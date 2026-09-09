@@ -357,7 +357,7 @@ ${notification.time}
   var notifWs = null;
   function connectNotif() {
     try {
-      notifWs = new WebSocket('ws://localhost:3001/ws/notifications');
+      notifWs = new WebSocket((window.FC_API ? window.FC_API.ws() : 'ws://localhost:3001') + '/ws/notifications');
       notifWs.onmessage = function(ev) {
         try {
           var data = JSON.parse(ev.data);

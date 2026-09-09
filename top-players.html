@@ -15,6 +15,7 @@
     <meta name="twitter:image" content="assets/fancoin/fanconnactlogo.png" />
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="js/api-config.js"></script>
     <script>
       if (localStorage.getItem("color-theme") === "dark") {
         document.documentElement.classList.add("dark");
@@ -252,7 +253,7 @@
     <script src="js/top-players-fallback.js"></script>
 
     <script>
-      const API_BASE = 'http://localhost:5000';
+      const API_BASE = window.FC_API ? window.FC_API.http() : (location.origin.includes('localhost') ? 'http://localhost:5000' : location.origin);
       let currentSport = 'cricket';
       let sportConfig = null;
       let players = [];

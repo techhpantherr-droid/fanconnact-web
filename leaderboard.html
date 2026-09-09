@@ -6,6 +6,7 @@
 <head>
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="js/api-config.js"></script>
   <script>
     if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.documentElement.classList.add('dark');
@@ -961,7 +962,7 @@ class="w-full flex items-center justify-center rounded-xl border border-purple-5
 
     async function loadTeamSports() {
       try {
-        const res = await fetch(' http://localhost:5000/api/leaderboard', { signal: AbortSignal.timeout(3000) });
+        const res = await fetch((window.FC_API ? window.FC_API.api() : 'http://localhost:5000/api') + '/leaderboard', { signal: AbortSignal.timeout(3000) });
         if (res.ok) {
           const data = await res.json();
           if (data.sports && data.sports.length) {
@@ -1024,7 +1025,7 @@ class="w-full flex items-center justify-center rounded-xl border border-purple-5
 
     function refreshTeamData() {
       if (usingBackendForTeams) {
-        fetch(' http://localhost:5000/api/sync/trigger', { method: 'POST', signal: AbortSignal.timeout(3000) }).catch(() => {});
+        fetch((window.FC_API ? window.FC_API.api() : 'http://localhost:5000/api') + '/sync/trigger', { method: 'POST', signal: AbortSignal.timeout(3000) }).catch(() => {});
       }
       setTimeout(function() {
         if (usingBackendForTeams) {
@@ -1114,7 +1115,7 @@ class="w-full flex items-center justify-center rounded-xl border border-purple-5
             'test';
 
         const url =
-            `http://localhost:5000/api/rankings/teams?format=${encodeURIComponent(format)}&women=${women}`;
+            (window.FC_API ? window.FC_API.api() : 'http://localhost:5000/api') + `/rankings/teams?format=${encodeURIComponent(format)}&women=${women}`;
 
         const res = await fetch(url, {
             signal: AbortSignal.timeout(8000)

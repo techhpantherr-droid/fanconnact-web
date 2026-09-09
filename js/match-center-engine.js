@@ -40,12 +40,7 @@
   // Backend proxy base (same as highlights.js) for real team rankings
   // Backend proxy. Prefer the local Node server; if the page is opened from a LAN
   // address, also try that host. No static/mock match source is used.
-  const API_BASES = Array.from(new Set([
-    'http://localhost:5000/api',
-    location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1'
-      ? ('http://' + location.hostname + ':5000/api')
-      : null
-  ].filter(Boolean)));
+  const API_BASES = [window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)];
   const API_PROXY = API_BASES[0];
 
   // ============================================================================

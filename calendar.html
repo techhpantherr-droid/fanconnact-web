@@ -14,6 +14,7 @@
     <meta name="twitter:image" content="assets/fancoin/fanconnactlogo.png" />
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="js/api-config.js"></script>
     <script>
       if (localStorage.getItem("color-theme") === "dark") {
         document.documentElement.classList.add("dark");
@@ -204,13 +205,7 @@
       // Source: FanConnact backend -> /api/matches/upcoming
       // The browser never calls the third-party cricket provider directly.
       // ================================================================
-      const API_BASE = (() => {
-        if (location.protocol === 'file:') return 'http://192.168.1.11:5000/api';
-        if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '192.168.1.11') {
-          return location.protocol + '//' + location.hostname + ':5000/api';
-        }
-        return location.origin + '/api';
-      })();
+      const API_BASE = window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin + '/api');
 
       let ALL_MATCHES = [];
       let currentDate = new Date();

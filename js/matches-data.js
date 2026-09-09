@@ -394,7 +394,7 @@
   async function loadDynamicTeamRegistry() {
     const categories = ['international', 'league', 'domestic', 'women'];
     const results = await Promise.allSettled(categories.map(async category => {
-      const res = await fetch('http://localhost:5000/api/teams/' + category);
+      const res = await fetch((window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)) + '/teams/' + category);
       if (!res.ok) throw new Error(category + ' teams: HTTP ' + res.status);
       return { category, payload: await res.json() };
     }));
@@ -409,12 +409,7 @@
   let backendHasLoadedOnce = false;
 
   async function fetchJson(path) {
-    const bases = Array.from(new Set([
-      'http://localhost:5000/api',
-      location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1'
-        ? ('http://' + location.hostname + ':5000/api')
-        : null
-    ].filter(Boolean)));
+    const bases = [window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)];
 
     let lastError = null;
     for (const base of bases) {

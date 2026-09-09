@@ -238,12 +238,7 @@ async function loadMatch(){
      * We do NOT depend on Firestore's "matches" collection for the page header.
      * This is what makes match-center -> prediction and direct Prediction work.
      */
-    const apiBases = Array.from(new Set([
-        "http://localhost:5000/api",
-        (location.hostname && location.hostname !== "localhost" && location.hostname !== "127.0.0.1")
-            ? `http://${location.hostname}:5000/api`
-            : null
-    ].filter(Boolean)));
+    const apiBases = [window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)];
 
     async function requestRawMatch(path, timeoutMs = 8000){
         let lastError = null;
@@ -551,12 +546,7 @@ async function loadMatch(){
 }
 
 async function requestMatchList(path){
-    const bases = Array.from(new Set([
-        "http://localhost:5000/api",
-        (location.hostname && location.hostname !== "localhost" && location.hostname !== "127.0.0.1")
-            ? `http://${location.hostname}:5000/api`
-            : null
-    ].filter(Boolean)));
+    const bases = [window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)];
 
     let lastError = null;
     for(const base of bases){

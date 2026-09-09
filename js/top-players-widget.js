@@ -7,7 +7,7 @@
 (function () {
   "use strict";
 
-  const API_BASE = " http://localhost:5000";
+  const API_BASE = window.FC_API ? window.FC_API.http() : (location.origin.includes('localhost') ? 'http://localhost:5000' : location.origin);
 
   // Map page filename -> sport id used by the API.
   const PAGE_SPORT = {

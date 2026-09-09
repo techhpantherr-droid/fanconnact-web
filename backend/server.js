@@ -4162,6 +4162,19 @@ app.get('/api/matches', async (req, res) => {
   }
 });
 
+// ─── SERVE FRONTEND STATIC FILES ─────────────────────────────────────────────
+const FRONTEND_DIR = path.join(__dirname, '..');
+app.use(express.static(FRONTEND_DIR));
+app.get('*', (req, res) => {
+  if (!req.path.startsWith('/api') && !req.path.startsWith('/ws')) {
+    const indexPath = path.join(FRONTEND_DIR, req.path);
+    if (fs.existsSync(indexPath) && fs.statSync(indexPath).isFile()) {
+      return res.sendFile(indexPath);
+    }
+  }
+  res.status(404).json({ error: 'Not found' });
+});
+
 // ─── START SERVER ────────────────────────────────────────────────────────────
 
 server.listen(PORT, () => {

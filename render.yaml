@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: fanconnact
+    runtime: node
+    rootDir: backend
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000

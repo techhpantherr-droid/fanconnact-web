@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
- const BASE = 'http://localhost:5000/api/matches';
+ const BASE = (window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin + '/api')) + '/matches';
 
   async function get(path) {
     const response = await fetch(BASE + path, {

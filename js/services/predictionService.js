@@ -410,14 +410,7 @@ export function isPredictionLocked(
     Firestore remains the prediction store.
 =====================================*/
 
-const PREDICTION_API_BASES = Array.from(new Set([
-    "http://localhost:5000/api",
-    location.hostname &&
-    location.hostname !== "localhost" &&
-    location.hostname !== "127.0.0.1"
-        ? `http://${location.hostname}:5000/api`
-        : null
-].filter(Boolean)));
+const PREDICTION_API_BASES = [window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin)];
 
 async function predictionApi(path){
     let lastError = null;
