@@ -51,7 +51,7 @@
     retryCount++;
 
     try {
-      var url = (window.FC_API ? window.FC_API.ws() : 'ws://localhost:3001') + '/ws/notifications';
+      var url = (window.FC_API ? window.FC_API.ws() : 'ws://localhost:5000') + '/ws/notifications';
       notifWs = new WebSocket(url);
 
       notifWs.onopen = function() {

@@ -4,7 +4,7 @@
 (function () {
   'use strict';
 
-  const WS_URL = (window.FC_API ? window.FC_API.ws() : 'ws://localhost:3001') + '/ws/chat';
+  const WS_URL = (window.FC_API ? window.FC_API.ws() : 'ws://localhost:5000') + '/ws/chat';
   const messagesEl = document.getElementById('chat-messages');
   const inputEl = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');

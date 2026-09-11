@@ -2,7 +2,7 @@
  * FanConnact - Shared API Configuration
  * Single source of truth for all API and WebSocket base URLs.
  * Detects environment automatically:
- *   - Dev (localhost / 127.0.0.1 / file://): uses localhost:5000 / ws://localhost:3001
+ *   - Dev (localhost / 127.0.0.1 / file://): uses localhost:5000 (HTTP + WS)
  *   - Production (any other host): uses same origin for HTTP, wss:// for WS
  * ========================================================================== */
 (function () {
@@ -13,7 +13,6 @@
     location.protocol === 'file:';
 
   var HTTP_PORT = 5000;
-  var WS_PORT = 3001;
 
   function httpBase() {
     if (isDev) return 'http://localhost:' + HTTP_PORT;
@@ -25,7 +24,7 @@
   }
 
   function wsBase() {
-    if (isDev) return 'ws://localhost:' + WS_PORT;
+    if (isDev) return 'ws://localhost:' + HTTP_PORT;
     var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
     return proto + '//' + location.host;
   }

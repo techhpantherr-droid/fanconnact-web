@@ -176,7 +176,7 @@ async function toggleFollow(isFollowing) {
 // Best-effort follow notification via the backend WS (ignored if offline).
 function pushFollowNotification() {
   try {
-    const ws = new WebSocket((window.FC_API ? window.FC_API.ws() : 'ws://localhost:3001') + '/ws/notifications');
+    const ws = new WebSocket((window.FC_API ? window.FC_API.ws() : 'ws://localhost:5000') + '/ws/notifications');
     ws.onopen = () => {
       ws.send(JSON.stringify({
         type: "follow",
