@@ -24,8 +24,29 @@
   // ---- Chat gating: open only when live or <30min to live; closed when finished ----
   function getMatchState() {
     const p = new URLSearchParams(location.search);
+    const state = (p.get('state') || '').toLowerCase();
+    const id = p.get('id') || '';
+    if (id) {
+      try {
+        const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
+        if (ms) {
+          const m = ms.find(x => String(x.id) === String(id));
+          if (m && m.status) {
+            const s = String(m.status).toLowerCase();
+            return {
+              state: s === 'in' || /live|progress/.test(s) ? 'live'
+                : s === 'post' || /finish|complete|done|result/.test(s) ? 'finished'
+                : 'upcoming',
+              sport: m.sport || 'cricket',
+              home: m.home || '',
+              away: m.away || ''
+            };
+          }
+        }
+      } catch (e) { /* fall through to URL params */ }
+    }
     return {
-      state: (p.get('state') || 'upcoming').toLowerCase(),
+      state: state || 'upcoming',
       sport: p.get('sport') || 'cricket',
       home: p.get('home') || '',
       away: p.get('away') || ''
