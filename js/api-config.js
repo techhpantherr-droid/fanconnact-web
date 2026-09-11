@@ -12,10 +12,15 @@
     location.hostname === '127.0.0.1' ||
     location.protocol === 'file:';
 
+  // GitHub Pages (github.io) frontend talks to the deployed Railway backend.
+  var BACKEND_ORIGIN = 'https://web-production-589a7.up.railway.app';
+  var isGitHubPages = /\.github\.io$/.test(location.hostname);
+
   var HTTP_PORT = 5000;
 
   function httpBase() {
     if (isDev) return 'http://localhost:' + HTTP_PORT;
+    if (isGitHubPages) return BACKEND_ORIGIN;
     return location.origin;
   }
 
@@ -26,7 +31,7 @@
   function wsBase() {
     if (isDev) return 'ws://localhost:' + HTTP_PORT;
     var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-    return proto + '//' + location.host;
+    return proto + '//' + ((isGitHubPages ? BACKEND_ORIGIN : location.origin)).replace(/^https?:\/\//, '');
   }
 
   window.FC_API = {
