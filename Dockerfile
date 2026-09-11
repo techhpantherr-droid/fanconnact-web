@@ -11,14 +11,12 @@ RUN npm install --omit=dev
 WORKDIR /app
 
 COPY backend ./backend
+
 COPY *.html ./
-COPY js ./js
 COPY css ./css
+COPY js ./js
 COPY assets ./assets
-COPY images ./images
-COPY fonts ./fonts
 COPY data ./data
-COPY src ./src
 
 EXPOSE 5000
 
