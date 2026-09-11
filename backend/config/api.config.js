@@ -8,6 +8,12 @@ module.exports = {
 
     apiHost: process.env.CRICBUZZ_API_HOST,
 
-    baseURL: process.env.CRICBUZZ_BASE_URL
+    baseURL: process.env.CRICBUZZ_BASE_URL,
+
+    allSports: {
+        apiKey: process.env.ALLSPORTS_API_KEY,
+        apiHost: process.env.ALLSPORTS_API_HOST,
+        baseURL: process.env.ALLSPORTS_BASE_URL
+    }
 
 };

@@ -4162,6 +4162,57 @@ app.get('/api/matches', async (req, res) => {
   }
 });
 
+// ─── ALL SPORTS RAPIDAPI PROXY (basketball, football, etc.) ──────────────────
+const ALLSPORTS_CONFIG = {
+  key: process.env.ALLSPORTS_API_KEY,
+  host: process.env.ALLSPORTS_API_HOST,
+  base: process.env.ALLSPORTS_BASE_URL || "https://allsportsapi2.p.rapidapi.com",
+};
+
+app.get("/api/all-sports/:sport/*", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const rest = req.params[0] || "";
+    if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
+      return res.status(403).json({ success: false, message: "All-Sports API key not configured" });
+    }
+    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/${rest}${req.url.includes("?") ? "" : ""}`;
+    const fullUrl = url;
+    const apiRes = await fetch(fullUrl, {
+      headers: {
+        "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+        "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+        "Content-Type": "application/json",
+      },
+      signal: AbortSignal.timeout(12000),
+    });
+    const data = await apiRes.json();
+    res.json({ success: apiRes.ok, status: apiRes.status, data });
+  } catch (e) {
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
+app.get("/api/odds/:sport/:matchId", async (req, res) => {
+  try {
+    const { sport, matchId } = req.params;
+    const featured = req.query.featured === "1" ? "/featured" : "";
+    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/odds/1${featured}`;
+    const apiRes = await fetch(url, {
+      headers: {
+        "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+        "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+        "Content-Type": "application/json",
+      },
+      signal: AbortSignal.timeout(12000),
+    });
+    const data = await apiRes.json();
+    res.json({ success: apiRes.ok, status: apiRes.status, data });
+  } catch (e) {
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
 // ─── SERVE FRONTEND STATIC FILES ─────────────────────────────────────────────
 const FRONTEND_DIR = path.join(__dirname, '..');
 app.use(express.static(FRONTEND_DIR));

@@ -10,3 +10,15 @@ services:
         value: production
       - key: PORT
         value: 10000
+      - key: CRICBUZZ_API_KEY
+        value: c1b19d058emsh83551a4eaf032cbp1d5e98jsn87ed5284597e
+      - key: CRICBUZZ_API_HOST
+        value: cricbuzz-cricket2.p.rapidapi.com
+      - key: CRICBUZZ_BASE_URL
+        value: https://cricbuzz-cricket2.p.rapidapi.com
+      - key: ALLSPORTS_API_KEY
+        value: c1b19d058emsh83551a4eaf032cbp1d5e98jsn87ed5284597e
+      - key: ALLSPORTS_API_HOST
+        value: allsportsapi2.p.rapidapi.com
+      - key: ALLSPORTS_BASE_URL
+        value: https://allsportsapi2.p.rapidapi.com
