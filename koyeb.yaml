@@ -1,0 +1,19 @@
+name: fanconnact
+services:
+  - name: web
+    type: web
+    run: node server.js
+    envs:
+      NODE_ENV: production
+      PORT: 5000
+      CRICBUZZ_API_KEY: c1b19d058emsh83551a4eaf032cbp1d5e98jsn87ed5284597e
+      CRICBUZZ_API_HOST: cricbuzz-cricket2.p.rapidapi.com
+      CRICBUZZ_BASE_URL: https://cricbuzz-cricket2.p.rapidapi.com
+      ALLSPORTS_API_KEY: c1b19d058emsh83551a4eaf032cbp1d5e98jsn87ed5284597e
+      ALLSPORTS_API_HOST: allsportsapi2.p.rapidapi.com
+      ALLSPORTS_BASE_URL: https://allsportsapi2.p.rapidapi.com
+    ports:
+      - 5000:5000
+    healthcheck:
+      path: /api/sync/status
+      port: 5000
