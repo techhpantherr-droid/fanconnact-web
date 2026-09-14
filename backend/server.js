@@ -75,7 +75,12 @@ const limiter = rateLimit({
 
 
 app.use(cors());
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginEmbedderPolicy: false
+  }));
 app.use(compression());
 app.use(express.json());
 app.use(limiter);
@@ -4169,6 +4174,128 @@ const ALLSPORTS_CONFIG = {
   base: process.env.ALLSPORTS_BASE_URL || "https://allsportsapi2.p.rapidapi.com",
 };
 
+// ─── NORMALIZED ALL-SPORTS MATCHES (for sport pages) ───────────────────────
+const ALLSPORTS_SUPPORTED = ["basketball", "baseball", "volleyball", "handball", "esport"];
+
+function normalizeAllSportsEvent(event, sport) {
+  if (!event || !event.id) return null;
+  const t = event.status?.type || "";
+  let status;
+  if (t === "inprogress" || t === "live") status = "live";
+  else if (t === "finished") status = "finished";
+  else status = "upcoming";
+
+  const ts = event.startTimestamp ? event.startTimestamp * 1000 : null;
+  return {
+    id: "as_" + event.id,
+    matchId: "as_" + event.id,
+    sport,
+    status,
+    series: event.tournament?.name || "",
+    matchType: sport,
+    format: sport,
+    stage: "",
+    venue: "",
+    startTime: ts,
+    date: ts ? new Date(ts).toLocaleDateString("en-CA") : "",
+    time: ts ? new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "",
+    rules: sport,
+    homeTeam: {
+      name: event.homeTeam?.name || "",
+      shortName: event.homeTeam?.shortName || event.homeTeam?.nameCode || "",
+      id: event.homeTeam?.id || "",
+    },
+    awayTeam: {
+      name: event.awayTeam?.name || "",
+      shortName: event.awayTeam?.shortName || event.awayTeam?.nameCode || "",
+      id: event.awayTeam?.id || "",
+    },
+    score: {
+      home: String(event.homeScore?.current ?? ""),
+      away: String(event.awayScore?.current ?? ""),
+      detail: event.status?.description || "",
+    },
+    result: status === "finished" ? (event.status?.description || "Finished") : "",
+    statusText: event.status?.description || "",
+  };
+}
+
+const allSportsMatchesCache = new Map();
+
+app.get("/api/all-sports/matches/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    if (!ALLSPORTS_SUPPORTED.includes(sport)) {
+      return res.status(400).json({ success: false, message: "Unsupported: " + sport + ". Supported: " + ALLSPORTS_SUPPORTED.join(", ") });
+    }
+    if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
+      return res.status(403).json({ success: false, message: "AllSports API key not configured" });
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    const dateParam = req.query.date || today;
+    const cacheKey = sport + "_" + dateParam;
+    const cached = allSportsMatchesCache.get(cacheKey);
+    if (cached && Date.now() - cached.ts < 5 * 60 * 1000) {
+      return res.json({ success: true, source: "allsports", cached: true, count: cached.data.length, matches: cached.data });
+    }
+
+    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/matches/live?date=${dateParam}`;
+    const apiRes = await fetch(url, {
+      headers: {
+        "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+        "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+        "Content-Type": "application/json",
+      },
+      signal: AbortSignal.timeout(12000),
+    });
+    const raw = await apiRes.json();
+    const events = raw?.events || [];
+    const matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
+
+    allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches });
+    res.json({ success: true, source: "allsports", count: matches.length, matches });
+  } catch (e) {
+    console.error("[AllSports] matches error:", req.params.sport, e.message);
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
+app.get("/api/all-sports/matches", async (req, res) => {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    const dateParam = req.query.date || today;
+    const results = await Promise.allSettled(
+      ALLSPORTS_SUPPORTED.map(async (sport) => {
+        const cacheKey = sport + "_" + dateParam;
+        const cached = allSportsMatchesCache.get(cacheKey);
+        if (cached && Date.now() - cached.ts < 5 * 60 * 1000) return cached.data;
+
+        if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) return [];
+        const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/matches/live?date=${dateParam}`;
+        const apiRes = await fetch(url, {
+          headers: {
+            "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+            "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+            "Content-Type": "application/json",
+          },
+          signal: AbortSignal.timeout(12000),
+        });
+        const raw = await apiRes.json();
+        const events = raw?.events || [];
+        const matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
+        allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches });
+        return matches;
+      })
+    );
+    const all = results.flatMap(r => r.status === "fulfilled" ? r.value : []);
+    res.json({ success: true, source: "allsports", count: all.length, matches: all });
+  } catch (e) {
+    console.error("[AllSports] aggregate error:", e.message);
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
+// AllSports raw proxy (must come AFTER the specific /matches/:sport routes)
 app.get("/api/all-sports/:sport/*", async (req, res) => {
   try {
     const { sport } = req.params;
@@ -4176,9 +4303,9 @@ app.get("/api/all-sports/:sport/*", async (req, res) => {
     if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
       return res.status(403).json({ success: false, message: "All-Sports API key not configured" });
     }
-    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/${rest}${req.url.includes("?") ? "" : ""}`;
-    const fullUrl = url;
-    const apiRes = await fetch(fullUrl, {
+    const qs = req.originalUrl.includes("?") ? req.originalUrl.split("?")[1] : "";
+    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/${rest}${qs ? "?" + qs : ""}`;
+    const apiRes = await fetch(url, {
       headers: {
         "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
         "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,

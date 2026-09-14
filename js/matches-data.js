@@ -549,6 +549,25 @@
           normalized.push(item);
         }
 
+        try {
+          const allSportsRes = await fetchJson('/all-sports/matches');
+          const allSportsMatches = allSportsRes?.matches || [];
+          for (const raw of allSportsMatches) {
+            const item = normalizeBackendMatch(raw);
+            if (!item || !item.id || seen.has(item.id)) continue;
+            seen.add(item.id);
+            item.id = item.id || raw.id || raw.matchId;
+            item.sport = raw.sport || item.sport;
+            if (item.status === 'upcoming' && raw.statusText) {
+              item.statusLine = raw.statusText;
+            }
+            normalized.push(item);
+          }
+          console.log('[matches] AllSports matches loaded:', allSportsMatches.length);
+        } catch (e) {
+          console.warn('[matches] AllSports load failed:', e.message);
+        }
+
         const anyEndpointSucceeded = settled.some(r => r.status === 'fulfilled');
 
         // Do not destroy the last good live data because one API request failed.
