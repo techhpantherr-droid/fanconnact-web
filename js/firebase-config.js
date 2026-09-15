@@ -927,8 +927,9 @@ window.__FB__ = { auth, db, storage, fetchSignInMethodsForEmail };
 
 // --- Dynamic user count for "Trusted by 100K+" trust badges ---
 // Reads the live Firestore users collection and formats the count as
-// "123", "4.5K+", "100K+", "1.2M+" etc. Updates every element tagged
-// with [data-user-count]. Falls back to the static text if it fails.
+// "many" (for a small audience), "123+", "4.5K+", "100K+", "1.2M+" etc.
+// Updates every element tagged with [data-user-count]. Falls back to the
+// static text if it fails.
 async function updateUserCounts() {
     const targets = document.querySelectorAll("[data-user-count]");
     if (!targets.length) return;
@@ -936,7 +937,8 @@ async function updateUserCounts() {
         const snap = await getCountFromServer(query(collection(db, "users")));
         const n = snap.data().count;
         let label;
-        if (n >= 1000000) label = (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M+";
+        if (n < 25) label = "many";
+        else if (n >= 1000000) label = (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M+";
         else if (n >= 1000) label = (n / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
         else label = String(n) + "+";
         targets.forEach(el => { el.textContent = label; });
