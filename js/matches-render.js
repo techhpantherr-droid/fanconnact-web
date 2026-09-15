@@ -106,8 +106,8 @@
     // Compact cards (horizontal scrollers) are smaller so several fit on screen.
     const pad = compact ? "p-4" : "p-6";
     const headMb = compact ? "mb-4" : "mb-6";
-    const logoSize = compact ? "w-9 h-9 sm:w-11 sm:h-11" : "w-12 h-12 sm:w-14 sm:h-14";
-    const scoreSize = compact ? "text-base sm:text-lg" : "text-2xl sm:text-3xl md:text-4xl";
+    const logoSize = compact ? "w-10 h-10 sm:w-12 sm:h-12" : "w-14 h-14 sm:w-16 sm:h-16";
+    const scoreSize = compact ? "text-lg sm:text-xl" : "text-3xl sm:text-4xl md:text-5xl";
 
     let statusBadge, midBlock, footer;
     if (m.status === "live") {
@@ -423,7 +423,16 @@ as =
     const hero = document.querySelector('[data-purpose="match-card-grid"]');
 
     if (hero) {
-      hero.innerHTML = MATCHES.slice(0, 5).map(m => cardHTML(m, false)).join("");
+      // Give LIVE matches a full-width hero card so the score is prominent on
+      // the before-login page. Remaining matches tile below in the grid.
+      const live = MATCHES.filter(m => m.status === "live");
+      const others = MATCHES.filter(m => m.status !== "live");
+      const first = live.length ? live : MATCHES;
+      const list = first.slice(0, 5);
+      hero.innerHTML = list.map((m, i) => {
+        const wide = m.status === "live" && i === 0 ? " md:col-span-2 xl:col-span-3" : "";
+        return cardHTML(m, false).replace('<div class="bg-card-bg', '<div class="' + wide + ' bg-card-bg');
+      }).join("");
     }
 
     document.querySelectorAll('[data-purpose="matches-list"]').forEach(c => {
