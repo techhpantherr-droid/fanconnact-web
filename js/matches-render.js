@@ -423,16 +423,13 @@ as =
     const hero = document.querySelector('[data-purpose="match-card-grid"]');
 
     if (hero) {
-      // Give LIVE matches a full-width hero card so the score is prominent on
-      // the before-login page. Remaining matches tile below in the grid.
+      // Tile live matches side-by-side in the grid (bigger than the compact
+      // horizontal scrollers), keeping the score prominent. No full-width
+      // column so several games are always visible next to each other.
       const live = MATCHES.filter(m => m.status === "live");
-      const others = MATCHES.filter(m => m.status !== "live");
-      const first = live.length ? live : MATCHES;
-      const list = first.slice(0, 5);
-      hero.innerHTML = list.map((m, i) => {
-        const wide = m.status === "live" && i === 0 ? " md:col-span-2 xl:col-span-3" : "";
-        return cardHTML(m, false).replace('<div class="bg-card-bg', '<div class="' + wide + ' bg-card-bg');
-      }).join("");
+      const rest = MATCHES.filter(m => m.status !== "live");
+      const list = live.concat(rest).slice(0, 6);
+      hero.innerHTML = list.map(m => cardHTML(m, false)).join("");
     }
 
     document.querySelectorAll('[data-purpose="matches-list"]').forEach(c => {
