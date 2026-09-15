@@ -54,17 +54,16 @@
         }
     </style>
     <style>
-        /* Left panel (brand area) - sophisticated gradient bg + black text in light mode */
+        /* Left panel (brand area) - stadium hero bg + overlay */
         .bg-on-surface {
-            background: 
-                radial-gradient(ellipse 80% 60% at 0% 0%, rgba(59,130,246,0.12) 0%, transparent 100%),
-                radial-gradient(ellipse 60% 50% at 100% 100%, rgba(99,102,241,0.08) 0%, transparent 100%),
-                linear-gradient(180deg, #f8faff 0%, #eef2ff 50%, #e8ecf8 100%) !important;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.85)),
+                url("assets/images/hero-stadium.jpg") center / cover no-repeat !important;
         }
         .dark .bg-on-surface {
-            background: 
-                radial-gradient(ellipse 80% 60% at 0% 0%, rgba(16,185,129,0.06) 0%, transparent 100%),
-                #000000 !important;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.78)),
+                url("assets/images/hero-stadium.jpg") center / cover no-repeat !important;
         }
         /* H1 "FanConnact" must be readable on both the light gradient and the dark panel */
         .bg-on-surface .text-primary-fixed { color: #1565c0 !important; }
@@ -441,7 +440,7 @@
                         <span class="text-fan">Fan</span><span class="text-connect">Connact</span>
                     </h1>
                     <p class="text-label-sm font-label-sm text-surface-dim uppercase tracking-widest mt-1">
-                        Connect. Predict. Win.
+                        The Digital Stadium of India
                     </p>
                 </div>
             </div>
@@ -450,7 +449,7 @@
                 <div class="space-y-xs">
                     <h2 class="font-headline-xl text-headline-xl text-on-tertiary uppercase leading-tight">
                         FOR FANS. <br /> BY FANS. <br />
-                        <span class="text-primary-fixed-dim">ALWAYS FOR CRICKET.</span>
+                        <span class="text-primary-fixed-dim">THE DIGITAL STADIUM OF INDIA.</span>
                     </h2>
                     <p class="font-body-lg text-body-lg text-surface-dim max-w-md">
                         Join 100K+ cricket fans. <br /> Predict. Compete. Connect. Win!
@@ -534,13 +533,14 @@
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCWGB6ky4slvYqnFf5Ip-X7rrC4YHbbESbQ1IVnH7UhAYWdXYB1IoXvH-v-jhEEEnsNCCPCoiRN7gmRtqXWTbbBxv7AwAzbS6EuLHNjzUKYM_bssp-uJUI8x7pQvlskaPW3oWdGJ1FojMqBwCVdI-AYlRQERXVsrAp78_upKhpwrTiftnk9L5G5rlnUK1Vzb5y7dsqqXOCD21_2ygRsjZI43tuTouF4-nxxYHYjSWL64Vd-DaLBA9C1xataqcfQ5uSwwAYUE3us3XVY"
             />
             <div
-              class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold flex items-center justify-center border-2 border-on-surface"
+class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold flex items-center justify-center border-2 border-on-surface"
+               data-user-count
             >
-              100K+
+               100K+
             </div>
-          </div>
-          <div class="text-body-sm text-surface-dim/80">
-            <span class="block font-bold">Trusted by 100K+</span> Cricket Fans globally
+           </div>
+           <div class="text-body-sm text-surface-dim/80">
+             <span class="block font-bold">Trusted by <span data-user-count>100K+</span></span> Cricket Fans globally
                     </div>
                 </div>
             </div>

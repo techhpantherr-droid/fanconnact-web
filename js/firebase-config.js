@@ -36,7 +36,8 @@ import {
     increment,
     runTransaction,
     serverTimestamp,
-    writeBatch
+    writeBatch,
+    getCountFromServer
 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -918,8 +919,29 @@ function sportImage(sport) {
     return SPORT_IMAGE_MAP[String(sport).toLowerCase()] || DEFAULT_SPORT_IMAGE;
 }
 
-export { auth, db, storage, valMsg, v, debounceDb, generateOTP, sportImage };
+export { auth, db, storage, valMsg, v, debounceDb, generateOTP, sportImage, updateUserCounts };
 
 // Expose core Firebase handles on window so non-module scripts
 // (e.g. leaderboard.js loaded as a plain <script>) can read real data.
 window.__FB__ = { auth, db, storage, fetchSignInMethodsForEmail };
+
+// --- Dynamic user count for "Trusted by 100K+" trust badges ---
+// Reads the live Firestore users collection and formats the count as
+// "123", "4.5K+", "100K+", "1.2M+" etc. Updates every element tagged
+// with [data-user-count]. Falls back to the static text if it fails.
+async function updateUserCounts() {
+    const targets = document.querySelectorAll("[data-user-count]");
+    if (!targets.length) return;
+    try {
+        const snap = await getCountFromServer(query(collection(db, "users")));
+        const n = snap.data().count;
+        let label;
+        if (n >= 1000000) label = (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M+";
+        else if (n >= 1000) label = (n / 1000).toFixed(1).replace(/\.0$/, "") + "K+";
+        else label = String(n) + "+";
+        targets.forEach(el => { el.textContent = label; });
+    } catch (err) {
+        console.warn("updateUserCounts failed, keeping static text:", err);
+    }
+}
+updateUserCounts();
