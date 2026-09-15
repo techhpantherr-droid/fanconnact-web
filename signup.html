@@ -172,6 +172,20 @@
             box-shadow: 0 4px 20px rgba(33,150,243,0.2);
             transition: all 0.3s ease;
         }
+
+        /* Fully green solid buttons (Verify Email / Camera / Send OTP) in both themes */
+        .btn-green-solid {
+            background-color: #10b981 !important;
+            color: #ffffff !important;
+            border-color: #10b981 !important;
+        }
+        .btn-green-solid:hover:not(:disabled) {
+            background-color: #059669 !important;
+        }
+        .btn-green-solid:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         .bg-gradient-to-r.from-primary:hover {
             box-shadow: 0 8px 28px rgba(33,150,243,0.3);
             transform: translateY(-1px);
@@ -452,7 +466,7 @@
                         <span class="text-primary-fixed-dim">THE DIGITAL STADIUM OF INDIA.</span>
                     </h2>
                     <p class="font-body-lg text-body-lg text-surface-dim max-w-md">
-                        Join 100K+ cricket fans. <br /> Predict. Compete. Connect. Win!
+                        Join many sports fans. <br /> Predict. Compete. Connect. Win!
                     </p>
                 </div>
                 <!-- Feature Bento Grid -->
@@ -534,13 +548,12 @@
             />
             <div
 class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-[10px] font-bold flex items-center justify-center border-2 border-on-surface"
-               data-user-count
-            >
-               100K+
+               >
+               many
             </div>
            </div>
            <div class="text-body-sm text-surface-dim/80">
-             <span class="block font-bold">Trusted by <span data-user-count>100K+</span></span> Cricket Fans globally
+             <span class="block font-bold">Trusted by many fans</span> Sports globally
                     </div>
                 </div>
             </div>
@@ -612,7 +625,7 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
               <button
                 type="button"
                 id="camera-capture-btn"
-                class="px-4 py-2 bg-primary/20 border border-primary/40 rounded-xl text-label-md font-label-md text-primary hover:bg-primary/30 transition-colors flex items-center gap-2"
+                class="px-4 py-2 bg-primary text-on-primary rounded-xl text-label-md font-label-md hover:brightness-110 transition-colors flex items-center gap-2 btn-green-solid"
               >
                 <span class="material-symbols-outlined text-base">camera_alt</span>
                 Camera
@@ -924,8 +937,8 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
             <div class="md:col-span-2">
               <div class="flex flex-wrap items-center gap-2">
                 <input id="email-otp-input" type="text" maxlength="6" placeholder="Enter 6-digit OTP" class="w-32 bg-surface-variant/5 border border-outline-variant/20 rounded-xl py-3 px-4 text-sm text-on-tertiary placeholder:text-surface-dim/30 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled />
-                <button type="button" id="send-email-otp-btn" class="px-4 py-3 text-sm bg-primary/20 text-primary rounded-xl hover:bg-primary/30 transition-colors disabled:opacity-50 whitespace-nowrap">Send Email OTP</button>
-                <button type="button" id="verify-email-otp-btn" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap" disabled>Verify</button>
+                <button type="button" id="send-email-otp-btn" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid">Send Email OTP</button>
+                <button type="button" id="verify-email-otp-btn" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid" disabled>Verify</button>
                 <span id="email-otp-status" class="text-xs text-surface-dim/70"></span>
               </div>
             </div>
