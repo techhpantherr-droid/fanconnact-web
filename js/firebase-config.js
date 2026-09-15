@@ -295,7 +295,7 @@ loginForm?.addEventListener("submit", async(e) => {
     }
 });
 
-// --- Login email: check if already registered (show immediately) ---
+// --- Login email/username: check if already registered (show immediately) ---
 let loginEmailTimer = null;
 const loginEmailInput = document.getElementById("username");
 const loginEmailMsg = document.getElementById("login-email-msg");
@@ -305,18 +305,37 @@ if (loginEmailInput && loginEmailMsg) {
         if (loginEmailTimer) clearTimeout(loginEmailTimer);
         loginEmailMsg.className = "text-xs mt-1 ml-1 hidden";
         loginEmailMsg.textContent = "";
-        if (!val || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return;
+        if (!val) return;
         loginEmailMsg.className = "text-xs mt-1 ml-1 text-gray-400";
         loginEmailMsg.textContent = "Checking...";
         loginEmailTimer = setTimeout(async () => {
             try {
-                const methods = await fetchSignInMethodsForEmail(auth, val);
-                if (methods.length > 0) {
+                // The login field accepts BOTH email and username, and Firebase
+                // may enable email enumeration protection (which hides whether an
+                // email is registered). So check the Firestore users collection too.
+                let registered = false;
+                if (val.includes("@")) {
+                    const oMethods = await fetchSignInMethodsForEmail(auth, val);
+                    registered = oMethods.length > 0;
+                }
+                if (!registered) {
+                    const q = query(collection(db, "users"),
+                        where("email", "==", val.toLowerCase()));
+                    const snap = await getDocs(q);
+                    registered = !snap.empty;
+                }
+                if (!registered && !val.includes("@")) {
+                    const q = query(collection(db, "users"),
+                        where("username", "==", val.toLowerCase()));
+                    const snap = await getDocs(q);
+                    registered = !snap.empty;
+                }
+                if (registered) {
                     loginEmailMsg.className = "text-xs mt-1 ml-1 text-brand-green";
-                    loginEmailMsg.textContent = "✓ This email is already registered — you can log in.";
+                    loginEmailMsg.textContent = "✓ This account already exists — you can log in.";
                 } else {
                     loginEmailMsg.className = "text-xs mt-1 ml-1 text-amber-400";
-                    loginEmailMsg.textContent = "This email is not registered yet. Please sign up first.";
+                    loginEmailMsg.textContent = "This account is not registered yet. Please sign up first.";
                 }
             } catch (_) {
                 loginEmailMsg.className = "text-xs mt-1 ml-1 hidden";
