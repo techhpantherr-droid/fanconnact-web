@@ -190,15 +190,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Default landing page for unauthenticated users visiting root or protected pages
       if (page === "" || !guestAllowedPages.includes(page)) {
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
       }
     } else if (user) {
-      // User is logged in. Redirect away from landing and auth pages to dashboard.
+      // User is logged in. Redirect away from auth pages to index.
       const page = window.location.pathname.split("/").pop();
       if (
-        page === "index.html" ||
-        page === "login.html"
+        page === "login.html" ||
+        page === "signup.html"
       ) {
         // Check Firestore emailVerified for OTP-verified users
         // Missing field = legacy user = allow; false = block
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
           await signOut(auth);
           return;
         }
-        window.location.href = "dashboard.html";
+        window.location.href = "index.html";
         return;
       }
     }

@@ -34,6 +34,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/style.css" />
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -43,6 +44,14 @@
               sans: ["Inter", "sans-serif"],
             },
             colors: {
+              "emerald-accent": "#10b981",
+              "card-bg": "#101a2e",
+              "border-subtle": "#25324a",
+              "on-surface": "#e8eef7",
+              "on-surface-variant": "#94a3b8",
+              "surface-container-low": "#162132",
+              "surface-container-high": "#1e293b",
+              primary: "#10b981",
               brand: {
                 dark: "#0B0E1E",
                 blue: "#4154F1",
@@ -91,6 +100,24 @@
       :root:not(.dark) .hover\:bg-gray-800:hover { background: #f1f5f9 !important; }
       :root:not(.dark) ::-webkit-scrollbar-thumb { background: #2196f3; }
       .dark ::-webkit-scrollbar-thumb { background: #10b981; }
+      /* ---- match card theme (injected by js/matches-render.js) ---- */
+      :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
+      :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
+      :root:not(.dark) .text-on-surface { color: #0f172a !important; }
+      :root:not(.dark) .text-on-surface-variant { color: #475569 !important; }
+      :root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }
+      :root:not(.dark) .bg-emerald-accent\/15 { background: #dbeafe !important; }
+      :root:not(.dark) .bg-emerald-accent\/5 { background: #eff6ff !important; }
+      :root:not(.dark) .border-emerald-accent\/40 { border-color: #93c5fd !important; }
+      :root:not(.dark) .bg-surface-container-low { background: #eff4ff !important; }
+      :root:not(.dark) .bg-surface-container-high { background: #dce9ff !important; }
+      :root:not(.dark) .hover\:bg-surface-container-high:hover { background: #d3e4fe !important; }
+      .dark .text-on-surface { color: #ffffff !important; }
+      .dark .text-on-surface-variant { color: #aab6c4 !important; }
+      .dark .text-emerald-accent { color: #34d399 !important; }
+      .dark .score-home, .dark .score-away { color: #ffffff !important; }
+      .dark .bg-surface-container-low { background: #1a2a3e !important; }
+      .dark .bg-surface-container-high { background: #243347 !important; }
     </style>
   </head>
   <body class="bg-brand-dark text-white font-sans antialiased min-h-screen transition-colors duration-300">

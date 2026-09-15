@@ -83,6 +83,9 @@
                         "surface-tint": "#006c49",
                         "inverse-surface": "#213145",
                         "on-error": "#ffffff",
+                        "emerald-accent": "#10b981",
+                        "card-bg": "#16191E",
+                        "border-subtle": "#2A2E35",
                         brand: {
                             green: "#10b981",
                             dark: "#0B0E11",
@@ -175,6 +178,31 @@
          :root:not(.dark) .hero-gradient button * {
             color: #000 !important;
         }
+        
+        /* ---- match card theme (injected by js/matches-render.js) ---- */
+        :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
+        :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
+        :root:not(.dark) .text-on-surface { color: #0f172a !important; }
+        :root:not(.dark) .text-on-surface-variant { color: #475569 !important; }
+        :root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }
+        :root:not(.dark) .bg-emerald-accent\/15 { background: #dbeafe !important; }
+        :root:not(.dark) .bg-emerald-accent\/5 { background: #eff6ff !important; }
+        :root:not(.dark) .border-emerald-accent\/40 { border-color: #93c5fd !important; }
+        :root:not(.dark) .bg-surface-container-low { background: #eff4ff !important; }
+        :root:not(.dark) .bg-surface-container-high { background: #dce9ff !important; }
+        :root:not(.dark) .hover\:bg-surface-container-high:hover { background: #d3e4fe !important; }
+        :root:not(.dark) .score-home,
+        :root:not(.dark) .score-away { color: #0f172a !important; }
+        .dark .score-home,
+        .dark .score-away { color: #ffffff !important; }
+        .dark .text-on-surface { color: #ffffff !important; }
+        .dark .text-on-surface-variant { color: #aab6c4 !important; }
+        .dark .text-emerald-accent { color: #34d399 !important; }
+        .dark .bg-emerald-accent\/15 { background: rgba(16, 185, 129, 0.15) !important; }
+        .dark .border-emerald-accent\/40 { border-color: rgba(16, 185, 129, 0.4) !important; }
+        .dark .bg-surface-container-low { background: #1a2a3e !important; }
+        .dark .bg-surface-container-high { background: #243347 !important; }
+        .dark .hover\:bg-surface-container-high:hover { background: #2b3d55 !important; }
         
         .fan-war-bg {
             background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(30, 27, 75, 0.8)), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwCuhhgmpq4ax-2MoOqwW680LvqXJYLB7BSTP9ByZYzcWclRelEC6d-CAoLsKJVL4pEo44viJDoj1Nybp5b8UEUzO1uF-AQsmorzyBa_GhGwev3TKjQUAESIovARJWAUTdiVJii8YxP3eVgsHcoBXLfE5lDEKt5ZuNPeFahTYSFovGMAI4nOAY-A2GljKuEtF5T3Wqtla0m8ClWUwd2p5cnTBGe5nsoT3kxhb_NoZZgLWE9DQUi3ap8FAsXGv28cDJJUT8SSG-_Cfa");

@@ -4296,6 +4296,69 @@ app.get("/api/all-sports/matches", async (req, res) => {
 });
 
 // AllSports raw proxy (must come AFTER the specific /matches/:sport routes)
+app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
+  try {
+    const { sport, matchId } = req.params;
+    if (!ALLSPORTS_SUPPORTED.includes(sport)) {
+      return res.status(400).json({ success: false, message: "Unsupported: " + sport });
+    }
+    if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
+      return res.status(403).json({ success: false, message: "AllSports API key not configured" });
+    }
+    const [matchRes, incidentsRes, lineupsRes] = await Promise.allSettled([
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}`, {
+        headers: {
+          "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+          "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+          "Content-Type": "application/json",
+        },
+        signal: AbortSignal.timeout(12000),
+      }),
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/incidents`, {
+        headers: {
+          "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+          "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+          "Content-Type": "application/json",
+        },
+        signal: AbortSignal.timeout(12000),
+      }),
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/lineups`, {
+        headers: {
+          "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+          "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+          "Content-Type": "application/json",
+        },
+        signal: AbortSignal.timeout(12000),
+      })
+    ]);
+
+    const matchRaw = matchRes.status === "fulfilled" && matchRes.value.ok ? await matchRes.value.json() : null;
+    const events = matchRaw?.event || matchRaw || null;
+    const incidentRaw = incidentsRes.status === "fulfilled" && incidentsRes.value.ok ? await incidentsRes.value.json() : null;
+    const incidents = incidentRaw?.incidents || incidentRaw?.data?.incidents || [];
+    const lineupRaw = lineupsRes.status === "fulfilled" && lineupsRes.value.ok ? await lineupsRes.value.json() : null;
+
+    const normalized = normalizeAllSportsEvent(events || { id: matchId }, sport);
+
+    const homeStats = events?.homeStatistics || events?.statistics?.home || [];
+    const awayStats = events?.awayStatistics || events?.statistics?.away || [];
+
+    const detail = {
+      match: normalized,
+      events,
+      incidents,
+      lineups: lineupRaw || null,
+      homeStats,
+      awayStats
+    };
+    res.json({ success: true, source: "allsports", ...detail });
+  } catch (e) {
+    console.error("[AllSports] match detail error:", e.message);
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
+// AllSports raw proxy (must come AFTER specific /matches/:sport and /match/:sport routes)
 app.get("/api/all-sports/:sport/*", async (req, res) => {
   try {
     const { sport } = req.params;
