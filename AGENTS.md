@@ -1,5 +1,23 @@
 # Session Summary
 
+## Signup Button Visibility Fix (commit `a9bf2aa`, pushed to `web/r-feature`)
+- User reported signup Camera + Verify OTP buttons invisible until hover
+- Deployed page had correct `.btn-green-solid` CSS + classes; old cached version used `bg-primary/20` (20% faint, near-invisible on white) — hence hover-only appearance
+- Made bulletproof: inline `style="background-color:#10b981!important;color:#fff!important;opacity:1!important"` on `#camera-capture-btn` and `#send-email-otp-btn`; Verify uses `#43c98b` (disabled lighter green)
+- Inline `!important` beats any stylesheet rule regardless of cache/CSS cascade
+- Verified deployed on GitHub Pages via fetch (patterns present: camera id ×1, `#10b981 !important` ×2, `#43c98b !important` ×1)
+
+## Endpoint Audit (Railway backend `https://web-production-589a7.up.railway.app`)
+- WORKING: `/api/sync/status` (quota 6/100), `/api/all-sports/matches` (many live matches incl. `as_16524490` handball, `as_16642128`), `/api/rankings/basketball/points` (source database, 100 players), `/api/leaderboard` (11 sports), `/api/sync/last-updated` (but `playerRecords: 9` — suspiciously low)
+- FAILING: `/api/rankings/cricket/odi_bat_men` → 500 (local + Railway), `/api/matches/live` + `/api/matches/upcoming` → 500, `/api/all-sports/match/handball/as_16524490` → 502 (match-detail route passes raw `as_*` id to RapidAPI at server.js L4309 — likely needs `matchId.replace(/^as_/,'')`), `/api/quota` → 404 (route does NOT exist in server.js; quota only in `backend/api-quota.js`)
+- Local backend runs via `node server.js` in `backend/` but has `getaddrinfo ENOTFOUND cricbuzz-cricket2.p.rapidapi.com` (local DNS blocks Cricbuzz → cricket endpoints 500 locally)
+- PENDING (user asked): implement match center with real AllSports data for non-cricket sports; `match-center-engine.js` is cricket-only, card links lack `&sport=`, `as_*` ids show "Real match data not available"
+
+## Forgot Password Flow (commits `3f487cb`, `bf2407a`, `d37d829`, pushed)
+- Login email check fixed via Firestore users collection (bypasses Firebase email-enumeration protection)
+- Forgot-password simplified: `sendPasswordResetEmail(auth, email)` with NO custom redirect URL → Firebase hosted reset page handles everything; fixes "Invalid or missing reset link"
+- Reset email sender name shows "nites"/project id — Firebase Console only (Authentication → Settings → Email templates); template editing locked on Spark plan → user must upgrade to Blaze or accept
+
 ## News API Enhancement (Reverted)
 - GNews API addition was reverted by user request (no second API)
 - News flow is back to: **Currents API** → **static fallback**
