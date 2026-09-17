@@ -36,5 +36,22 @@ service cloud.firestore {
                  && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['followRequests']);
 
 }
+
+    match /rewards/{rewardId} {
+      // Reward history is used by the Fan Coin wallet (fancoin.html). A fan
+      // can read his own reward records and create new reward records that
+      // belong to him. Records cannot be edited or deleted after creation.
+      allow read: if request.auth != null
+                  && resource.data.uid == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+match /matches/{matchId} {
+      // Real match center data written for all fans.
+      allow read: if true;
+      allow write: if false;
+    }
   }
 }

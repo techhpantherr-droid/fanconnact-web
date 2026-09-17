@@ -2120,9 +2120,17 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
           emailTimer = setTimeout(async () => {
             try {
               const fb = window.__FB__;
-              if (!fb || !fb.fetchSignInMethodsForEmail || !fb.auth) return;
-              const methods = await fb.fetchSignInMethodsForEmail(fb.auth, val);
-              if (methods && methods.length > 0) {
+              // NOTE: fetchSignInMethodsForEmail is defeated by Firebase
+              // email-enumeration protection (returns [] even for registered
+              // emails), so we check the 'users' collection by email instead.
+              if (!fb || !fb.db) return;
+              const fs = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+              const q = fs.query(
+                fs.collection(fb.db, 'users'),
+                fs.where('email', '==', val.toLowerCase())
+              );
+              const snap = await fs.getDocs(q);
+              if (!snap.empty) {
                 emailMsg.textContent = '⚠ This email is already registered. Please log in instead.';
                 emailMsg.className = 'block mt-1.5 text-xs font-medium text-red-500';
               } else {

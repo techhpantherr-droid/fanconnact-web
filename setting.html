@@ -181,13 +181,13 @@
 
   <!-- Account Overview Card -->
   <section class="bg-gradient-to-br from-primary/10 to-transparent dark:from-primary/15 border border-outline-variant dark:border-brand-border rounded-2xl p-5 sm:p-6 flex items-center gap-4 card">
-    <img id="accountAvatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOdWz0yXTAfug92jAlZ-XZtnL5urTJNu8npwz7RIfeTacw2m4yeAoKNMAkf3MLOCIk0iI35_ID8tSabIp6I7MF2N_gez6RO01_i0q1DX3bj656URDlnI8A34wDvyRB5WoPOVTN1qvuyGRfskySDI-pCWAnw3raxBsKX2G6sEhrFHiweAO4TxLdxuB-4_oHoAPBbm9bwmrKrqSGKFEtAeXpM76OE_C1cQQSNmRYmIRT01ZVb4lT2k1tR1xDw6ujXtxiain2IWfiKxim" alt="Profile" class="w-16 h-16 rounded-full border-2 border-primary object-cover shrink-0" />
+    <img id="accountAvatar" src="assets/images/default-avatar.png" alt="Profile" class="w-16 h-16 rounded-full border-2 border-primary object-cover shrink-0" />
     <div class="min-w-0 flex-1">
-      <p id="accountName" class="text-lg font-bold text-on-surface dark:text-white truncate">Nitesh Yadav</p>
-      <p id="accountEmail" class="text-sm text-on-surface-variant dark:text-slate-400 truncate">nitesh.yadav@fanconnact.com</p>
+      <p id="accountName" class="text-lg font-bold text-on-surface dark:text-white truncate">Loading…</p>
+      <p id="accountEmail" class="text-sm text-on-surface-variant dark:text-slate-400 truncate"></p>
       <div class="mt-2 flex items-center gap-2">
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/15 text-primary text-[11px] font-semibold">
-          <span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Level 28
+        <span id="accountLevel" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/15 text-primary text-[11px] font-semibold">
+          <span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Level 0
         </span>
         <span class="text-[11px] text-on-surface-variant dark:text-slate-500">Active now</span>
       </div>
@@ -307,194 +307,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Preferences Grid -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-xl">
-
-    <!-- Sports Preferences -->
-    <section class="bg-surface-container-lowest dark:bg-brand-card border border-outline-variant dark:border-brand-border rounded-xl p-lg shadow-sm card">
-      <div class="flex items-center gap-3 mb-xs">
-        <span class="w-9 h-9 rounded-xl bg-primary/15 text-primary flex items-center justify-center">
-          <span class="material-symbols-outlined text-xl">sports_soccer</span>
-        </span>
-        <h2 class="font-headline-md text-headline-md text-on-surface dark:text-white" data-i18n="sports-title">Sports Preferences</h2>
-      </div>
-      <p class="font-body-sm text-on-surface-variant dark:text-slate-400 mb-lg" data-i18n="sports-subtitle">Select your favorite sports to get personalized updates</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-md">
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_cricket</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-cricket">Cricket</span>
-          </div>
-          <input data-sport="cricket" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_soccer</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-football">Football</span>
-          </div>
-          <input data-sport="football" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_basketball</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-basketball">Basketball</span>
-          </div>
-          <input data-sport="basketball" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_tennis</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-tennis">Tennis</span>
-          </div>
-          <input data-sport="tennis" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_hockey</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-hockey">Hockey</span>
-          </div>
-          <input data-sport="hockey" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_kabaddi</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-kabaddi">Kabaddi</span>
-          </div>
-          <input data-sport="kabaddi" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_volleyball</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-volleyball">Volleyball</span>
-          </div>
-          <input data-sport="volleyball" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_handball</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-tabletennis">Table Tennis</span>
-          </div>
-          <input data-sport="tabletennis" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">sports_esports</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-esports">Esports</span>
-          </div>
-          <input data-sport="esports" class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-        <label class="flex items-center justify-between p-sm border border-outline-variant dark:border-brand-border rounded-lg hover:border-primary cursor-pointer transition-all sport-item">
-          <div class="flex items-center gap-sm">
-            <span class="material-symbols-outlined text-primary">sports_baseball</span>
-            <span class="text-body-sm font-semibold text-on-surface dark:text-white" data-i18n="sport-baseball">Baseball</span>
-          </div>
-          <input data-sport="baseball" checked class="rounded border-outline-variant text-primary focus:ring-primary h-4 w-4" type="checkbox"/>
-        </label>
-      </div>
-      <button class="mt-lg text-primary font-bold text-body-sm flex items-center gap-base hover:underline transition-all">
-        <span class="material-symbols-outlined text-base">add</span>
-        Add more sports
-      </button>
-    </section>
-
-    <!-- Notification Preferences -->
-    <section class="bg-surface-container-lowest dark:bg-brand-card border border-outline-variant dark:border-brand-border rounded-xl p-lg shadow-sm card">
-      <div class="flex items-center gap-3 mb-xs">
-        <span class="w-9 h-9 rounded-xl bg-primary/15 text-primary flex items-center justify-center">
-          <span class="material-symbols-outlined text-xl">notifications</span>
-        </span>
-        <h2 class="font-headline-md text-headline-md text-on-surface dark:text-white" data-i18n="notif-title">Notification Preferences</h2>
-      </div>
-      <p class="font-body-sm text-on-surface-variant dark:text-slate-400 mb-lg" data-i18n="notif-subtitle">Choose what you want to be notified about</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-xl gap-y-sm">
-        <div class="space-y-sm">
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">sensors</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-live">Live Match Alerts</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="liveMatchAlerts" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">newspaper</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-news">Breaking News</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="breakingNews" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">analytics</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-predictions">Prediction Results</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="predictionResults" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">group</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-community">Community Updates</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="communityUpdates" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-        </div>
-        <div class="space-y-sm">
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">mail</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-email">Email Notifications</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="emailNotifications" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">notifications_active</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-push">Push Notifications</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="pushNotifications" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">alternate_email</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-mentions">Mentions &amp; Replies</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="mentionsReplies" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-          <div class="flex items-center justify-between p-sm hover:bg-surface-container-low dark:hover:bg-white/5 rounded-lg transition-colors notification-item">
-            <div class="flex items-center gap-md">
-              <span class="material-symbols-outlined text-on-surface-variant dark:text-slate-400">person_add</span>
-              <span class="text-body-sm text-on-surface dark:text-white" data-i18n="notif-followers">New Followers</span>
-            </div>
-            <label class="relative inline-flex items-center cursor-pointer">
-              <input data-notif="newFollowers" checked class="sr-only peer" type="checkbox"/>
-              <div class="w-10 h-5 bg-surface-container-high dark:bg-slate-600 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[1px] after:left-[1px] after:bg-white after:rounded-full after:h-[18px] after:w-[18px] after:transition-all peer-checked:bg-primary"></div>
-            </label>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
 
   <!-- Footer Grid -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
@@ -751,6 +563,71 @@
 <script type="module" src="js/script.js"></script>
 <script src="js/theme.js"></script>
 <script src="js/settings.js"></script>
+<script>
+  // ---- Real account data for the Account Overview card ----
+  (function () {
+    var avatarEl = document.getElementById("accountAvatar");
+    var nameEl = document.getElementById("accountName");
+    var emailEl = document.getElementById("accountEmail");
+    var levelEl = document.getElementById("accountLevel");
+
+    function requiredXP(level) {
+      if (level <= 0) return 0;
+      return Math.floor(150 * level + ((level - 1) * level * 25));
+    }
+    function levelFromXP(xp) {
+      xp = Math.max(0, parseInt(xp, 10) || 0);
+      var lvl = 0;
+      while (xp >= requiredXP(lvl + 1)) lvl++;
+      return lvl;
+    }
+
+    function apply(user, data) {
+      if (avatarEl && (data && data.photoURL)) avatarEl.src = data.photoURL;
+      else if (avatarEl && user && user.photoURL) avatarEl.src = user.photoURL;
+      if (nameEl) nameEl.textContent = (data && (data.fullName || data.username)) || (user && user.displayName) || "Fan";
+      if (emailEl) emailEl.textContent = (data && data.email) || (user && user.email) || "";
+      if (levelEl) {
+        var lvl = (data && data.level) != null && Number.isFinite(Number(data.level))
+          ? Number(data.level)
+          : levelFromXP(data && data.xp);
+        levelEl.textContent = "Level " + lvl;
+      }
+    }
+
+    // Self-sufficient fallback: read the user doc + auth directly if the
+    // script.js event never fires (no race on window.__FB__).
+    async function loadDirect() {
+      try {
+        if ((!window.__FB__ || !window.__FB__.db) && !window.currentUserProfile) {
+          setTimeout(loadDirect, 300);
+          return;
+        }
+        var user = window.__FB__ && window.__FB__.auth && window.__FB__.auth.currentUser;
+        if (window.currentUserProfile && window.currentUserProfile.uid) {
+          var db = window.__FB__ && window.__FB__.db;
+          if (!db) return;
+          var fs = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+          var snap = await fs.getDoc(fs.doc(db, "users", window.currentUserProfile.uid));
+          if (snap.exists()) apply(user, snap.data());
+          else apply(user, window.currentUserProfile);
+        } else if (user) {
+          apply(user, null);
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    window.addEventListener("fanconnact:user-profile-updated", function (e) {
+      apply(e.detail ? { photoURL: e.detail.photoURL, displayName: e.detail.name } : null, e.detail);
+    });
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", loadDirect);
+    } else {
+      loadDirect();
+    }
+  })();
+</script>
 <script>
   document.querySelectorAll('input[type="checkbox"].sr-only').forEach(function(cb) {
     cb.addEventListener('change', function() {

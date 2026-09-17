@@ -180,70 +180,6 @@ function applyAnimation() {
 }
 
 /*=================================
-SPORTS PREFERENCES
-=================================*/
-const sportCheckboxes = document.querySelectorAll("[data-sport]");
-
-// Defensive: older saved settings may lack the sports array.
-if (!Array.isArray(settings.sports)) {
-  settings.sports = [
-    "cricket", "football", "basketball", "tennis", "hockey",
-    "kabaddi", "volleyball", "tabletennis", "baseball"
-  ];
-}
-
-function loadSports() {
-  sportCheckboxes.forEach((cb) => {
-    cb.checked = settings.sports.includes(cb.dataset.sport);
-  });
-}
-
-sportCheckboxes.forEach((cb) => {
-  cb.addEventListener("change", function () {
-    const sport = this.dataset.sport;
-    if (this.checked) {
-      if (!settings.sports.includes(sport)) settings.sports.push(sport);
-    } else {
-      settings.sports = settings.sports.filter((s) => s !== sport);
-    }
-    saveSettings();
-  });
-});
-
-/*=================================
-NOTIFICATION PREFERENCES
-=================================*/
-const notifCheckboxes = document.querySelectorAll("[data-notif]");
-
-// Defensive: older saved settings may lack the notifications object.
-if (!settings.notifications || typeof settings.notifications !== "object") {
-  settings.notifications = {
-    liveMatchAlerts: true,
-    breakingNews: true,
-    predictionResults: true,
-    communityUpdates: true,
-    emailNotifications: true,
-    pushNotifications: true,
-    mentionsReplies: true,
-    newFollowers: true
-  };
-}
-
-function loadNotifications() {
-  notifCheckboxes.forEach((cb) => {
-    const key = cb.dataset.notif;
-    cb.checked = settings.notifications[key] !== false;
-  });
-}
-
-notifCheckboxes.forEach((cb) => {
-  cb.addEventListener("change", function () {
-    settings.notifications[this.dataset.notif] = this.checked;
-    saveSettings();
-  });
-});
-
-/*=================================
 CUSTOM DROPDOWN (Language / Timezone / Region)
 =================================*/
 const dropdownConfigs = [
@@ -771,8 +707,6 @@ document.addEventListener("DOMContentLoaded", () => {
   applyCompactMode();
   applyLargeText();
   applyAnimation();
-  loadSports();
-  loadNotifications();
 
   // Sync language display name with the active language code from fanconnect-lang
   const activeLangCode = localStorage.getItem("fanconnect-lang") || "en";

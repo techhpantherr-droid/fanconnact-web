@@ -443,9 +443,12 @@ signupForm?.addEventListener("submit", async(e) => {
             throw new Error("Username is already taken. Please choose another one.");
         }
 
-        // 2. Final email duplicate check via Firebase Auth
-        const methods = await fetchSignInMethodsForEmail(auth, email);
-        if (methods.length > 0) {
+        // 2. Final email duplicate check. NOTE: fetchSignInMethodsForEmail is
+        //    defeated by email-enumeration protection (returns [] even for
+        //    registered emails), so query the public-read users collection.
+        const emailQ = query(collection(db, "users"), where("email", "==", email.toLowerCase()));
+        const emailSnap = await getDocs(emailQ);
+        if (!emailSnap.empty) {
             throw new Error("This email is already registered. Please login.");
         }
 

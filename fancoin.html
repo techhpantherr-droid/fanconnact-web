@@ -357,13 +357,28 @@
             if (window.__FB__ && window.__FB__.db && window.__FB__.auth) {
               return { db: window.__FB__.db, auth: window.__FB__.auth };
             }
+            // Self-sufficient fallback: import the Firebase handles directly
+            // (avoids the race with js/script.js setting window.__FB__).
+            try {
+              const fb = await import("./js/firebase-config.js");
+              if (fb.db && fb.auth) {
+                return { db: fb.db, auth: fb.auth };
+              }
+            } catch (e) {
+              console.warn("[fancoin] direct firebase import failed:", e);
+            }
             return null;
           }
 
-          async function loadFanCoin() {
+          async function loadFanCoin(retries = 0) {
             try {
               const handles = await getFirebaseHandles();
-              if (!handles) return;
+              if (!handles) {
+                if (retries < 10) {
+                  setTimeout(() => loadFanCoin(retries + 1), 300);
+                }
+                return;
+              }
 
               const {
                 doc,

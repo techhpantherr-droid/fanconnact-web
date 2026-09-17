@@ -1580,8 +1580,12 @@
           if (val === originalEmail) { v(m, "", true); return; }
           v(m, "Checking...", true);
           try {
-            const methods = await fetchSignInMethodsForEmail(auth, val);
-            if (methods.length > 0) v(m, "Already registered", false);
+            // query the public-read users collection by email (same reason as
+            // signup: fetchSignInMethodsForEmail is hidden by enumeration
+            // protection)
+            const q = query(collection(db, "users"), where("email", "==", val.toLowerCase()));
+            const snap = await getDocs(q);
+            if (!snap.empty) v(m, "Already registered", false);
             else v(m, "Available", true);
           } catch (_) { v(m, "Check failed", false); }
         }, 400);
