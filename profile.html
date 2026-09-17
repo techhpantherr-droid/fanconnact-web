@@ -2510,8 +2510,11 @@
           if (!newEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) { isSaving = false; alert("Valid email required."); return; }
           if (!profileEmailVerified) { isSaving = false; alert("Verify your new email via OTP first."); return; }
           try {
-            const methods = await fetchSignInMethodsForEmail(auth, newEmail);
-            if (methods.length > 0) { isSaving = false; alert("Email already registered."); return; }
+            // Query the public-read users collection (same reason as signup:
+            // fetchSignInMethodsForEmail is hidden by enumeration protection).
+            const q = query(collection(db, "users"), where("email", "==", newEmail.toLowerCase()));
+            const snap = await getDocs(q);
+            if (!snap.empty) { isSaving = false; alert("Email already registered."); return; }
           } catch (_) {}
         }
 

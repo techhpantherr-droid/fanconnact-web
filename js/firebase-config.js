@@ -699,8 +699,11 @@ document.getElementById('email')?.addEventListener('input', function () {
     debounceDb('email', async () => {
         v(m, 'Checking...', true);
         try {
-            const methods = await fetchSignInMethodsForEmail(auth, val);
-            if (methods.length > 0) {
+            // users collection by email (enumeration protection hides
+            // fetchSignInMethodsForEmail results for registered emails)
+            const q = query(collection(db, "users"), where("email", "==", val.toLowerCase()));
+            const snap = await getDocs(q);
+            if (!snap.empty) {
                 v(m, 'Already registered — cannot send OTP', false);
                 sendEmailOTPBtn.disabled = true;
             } else {
@@ -830,8 +833,9 @@ sendEmailOTPBtn?.addEventListener("click", async () => {
 
     // Check if email already registered (before wasting an OTP)
     try {
-        const methods = await fetchSignInMethodsForEmail(auth, email);
-        if (methods.length > 0) {
+        const q = query(collection(db, "users"), where("email", "==", email.toLowerCase()));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
             alert("This email is already registered. Please login instead.");
             return;
         }
