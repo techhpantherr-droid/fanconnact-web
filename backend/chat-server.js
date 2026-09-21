@@ -2,7 +2,20 @@ const { WebSocketServer } = require('ws');
 const https = require('https');
 
 const CHAT_HISTORY_LIMIT = 100;
-let messageHistory = [];
+// Chat history is PER MATCH ROOM — rooms never share messages.
+const messageHistory = {};
+function roomHistory(matchId) {
+  const key = matchId || 'default';
+  if (!messageHistory[key]) messageHistory[key] = [];
+  return messageHistory[key];
+}
+function pushHistory(matchId, message) {
+  const hist = roomHistory(matchId);
+  hist.push(message);
+  if (hist.length > CHAT_HISTORY_LIMIT) {
+    messageHistory[matchId || 'default'] = hist.slice(-CHAT_HISTORY_LIMIT);
+  }
+}
 let onlineUsers = new Map();
 let userCounter = 0;
 
@@ -74,13 +87,15 @@ function createSystemMessage(text, user) {
   };
 }
 
-function createUserMessage(user, payload) {
+function createUserMessage(user, payload, matchId) {
   const msg = {
     type: 'message',
+    matchId: matchId || 'default',
     user: {
       name: user.name,
       img: user.img,
-      id: user.id
+      id: user.id,
+      cid: user.cid || null
     },
     time: Date.now(),
     likes: 0,
@@ -92,7 +107,7 @@ function createUserMessage(user, payload) {
     if (payload.text) msg.text = String(payload.text).slice(0, 200);
   } else if (payload.kind === 'sticker' && payload.sticker) {
     msg.kind = 'sticker';
-    msg.sticker = String(payload.sticker).slice(0, 8);
+    msg.sticker = String(payload.sticker).slice(0, 16);
   } else {
     msg.kind = 'text';
     msg.text = String(payload.text || '').slice(0, 500);
@@ -105,6 +120,23 @@ function getOnlineCount() {
   let count = 0;
   onlineUsers.forEach(u => { if (u.alive) count++; });
   return count || onlineUsers.size;
+}
+
+// ---- Per-room unique members (no fake online users) ----
+// roomMembers: matchId -> Map(identityKey -> { ws, user }).
+// One slot per real identity per room: same user rejoining (reload, second
+// tab, reconnect) replaces the old socket instead of inflating the count.
+// leaveTimers delay the leave announcement so quick reconnects stay silent.
+const roomMembers = new Map();
+const leaveTimers = new Map();
+
+function identityKey(user, fallbackId) {
+  const uid = user && user.uid ? String(user.uid).slice(0, 80) : '';
+  return uid || ('conn:' + fallbackId);
+}
+function roomCount(matchId) {
+  const room = roomMembers.get(matchId);
+  return room ? room.size : 0;
 }
 
 function createChatServer(httpServer) {
@@ -122,12 +154,13 @@ function createChatServer(httpServer) {
     const user = { name: userName, img: userAvatar, id: userId, color: userColors[userCounter % userColors.length] };
 
     onlineUsers.set(ws, { name: userName, id: userId, alive: true, matchId });
+    ws.isAlive = true;
 
     ws.send(JSON.stringify({
       type: 'connected',
       user,
-      onlineCount: getOnlineCount(),
-      recentMessages: messageHistory.slice(-30)
+      onlineCount: roomCount(matchId),
+      recentMessages: roomHistory(matchId).slice(-30)
     }));
 
     // Announce join only AFTER the client identifies with its real profile
@@ -147,13 +180,34 @@ function createChatServer(httpServer) {
         const msg = JSON.parse(data.toString());
 
         if (msg.type === 'identify' && msg.user) {
-          // Client sends its real profile (name + photo) from Firebase
+          // Client sends its real profile (name + photo + stable uid) from Firebase.
+          // Same identity rejoining (reload/second tab/reconnect) REPLACES the old
+          // socket in this room: no duplicate online slot, no repeated join spam.
           if (msg.user.name) user.name = String(msg.user.name).slice(0, 40);
           if (msg.user.img) user.img = String(msg.user.img).slice(0, 2000);
+          if (msg.user.uid) user.uid = String(msg.user.uid).slice(0, 80);
+          if (msg.user.cid) user.cid = String(msg.user.cid).slice(0, 40);
+          user.key = identityKey(user, userId);
           onlineUsers.set(ws, { name: user.name, id: userId, alive: true, matchId });
+          let room = roomMembers.get(matchId);
+          if (!room) { room = new Map(); roomMembers.set(matchId, room); }
+          const timerKey = matchId + '::' + user.key;
+          if (leaveTimers.has(timerKey)) {
+            clearTimeout(leaveTimers.get(timerKey));
+            leaveTimers.delete(timerKey);
+          }
+          const existing = room.get(user.key);
           ws.send(JSON.stringify({ type: 'identified', user }));
           clearTimeout(joinTimer);
-          announceJoin();
+          if (existing && existing.ws !== ws) {
+            try { existing.ws.replaced = true; } catch (e) {}
+            room.set(user.key, { ws, user });
+            announced = true; // silent rejoin: already announced earlier
+          } else {
+            room.set(user.key, { ws, user });
+            announceJoin();
+          }
+          broadcast(wss, { type: 'online_count', onlineCount: room.size }, matchId);
           return;
         }
 
@@ -163,11 +217,8 @@ function createChatServer(httpServer) {
         }
 
         if (msg.type === 'message' && msg.payload) {
-          const message = createUserMessage(user, msg.payload);
-          messageHistory.push(message);
-          if (messageHistory.length > CHAT_HISTORY_LIMIT) {
-            messageHistory = messageHistory.slice(-CHAT_HISTORY_LIMIT);
-          }
+          const message = createUserMessage(user, msg.payload, matchId);
+          pushHistory(matchId, message);
           broadcast(wss, message, matchId);
         }
 
@@ -177,7 +228,7 @@ function createChatServer(httpServer) {
         }
 
         if (msg.type === 'react' && msg.messageId) {
-          const target = messageHistory.find(m => m.id === msg.messageId);
+          const target = roomHistory(matchId).find(m => m.id === msg.messageId);
           if (target && target.type === 'message') {
             target.likes = (target.likes || 0) + 1;
             broadcast(wss, {
@@ -189,7 +240,7 @@ function createChatServer(httpServer) {
         }
 
         if (msg.type === 'like' && msg.messageId) {
-          const target = messageHistory.find(m => m.id === msg.messageId);
+          const target = roomHistory(matchId).find(m => m.id === msg.messageId);
           if (target && target.type === 'message') {
             target.likes = (target.likes || 0) + 1;
             broadcast(wss, {
@@ -210,7 +261,7 @@ function createChatServer(httpServer) {
         }
 
         if (msg.type === 'seen' && msg.messageId) {
-          const target = messageHistory.find(m => m.id === msg.messageId);
+          const target = roomHistory(matchId).find(m => m.id === msg.messageId);
           if (target && target.type === 'message' && !target.seenBy.includes(userId)) {
             target.seenBy.push(userId);
             broadcast(wss, {
@@ -227,12 +278,32 @@ function createChatServer(httpServer) {
 
     ws.on('close', () => {
       onlineUsers.delete(ws);
-      const leaveMsg = createSystemMessage(`🚶 ${user.name} left the chat`, { name: user.name, img: user.img });
-      broadcast(wss, leaveMsg, matchId);
-      broadcast(wss, {
-        type: 'online_count',
-        onlineCount: getOnlineCount()
-      }, matchId);
+      const room = roomMembers.get(matchId);
+      const slot = (user.key && room) ? room.get(user.key) : null;
+      if (slot && slot.ws === ws && !ws.replaced) {
+        // Grace period: a quick reconnect replaces this socket silently,
+        // so leave spam + fake count jumps never appear.
+        const timerKey = matchId + '::' + user.key;
+        const t = setTimeout(() => {
+          leaveTimers.delete(timerKey);
+          const r2 = roomMembers.get(matchId);
+          if (r2 && r2.get(user.key) && r2.get(user.key).ws === ws) {
+            r2.delete(user.key);
+            broadcast(wss, createSystemMessage(`🚶 ${user.name} left the chat`, { name: user.name, img: user.img }), matchId);
+            broadcast(wss, { type: 'online_count', onlineCount: r2.size }, matchId);
+          }
+        }, 15000);
+        leaveTimers.set(timerKey, t);
+      } else {
+        const r3 = roomMembers.get(matchId);
+        broadcast(wss, { type: 'online_count', onlineCount: r3 ? r3.size : 0 }, matchId);
+      }
+    });
+
+    ws.on('pong', () => {
+      ws.isAlive = true;
+      const rec = onlineUsers.get(ws);
+      if (rec) rec.alive = true;
     });
 
     ws.on('error', () => {
@@ -240,12 +311,16 @@ function createChatServer(httpServer) {
     });
   });
 
-  // Heartbeat every 30s to detect stale connections
+  // Real heartbeat: drop dead sockets so ghost users never linger online.
   const heartbeat = setInterval(() => {
     wss.clients.forEach(ws => {
-      if (ws.readyState === ws.OPEN) {
-        ws.send(JSON.stringify({ type: 'ping' }));
+      if (ws.readyState !== ws.OPEN) return;
+      if (ws.isAlive === false) {
+        try { ws.terminate(); } catch (e) {}
+        return;
       }
+      ws.isAlive = false;
+      try { ws.ping(); } catch (e) {}
     });
   }, 30000);
 

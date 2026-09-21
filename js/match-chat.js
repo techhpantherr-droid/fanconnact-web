@@ -91,6 +91,27 @@
     return;
   }
 
+  // Stable chat identity: Firebase uid when logged in, else one guest id per
+  // browser (persisted). The server dedupes by this, so reloads/second tabs
+  // never inflate the online count.
+  function chatUid() {
+    try {
+      const au = window.__FB__ && window.__FB__.auth && window.__FB__.auth.currentUser;
+      if (au && au.uid) return 'uid:' + au.uid;
+    } catch (e) {}
+    try {
+      let g = localStorage.getItem('fanconnact:chat-guest-id');
+      if (!g) {
+        g = 'guest_' + Math.random().toString(36).slice(2, 10);
+        localStorage.setItem('fanconnact:chat-guest-id', g);
+      }
+      return g;
+    } catch (e) { return me.id; }
+  }
+  function isMine(m) {
+    return !!((m.user && (m.user.cid === me.id || m.user.id === me.id)) || m.mine);
+  }
+
   // Map of message id -> DOM node, for live "seen" updates
   const renderedMessages = {};
 
@@ -129,15 +150,79 @@
   setTimeout(refreshIdentity, 800);
   setTimeout(refreshIdentity, 2500);
 
-  // ---- Stickers ----
-  const STICKERS = ['🏏', '🔥', '💥', '👏', '💪', '⭐', '🎯', '🏆', '😂', '😮', '😍', '🥳', '👍', '🤯', '🙌', '❤️'];
-  STICKERS.forEach(s => {
+  // ---- Floating reaction CSS (Hotstar-style) + layer ----
+  // Tapping a sticker/ticker floats it up over the chat, for sender and receivers.
+  (function injectFloatCss() {
+    if (document.getElementById('chat-float-css')) return;
+    const st = document.createElement('style');
+    st.id = 'chat-float-css';
+    st.textContent = '#chat-float-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:30}' +
+      '.chat-float{position:absolute;bottom:10%;animation:chatFloatUp 2.3s ease-out forwards;text-shadow:0 2px 10px rgba(0,0,0,.4);white-space:nowrap}' +
+      '@keyframes chatFloatUp{0%{transform:translateY(30px) scale(.5);opacity:0}15%{opacity:1;transform:translateY(0) scale(1.15)}100%{transform:translateY(-260px) scale(1);opacity:0}}';
+    document.head.appendChild(st);
+  })();
+  function floatSticker(s) {
+    try {
+      if (!s) return;
+      messagesEl.style.position = 'relative';
+      let layer = messagesEl.querySelector(':scope > #chat-float-layer');
+      if (!layer) {
+        layer = document.createElement('div');
+        layer.id = 'chat-float-layer';
+        messagesEl.appendChild(layer);
+      }
+      if (layer.childElementCount > 14) return; // avoid overload
+      const el = document.createElement('div');
+      el.className = 'chat-float';
+      el.textContent = s;
+      el.style.left = (6 + Math.random() * 78) + '%';
+      el.style.fontSize = (26 + Math.random() * 26) + 'px';
+      layer.appendChild(el);
+      setTimeout(function () { el.remove(); }, 2400);
+    } catch (e) {}
+  }
+
+  // ---- Stickers + sport tickers (GOAL / SIX / FOUR / WICKET ...) ----
+  const REACTIONS = ['🏏', '🔥', '💥', '👏', '💪', '⭐', '🎯', '🏆', '😂', '😮', '😍', '🥳', '👍', '🤯', '🙌', '❤️'];
+  const TICKERS_BY_SPORT = {
+    cricket: ['🏏SIX', '🏏FOUR', '🎯OUT', '🔥', '🏆'],
+    football: ['⚽GOAL', '🧤SAVE', '🔥', '🏆'],
+    basketball: ['🏀3PT', '🔥', '🏆'],
+    tennis: ['🎾ACE', '🔥', '🏆'],
+    baseball: ['⚾HR', '🔥', '🏆'],
+    hockey: ['🏒GOAL', '🔥', '🏆'],
+    kabaddi: ['🤼RAID', '🔥', '🏆'],
+    volleyball: ['🏐ACE', '🔥', '🏆'],
+    'e-sports': ['🎮GG', '🔥', '🏆'],
+    tabletennis: ['🏓', '🔥', '🏆'],
+    'default': ['🔥', '👏', '⭐', '🏆']
+  };
+  function sendSticker(s) {
+    floatSticker(s);
+    sendPayload({ kind: 'sticker', sticker: s });
+  }
+  REACTIONS.forEach(s => {
     const b = document.createElement('button');
-    b.className = 'text-2xl hover:scale-110 transition';
+    b.className = 'text-2xl p-1 hover:scale-110 active:scale-95 transition';
     b.textContent = s;
-    b.addEventListener('click', () => sendPayload({ kind: 'sticker', sticker: s }));
+    b.addEventListener('click', () => sendSticker(s));
     stickerBox.appendChild(b);
   });
+  (function buildTickers() {
+    const label = document.createElement('div');
+    label.className = 'w-full text-[10px] font-bold text-gray-400 uppercase tracking-wide mt-1';
+    label.textContent = 'Match tickers';
+    stickerBox.appendChild(label);
+    const st = getMatchState().sport;
+    const tickers = TICKERS_BY_SPORT[st] || TICKERS_BY_SPORT['default'];
+    tickers.forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'px-2.5 py-1.5 rounded-full bg-gray-100 dark:bg-white/10 text-sm font-bold hover:scale-105 active:scale-95 transition';
+      b.textContent = t;
+      b.addEventListener('click', () => sendSticker(t));
+      stickerBox.appendChild(b);
+    });
+  })();
   stickerBtn.addEventListener('click', () => stickerBox.classList.toggle('hidden'));
 
   // ---- Helpers ----
@@ -155,7 +240,7 @@
   function renderMessage(m) {
     const wrap = document.createElement('div');
     wrap.className = 'flex gap-3 items-start';
-    const isMe = (m.user && m.user.id === me.id) || m.mine;
+    const isMe = isMine(m);
     if (m.id) renderedMessages[m.id] = wrap;
     const av = document.createElement('img');
     av.className = 'w-9 h-9 rounded-full border border-gray-200 dark:border-white/10 shrink-0';
@@ -330,7 +415,7 @@
           if (identified) return;
           identified = true;
           refreshIdentity();
-          ws.send(JSON.stringify({ type: 'identify', user: { name: me.name, img: me.img } }));
+          ws.send(JSON.stringify({ type: 'identify', user: { name: me.name, img: me.img, uid: chatUid(), cid: me.id } }));
         };
         // Wait until the real Firestore profile is resolved (it has a non-empty
         // `username`, unlike the early auth-only placeholder). Fall back after 2s.
@@ -357,8 +442,9 @@
           if (m.user && m.user.img) me.img = m.user.img;
         } else if (m.type === 'message') {
           renderMessage(m);
+          if (m.kind === 'sticker' && m.sticker) floatSticker(m.sticker);
           // Mark others' messages as seen (until match is live)
-          if (m.id && !(m.user && m.user.id === me.id) && ws.readyState === WebSocket.OPEN) {
+          if (m.id && !isMine(m) && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ type: 'seen', messageId: m.id }));
           }
         } else if (m.type === 'seen_update') {
