@@ -533,7 +533,7 @@
       },
       statusLine: match.statusText || match.result || match.status || '',
       result: status === 'finished' ? (match.result || match.statusText || match.status || '') : '',
-      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? '')) + '&sport=' + encodeURIComponent(String(match.sport || 'cricket').toLowerCase())
+      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? '')) + '&sport=' + encodeURIComponent(String(match.sport || 'cricket').toLowerCase()) + '&state=' + encodeURIComponent(status)
     };
   }
 
@@ -566,7 +566,7 @@
       score: { home: raw.homeScore != null ? String(raw.homeScore) : "", away: raw.awayScore != null ? String(raw.awayScore) : "", detail },
       statusLine: detail,
       result: status === "finished" ? detail || "Full Time" : "",
-      link: "match-center.html?id=" + encodeURIComponent(id) + "&sport=" + encodeURIComponent(String(sport).toLowerCase())
+      link: "match-center.html?id=" + encodeURIComponent(id) + "&sport=" + encodeURIComponent(String(sport).toLowerCase()) + "&state=" + encodeURIComponent(status)
     };
   }
 

@@ -21,39 +21,41 @@
 
   if (!messagesEl) return; // panel not present
 
-  // ---- Chat gating: open only when live or <30min to live; closed when finished ----
-  // NOTE: match-center links carry ?id=&sport= (no explicit state/home/away).
-  // MATCHES loads async AFTER chat init, so a lookup miss must NOT lock chat.
-  // Default: any opened match-center (id present) keeps chat open.
+  // ---- Chat rooms + open/close rules ----
+  // - Each match gets its own room: "<sport>-<id>" from the match-center URL,
+  //   so different matches never share messages.
+  // - Chat is OPEN before the match (upcoming) and while LIVE.
+  // - Chat CLOSES once the match is finished.
+  // Match-center card links carry ?id=&sport=&state=, so the state param is
+  // authoritative (no race with the async MATCHES load).
+  function normState(s) {
+    s = String(s || '').toLowerCase();
+    if (/finish|complete|done|result|post/.test(s)) return 'finished';
+    if (/live|progress|^in$/.test(s)) return 'live';
+    return 'upcoming';
+  }
   function getMatchState() {
     const p = new URLSearchParams(location.search);
-    const state = (p.get('state') || '').toLowerCase();
-    const id = p.get('id') || '';
+    const id = p.get('id') || p.get('match') || '';
+    const sport = (p.get('sport') || 'cricket').toLowerCase();
+    // 1) Explicit ?state= from the card link wins.
+    if (p.get('state')) {
+      return { state: normState(p.get('state')), sport, home: p.get('home') || '', away: p.get('away') || '' };
+    }
+    // 2) Look up the loaded backend matches by id.
     if (id) {
       try {
         const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
         if (ms) {
           const m = ms.find(x => String(x.id) === String(id));
           if (m && m.status) {
-            const s = String(m.status).toLowerCase();
-            return {
-              state: s === 'in' || /live|progress/.test(s) ? 'live'
-                : s === 'post' || /finish|complete|done|result/.test(s) ? 'finished'
-                : 'upcoming',
-              sport: m.sport || 'cricket',
-              home: m.home || '',
-              away: m.away || ''
-            };
+            return { state: normState(m.status), sport: m.sport || sport, home: m.home || '', away: m.away || '' };
           }
         }
-      } catch (e) { /* fall through to URL params */ }
+      } catch (e) { /* fall through */ }
     }
-    return {
-      state: state || (id ? 'live' : 'upcoming'),
-      sport: p.get('sport') || 'cricket',
-      home: p.get('home') || '',
-      away: p.get('away') || ''
-    };
+    // 3) Default: open chat whenever a match is opened.
+    return { state: id ? 'upcoming' : 'upcoming', sport, home: p.get('home') || '', away: p.get('away') || '' };
   }
   function getMatchStart() {
     try {
@@ -69,13 +71,9 @@
   }
   function chatEligibility() {
     const s = getMatchState();
-    if (s.state === 'finished') return { enabled: false, reason: 'Chat is closed — this match has finished.' };
+    if (s.state === 'finished') return { enabled: false, reason: 'Chat is closed — this match has ended.' };
     if (s.state === 'live') return { enabled: true, reason: 'Live chat is open.' };
-    const start = getMatchStart();
-    if (!start) return { enabled: false, reason: 'Chat opens 30 minutes before the match.' };
-    const diffMin = (start.getTime() - Date.now()) / 60000;
-    if (diffMin <= 30) return { enabled: true, reason: 'Live chat is open — match starting soon.' };
-    return { enabled: false, reason: 'Chat opens 30 minutes before the match (' + start.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }) + ').' };
+    return { enabled: true, reason: 'Chat is open — the match has not started yet. Talk before the action begins!' };
   }
   const _elig = chatEligibility();
   if (!_elig.enabled) {
