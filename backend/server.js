@@ -4602,11 +4602,19 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
       })
     ]);
 
-    const matchRaw = matchRes.status === "fulfilled" && matchRes.value.ok ? await matchRes.value.json() : null;
+    const safeJson = async (settled) => {
+      try {
+        if (!settled || settled.status !== "fulfilled" || !settled.value || !settled.value.ok) return null;
+        const text = await settled.value.text();
+        if (!text) return null;
+        return JSON.parse(text);
+      } catch (_) { return null; }
+    };
+    const matchRaw = await safeJson(matchRes);
     const events = matchRaw?.event || matchRaw || null;
-    const incidentRaw = incidentsRes.status === "fulfilled" && incidentsRes.value.ok ? await incidentsRes.value.json() : null;
+    const incidentRaw = await safeJson(incidentsRes);
     const incidents = incidentRaw?.incidents || incidentRaw?.data?.incidents || [];
-    const lineupRaw = lineupsRes.status === "fulfilled" && lineupsRes.value.ok ? await lineupsRes.value.json() : null;
+    const lineupRaw = await safeJson(lineupsRes);
 
     const normalized = normalizeAllSportsEvent(events || { id: rawId }, sport);
 
