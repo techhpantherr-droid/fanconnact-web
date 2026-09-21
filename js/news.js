@@ -85,75 +85,18 @@ const _fallback = (arr) =>
     source: item.source || { name: "Sports News" },
   }));
 
-FALLBACK_NEWS.all = _fallback([
-  { title: "IPL 2025: MI Clinch Thrilling Victory Over CSK in Final Over", description: "Mumbai Indians chased down 189 with a last-ball six from Pandya, keeping their playoff hopes alive in a high-voltage encounter at Wankhede.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "Premier League: Arsenal Go Top After Dominant Win Over Chelsea", description: "Arsenal put on a masterclass at the Emirates, with Saka and Odegaard scoring in a convincing 3-0 victory over London rivals Chelsea.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Football"] },
-  { title: "NBA Finals: Lakers Take Game 1 Behind LeBron's Triple-Double", description: "LeBron James recorded his 40th playoff triple-double as the Lakers defeated the Celtics 112-104 in a thrilling Game 1 showdown.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Basketball"] },
-  { title: "French Open: Djokovic Battles Past Alcaraz in Epic Five-Set Quarterfinal", description: "In a match lasting over four hours, Novak Djokovic showed his champion grit to overcome Carlos Alcaraz in a Roland Garros classic.", image: "https://images.unsplash.com/photo-1622279457486-62f36a6f1a2b?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Tennis"] },
-  { title: "Pro Kabaddi: Patna Pirates Stun Bengal Warriors in Final Seconds", description: "A last-second raid by Pardeep Narwal sealed a dramatic 32-31 victory for Patna Pirates in a nail-biting Pro Kabaddi League encounter.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Kabaddi"] },
-  { title: "F1 Australian GP: Verstappen Dominates from Pole to Checkered Flag", description: "Max Verstappen led every lap at Albert Park to claim his third consecutive Australian Grand Prix victory, extending his championship lead.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Formula 1"] },
-  { title: "Champions Trophy: India Set Up Final Clash With Australia", description: "India bowled out England for 218 and chased with six wickets in hand to book their spot in the ICC Champions Trophy final.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "UFC 305: Du Plessis Retains Title With Submission Win Over Adesanya", description: "Dricus du Plessis submitted Israel Adesanya in the fourth round to successfully defend his middleweight championship in Perth.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Boxing"] },
-  { title: "Valorant Champions: Sentinels Advance to Grand Finals", description: "Sentinels defeated NAVI 3-1 in the lower bracket final to book their spot in the Valorant Champions grand finals.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["E-Sports"] },
-  { title: "Hockey World Cup: Netherlands Edge Belgium in Shootout", description: "The Netherlands defeated Belgium 4-3 in a penalty shootout to win the Hockey World Cup after a 1-1 draw in regulation time.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Hockey"] },
-  { title: "MLB: Yankees Clinch Division Title With Walk-Off Homer", description: "Aaron Judge hit a walk-off two-run homer in the bottom of the ninth to give the Yankees a 5-4 win and clinch the AL East division title.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Baseball"] },
-  { title: "FIVB Nations League: Brazil Sweep Italy in Straight Sets", description: "Brazil dominated Italy 3-0 in the FIVB Volleyball Nations League final, showcasing powerful attacking and solid defense throughout.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Volleyball"] },
-]);
+FALLBACK_NEWS.all = [];
+FALLBACK_NEWS.cricket = [];
+FALLBACK_NEWS.football = [];
+FALLBACK_NEWS.basketball = [];
+FALLBACK_NEWS.tennis = [];
+FALLBACK_NEWS.hockey = [];
+FALLBACK_NEWS.kabaddi = [];
+FALLBACK_NEWS["e-sports"] = [];
+FALLBACK_NEWS.baseball = [];
+FALLBACK_NEWS.volleyball = [];
+FALLBACK_NEWS["table-tennis"] = [];
 
-FALLBACK_NEWS.cricket = _fallback([
-  { title: "IPL 2025: MI Clinch Thrilling Victory Over CSK in Final Over", description: "Mumbai Indians chased down 189 with a last-ball six from Pandya, keeping their playoff hopes alive.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "Champions Trophy: India Set Up Final Clash With Australia", description: "India bowled out England for 218 and chased with six wickets in hand to book their spot in the final.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "Ashes 2025: England Fight Back After Early Wobble", description: "Joe Root scored a stubborn 85 to lead England's recovery after Australia had reduced them to 45-3 on day one at Lord's.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "BCCI Announces New Central Contracts for 2025-26", description: "The BCCI has announced revised central contracts with increased match fees and performance bonuses for contracted players.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-  { title: "World Test Championship: Points Table Shake-Up After NZ Win", description: "New Zealand's emphatic win over South Africa has thrown the WTC points table wide open with several teams still in contention.", image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Cricket"] },
-]);
-
-FALLBACK_NEWS.football = _fallback([
-  { title: "Premier League: Arsenal Go Top After Dominant Win Over Chelsea", description: "Arsenal put on a masterclass at the Emirates with Saka and Odegaard scoring in a 3-0 victory.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Football"] },
-  { title: "Champions League: Real Madrid Stun Bayern Munich With Late Comeback", description: "Real Madrid scored twice in the final 10 minutes to overturn a 1-0 deficit and reach the semi-finals.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Football"] },
-  { title: "Transfer Window: City Eye €120M Move for Wirtz", description: "Manchester City are preparing a club-record bid for Bayer Leverkusen's Florian Wirtz as De Bruyne replacement.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Football"] },
-]);
-
-FALLBACK_NEWS.basketball = _fallback([
-  { title: "NBA Finals: Lakers Take Game 1 Behind LeBron's Triple-Double", description: "LeBron James recorded his 40th playoff triple-double as the Lakers defeated the Celtics 112-104.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Basketball"] },
-  { title: "Celtics Even Series With Dominant Game 2 Victory", description: "Boston responded emphatically with a 118-96 win behind Jayson Tatum's 35 points to level the NBA Finals.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Basketball"] },
-]);
-
-FALLBACK_NEWS.tennis = _fallback([
-  { title: "French Open: Djokovic Battles Past Alcaraz in Epic Quarterfinal", description: "In a match lasting over four hours, Djokovic showed his champion grit to overcome Alcaraz at Roland Garros.", image: "https://images.unsplash.com/photo-1622279457486-62f36a6f1a2b?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Tennis"] },
-  { title: "Swiatek Cruises Into Semi-Finals Without Dropping a Set", description: "Iga Swiatek continued her dominant run at Roland Garros, dispatching Gauff 6-2, 6-3 in the quarter-finals.", image: "https://images.unsplash.com/photo-1622279457486-62f36a6f1a2b?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Tennis"] },
-]);
-
-FALLBACK_NEWS.hockey = _fallback([
-  { title: "Hockey World Cup: Netherlands Edge Belgium in Shootout", description: "The Netherlands defeated Belgium 4-3 in a penalty shootout to win the Hockey World Cup after a 1-1 draw in regulation time.", image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Hockey"] },
-  { title: "FIH Pro League: India Secure Thrilling Win Over Australia", description: "India scored twice in the final quarter to secure a 4-3 victory over Australia in a pulsating FIH Pro League encounter.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Hockey"] },
-]);
-
-FALLBACK_NEWS.kabaddi = _fallback([
-  { title: "Pro Kabaddi: Patna Pirates Stun Bengal Warriors", description: "A last-second raid by Pardeep Narwal sealed a dramatic 32-31 victory for Patna Pirates.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Kabaddi"] },
-]);
-
-FALLBACK_NEWS["e-sports"] = _fallback([
-  { title: "Valorant Champions: Sentinels Advance to Grand Finals", description: "Sentinels defeated NAVI 3-1 in the lower bracket final to book their spot in the Valorant Champions grand finals.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["E-Sports"] },
-  { title: "CS2 Major: FaZe Eliminate NAVI in Quarterfinal Thriller", description: "FaZe Clan pulled off a stunning 2-1 victory over NAVI in the CS2 Major quarterfinals with a incredible comeback on Nuke.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["E-Sports"] },
-  { title: "League of Legends Worlds: T1 Dominate Group Stage", description: "T1 finished the group stage undefeated after dominant wins over all opponents, establishing themselves as tournament favorites.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["E-Sports"] },
-]);
-
-FALLBACK_NEWS.baseball = _fallback([
-  { title: "MLB: Yankees Clinch Division Title With Walk-Off Homer", description: "Aaron Judge hit a walk-off two-run homer in the bottom of the ninth to give the Yankees a 5-4 win and clinch the AL East.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Baseball"] },
-  { title: "World Series: Dodgers Take 2-1 Series Lead Over Astros", description: "The Dodgers rode a dominant pitching performance to a 6-1 victory over the Astros, taking a 2-1 lead in the World Series.", image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?auto=format&fit=crop&q=80&w=1536", url: "#", category: ["Baseball"] },
-]);
-
-FALLBACK_NEWS.volleyball = _fallback([
-  { title: "FIVB Nations League: Brazil Sweep Italy in Straight Sets", description: "Brazil dominated Italy 3-0 in the FIVB Volleyball Nations League final, showcasing powerful attacking and solid defense.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Volleyball"] },
-  { title: "Olympic Qualifiers: USA Women's Team Books Tokyo Berth", description: "The USA women's volleyball team secured their Olympic qualification with a straight-sets win over Poland in the final qualifier.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Volleyball"] },
-]);
-
-FALLBACK_NEWS["table-tennis"] = _fallback([
-  { title: "World Table Tennis Championships: Fan Zhendong Retains Title", description: "Fan Zhendong defeated Wang Chuqin in an all-Chinese final to retain his World Table Tennis Championships title in thrilling fashion.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Table Tennis"] },
-  { title: "WTT Champions: Sun Yingsha Wins Women's Singles Crown", description: "Sun Yingsha defeated Chen Meng 4-2 in a high-quality final to claim the WTT Champions women's singles title.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Table Tennis"] },
-  { title: "Asian Games: India's Sharath Kamal Wins Historic Bronze", description: "Achanta Sharath Kamal won India's first-ever Asian Games table tennis medal with a bronze in the men's singles event.", image: "https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=800", url: "#", category: ["Table Tennis"] },
-]);
 
 const YOUTUBE_VIDEOS = {
   cricket: ["YqKYpgZ9FWU", "N22Vd0DY3Lw", "AVCW8P9oXcA"],

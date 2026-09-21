@@ -300,15 +300,40 @@
   }
 
   async function loadAllSportsMatchData(sport, rawId) {
-    const cleanId = String(rawId || MATCHID || '').replace(/^as_/, '');
-    let detail = null;
-    try {
-      detail = await API.getAllSportsDetail(sport, cleanId);
-    } catch (err) {
-      console.warn('[Match Center] AllSports detail unavailable:', err);
+    // Resolve sport when the link lacks ?sport=: dashboard MATCHES first,
+    // then try every supported sport until one returns real teams.
+    const candidates = [];
+    if (sport) candidates.push(sport);
+    if (!sport) {
+      try {
+        const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
+        const found = ms && ms.find(x => String(x.id) === String(rawId || MATCHID));
+        if (found && found.sport) candidates.push(String(found.sport).toLowerCase());
+      } catch (_) {}
     }
+    for (const s of ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi", "football", "hockey", "tennis"]) {
+      if (!candidates.includes(s)) candidates.push(s);
+    }
+    for (const s of candidates) {
+      let detail = null;
+      try {
+        detail = await API.getAllSportsDetail(s, rawId || MATCHID);
+      } catch (err) {
+        console.warn("[Match Center] AllSports detail unavailable:", s, err);
+        continue;
+      }
+      if (await applyAllSportsDetail(detail, s)) return;
+    }
+    BACKEND_READY = false;
+    setUnavailableModel("Real match data is not available");
+  }
+
+  async function applyAllSportsDetail(detail, sport) {
     const norm = detail?.match || detail?.data?.match || null;
-    const evt = detail?.events || detail?.event || detail?.data?.event || norm || {};
+    const evt = detail?.events || detail?.event || detail?.data?.event || null;
+    // Reject empty shells (wrong sport tried): need real team names.
+    const hasTeams = !!(norm?.homeTeam?.name || evt?.homeTeam?.name);
+    if (!hasTeams) return false;
     const incidents = Array.isArray(detail?.incidents) ? detail.incidents
       : Array.isArray(detail?.data?.incidents) ? detail.data.incidents : [];
     const lineups = detail?.lineups || detail?.data?.lineups || null;
@@ -370,19 +395,19 @@
     M.squads = { home: { xi: homeXI, bench: [], staff: [] }, away: { xi: awayXI, bench: [], staff: [] } };
     M.summary = { resultLine: M.score.resultText, sub: M.meta.sub, points: statusText ? [statusText] : [], performers: [], potm: null };
     M.news = { source: 'Live backend', articles: [] };
-    BACKEND_READY = !!(norm || evt && Object.keys(evt).length);
-    if (!BACKEND_READY) setUnavailableModel('Real match data is not available');
+    BACKEND_READY = true;
+    return true;
   }
 
   async function loadRealMatchData() {
     setupPredictionLink();
-    // Non-cricket (AllSports) matches use a dedicated real-data path.
+    // Non-cricket (AllSports/ESPN/PKL) matches use a dedicated real-data path.
     const sportParam = String(SPORT || '').toLowerCase();
-    const isAllSportsId = /^as_/i.test(String(MATCHID || ''));
+    const isAllSportsId = /^(as_|espn_|pkl_)/i.test(String(MATCHID || ''));
     const isAllSportsSport = sportParam && sportParam !== 'cricket';
     if (isAllSportsId || isAllSportsSport) {
-      const sport = isAllSportsSport ? sportParam : 'basketball';
-      console.log('Loading REAL AllSports match data:', MATCHID, sport);
+      const sport = isAllSportsSport ? sportParam : null;
+      console.log('Loading REAL AllSports match data:', MATCHID, sport || '(auto-detect)');
       if (!MATCHID) { BACKEND_READY = false; setUnavailableModel('Match ID is missing'); return; }
       await loadAllSportsMatchData(sport, MATCHID);
       return;
