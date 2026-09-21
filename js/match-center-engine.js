@@ -358,6 +358,7 @@
     M.meta.series = M.meta.sub;
     M.meta.venue = evt?.venue?.name || '';
     M.meta.format = sport;
+    M.meta.date = norm?.date ? (norm.date + (norm?.time ? ' · ' + norm.time : '')) : '';
     M.score = {
       status,
       resultText: status === 'finished' ? (norm?.result || statusText || 'Full Time')
@@ -380,12 +381,17 @@
       : { type: 'cricket', innings: [] };
     M.comm = {
       label: 'Match Events',
-      items: incidents.slice(0, 100).map((ev, i) => ({
-        over: ev?.time ?? ev?.minute ?? ('#' + (i + 1)),
-        text: ev?.text || ev?.comment || ev?.description || (ev?.player?.name ? ev.player.name + ' — ' + (ev?.type || 'event') : (ev?.type || 'Event')),
-        type: /goal|score|win|point/i.test(ev?.type || ev?.text || '') ? 'four' : 'info',
-        timestamp: ev?.timeStamp || Date.now()
-      }))
+      items: incidents.slice(0, 100).map((ev, i) => {
+        const h = ev?.homeScore, a = ev?.awayScore;
+        const snap = (h != null && a != null && h !== '' && a !== '') ? ' (' + h + '-' + a + ')' : '';
+        const base = ev?.text || ev?.comment || ev?.description || (ev?.player?.name ? ev.player.name + ' — ' + (ev?.type || 'event') : (ev?.type || 'Event'));
+        return {
+          over: ev?.time ?? ev?.minute ?? ('#' + (i + 1)),
+          text: base + snap,
+          type: /goal|score|win|point/i.test(ev?.type || ev?.text || '') ? 'four' : 'info',
+          timestamp: ev?.timeStamp || Date.now()
+        };
+      })
     };
     const lineupToPlayers = (arr) => (Array.isArray(arr) ? arr.slice(0, 18).map(p => ({
       n: p?.player?.name || p?.name || 'Player', r: p?.position || p?.role || '', id: p?.player?.id || p?.id || ''
@@ -393,8 +399,25 @@
     const homeXI = lineupToPlayers(lineups?.home?.players || lineups?.homeTeam?.players || lineups?.home);
     const awayXI = lineupToPlayers(lineups?.away?.players || lineups?.awayTeam?.players || lineups?.away);
     M.squads = { home: { xi: homeXI, bench: [], staff: [] }, away: { xi: awayXI, bench: [], staff: [] } };
-    M.summary = { resultLine: M.score.resultText, sub: M.meta.sub, points: statusText ? [statusText] : [], performers: [], potm: null };
-    M.news = { source: 'Live backend', articles: [] };
+    // Real summary + team-filtered news + weather, same builders as cricket.
+    applyRealSummaryData();
+    try {
+      const rawNews = await API.getNews().catch(() => null);
+      REAL_DATA.news = rawNews;
+      applyRealNewsData();
+      const hn = (HOME_T.name || '').toLowerCase(), an = (AWAY_T.name || '').toLowerCase();
+      M.news.articles = (M.news.articles || []).filter(a =>
+        (hn && (((a.title || '') + ' ' + (a.desc || '')).toLowerCase().includes(hn))) ||
+        (an && (((a.title || '') + ' ' + (a.desc || '')).toLowerCase().includes(an))));
+      M.news.source = 'Live backend';
+    } catch (_) { M.news = { source: 'Live backend', articles: [] }; }
+    // Score progression for the Graph tab, from incident scorelines.
+    M.graph.timeline = incidents
+      .filter(ev => ev && ev.homeScore != null && ev.awayScore != null && ev.homeScore !== '' && ev.awayScore !== '')
+      .map(ev => ({ t: String(ev.time ?? ev.minute ?? ''), h: Number(ev.homeScore), a: Number(ev.awayScore) }))
+      .filter(p => Number.isFinite(p.h) && Number.isFinite(p.a))
+      .slice(0, 60);
+    try { await loadRealWeather(); } catch (_) {}
     BACKEND_READY = true;
     return true;
   }
@@ -3442,6 +3465,13 @@ if (Array.isArray(model.overs) && model.overs.length) {
   }
   // crex-style commentary item with avatars + new-batsman on wicket
   function commItemHtml(it) {
+    // Generic match events (non-cricket feeds have no striker/bowler avatars).
+    if (!it.striker && !it.bowler) {
+      return '<div class="comm-item flex gap-3 p-4" data-type="' + it.type + '">' +
+        '<span class="shrink-0 w-12 text-right text-xs font-bold text-crexGold mt-1">' + esc(it.over) + '</span>' +
+        '<div class="flex-1 min-w-0"><div class="text-sm text-gray-700 dark:text-gray-200">' + esc(it.text) + '</div>' +
+        (it.time ? '<div class="mt-1 text-[10px] text-gray-400">⏱ ' + esc(it.time) + '</div>' : '') + '</div></div>';
+    }
     const cls = it.type === 'wicket' ? 'text-red-500' : (it.type === 'four' || it.type === 'six' ? 'text-gray-900 dark:text-white' : '');
     const av = (nm, teamCode, z) => '<a href="player.html" class="relative z-' + z + '"><img alt="' + esc(nm) + '" title="' + esc(nm) + '" class="w-9 h-9 rounded-full border-2 border-white dark:border-[#12172D] cursor-pointer hover:ring-2 hover:ring-crexGold transition" src="' + avatarFor(nm, teamCode) + '"></a>';
     const strikerTeam = M.players.home.indexOf(it.striker) >= 0 ? HOME_CODE : (M.players.away.indexOf(it.striker) >= 0 ? AWAY_CODE : '');
@@ -3783,6 +3813,14 @@ if (Array.isArray(model.overs) && model.overs.length) {
 
     }
     if (!sc || !Array.isArray(sc.innings) || !sc.innings.length) {
+      // Non-cricket: no innings model — show the real final/live score instead.
+      if (!SC.isCricket && M.score && (M.score.home.score !== '' || M.score.away.score !== '')) {
+        html += '<section class="rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-[#12172D] border border-gray-200 dark:border-gray-800"><div class="bg-[#0b1626] px-5 py-4"><h3 class="font-bold text-white text-sm uppercase tracking-wide">Match Score · ' + esc(SC.label) + '</h3></div><div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-800">' +
+          teamSummaryCard(HOME_T, M.score.home) + teamSummaryCard(AWAY_T, M.score.away) + '</div>' +
+          (M.score.home.detail || M.score.away.detail ? '<div class="px-5 py-4 border-t border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-600 dark:text-gray-300">' + esc([M.score.home.detail, M.score.away.detail].filter(Boolean).join(' · ')) + '</p></div>' : '') + '</section></div>';
+        p.innerHTML = html;
+        return;
+      }
       html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-400">Real scorecard data is not available from the live feed.</p></section></div>';
       p.innerHTML = html;
       return;
@@ -3863,7 +3901,8 @@ if (Array.isArray(model.overs) && model.overs.length) {
       if (!staff.length) return '';
       return '<div><p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">' + esc(tm.name) + '</p><div class="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden divide-y divide-gray-100 dark:divide-gray-800">' + staff.map(s => '<div class="flex items-center gap-3 px-3 py-2"><img alt="' + esc(s.n) + '" class="w-8 h-8 rounded-full border border-gray-200 dark:border-white/10 shrink-0" src="https://ui-avatars.com/api/?name=' + encodeURIComponent(s.n.split(' ').map(w => w[0]).join('')) + '&background=' + tm.color.replace('#', '') + '&color=fff&size=64"><div class="min-w-0 flex-1"><div class="text-sm font-medium text-gray-800 dark:text-white truncate">' + esc(s.n) + '</div><p class="text-[11px] text-gray-400 truncate">' + esc(s.r) + '</p></div></div>').join('') + '</div></div>';
     };
-    p.innerHTML = '<div class="col-span-12 bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-6">Squads</h3><div id="squads" class="grid grid-cols-1 md:grid-cols-2 gap-8">' + squadCol(HOME_T, 'home') + squadCol(AWAY_T, 'away') + '</div><div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Coaches &amp; Support Staff</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8">' + staffCol(HOME_T, 'home') + staffCol(AWAY_T, 'away') + '</div></div></div>';
+    const noSquads = !(M.squads.home.xi.length || M.squads.away.xi.length);
+    p.innerHTML = '<div class="col-span-12 bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-6">Squads</h3>' + (noSquads ? '<p class="text-sm text-gray-400 mb-6">Squad lists have not been published by the live feed for this match.</p>' : '') + '<div id="squads" class="grid grid-cols-1 md:grid-cols-2 gap-8">' + squadCol(HOME_T, 'home') + squadCol(AWAY_T, 'away') + '</div><div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Coaches &amp; Support Staff</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8">' + staffCol(HOME_T, 'home') + staffCol(AWAY_T, 'away') + '</div></div></div>';
     p.querySelectorAll('a[data-pname]').forEach(a => a.addEventListener('click', () => {
       sessionStorage.setItem('playerSport', SC.label);
       sessionStorage.setItem('playerView', JSON.stringify({ player: { id: a.dataset.pid || '', name: a.dataset.pname, country: a.dataset.pcountry }, sport: SC.label }));
@@ -4394,6 +4433,18 @@ if (Array.isArray(model.overs) && model.overs.length) {
       inningsEl.innerHTML = '';
       typeEl.innerHTML = '';
       if (legend) legend.innerHTML = '';
+      // Non-cricket: real score progression from the live incident feed.
+      const tl = Array.isArray(M.graph?.timeline) ? M.graph.timeline : [];
+      if (tl.length) {
+        svg.style.display = 'none';
+        let tbl = $('graph-timeline');
+        if (!tbl) { tbl = document.createElement('div'); tbl.id = 'graph-timeline'; svg.parentNode.appendChild(tbl); }
+        tbl.innerHTML = '<div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Time</th><th class="py-2 px-4 font-medium text-right">' + esc(HOME_T.name) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(AWAY_T.name) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' +
+          tl.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-crexGold font-semibold">' + esc(r.t || '—') + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.h)) + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.a)) + '</td></tr>').join('') +
+          '</tbody></table></div>';
+        if (loading) loading.textContent = 'Real score progression from the live feed.';
+        return;
+      }
       svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="currentColor" opacity=".6" font-size="13">Real graph data is not available from the live feed.</text>';
       return;
     }
@@ -4637,7 +4688,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
         M.meta.series = safeString(match.series || match.tournament || M.meta.series);
         M.meta.venue = safeString(match.venue?.name || match.venue || M.meta.venue);
       } else {
-        M.meta.title = 'Match Center';
+        M.meta.title = M.meta.title || 'Match Center';
       }
       console.log("REAL Match Center loaded", MATCHID);
     } catch (err) {
