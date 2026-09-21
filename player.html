@@ -706,7 +706,7 @@ document.addEventListener("DOMContentLoaded", function() {
       for (var s in sidMap) {
         (function(sport, id) {
           promises.push(
-            fetch("/api/rankings/" + id + "?limit=50")
+            fetch(API_BASE + "/api/rankings/" + id + "?limit=50")
               .then(function(r) { return r.json(); })
               .then(function(d) {
                 if (d && d.players) {

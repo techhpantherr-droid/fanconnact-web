@@ -447,7 +447,20 @@
       namw: 'nam',
       ugaw: 'uga',
       hkcw: 'hk',
-      tanw: 'tan'
+      tanw: 'tan',
+      // PKL kabaddi short-codes -> unique keys (BEN collides with Bengal Warriorz).
+      ben: 'bengaluru-bulls',
+      kol: 'bengal-warriorz',
+      del: 'dabang-delhi',
+      gg: 'gujarat-giants',
+      hs: 'haryana-steelers',
+      jai: 'jaipur-pink',
+      pat: 'patna-pirates',
+      pun: 'puneri-paltan',
+      tt: 'tamil-thalaivas',
+      hyd: 'telugu-titans',
+      mum: 'u-mumba',
+      upy: 'up-yoddhas'
     };
 
     const hk = MAP[homeKeyRaw] || homeKeyRaw;
@@ -520,7 +533,40 @@
       },
       statusLine: match.statusText || match.result || match.status || '',
       result: status === 'finished' ? (match.result || match.statusText || match.status || '') : '',
-      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? ''))
+      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? '')) + '&sport=' + encodeURIComponent(String(match.sport || 'cricket').toLowerCase())
+    };
+  }
+
+  function normalizeEspnClubMatch(raw, sport) {
+    if (!raw || typeof raw !== "object") return null;
+    const st = String(raw.status || "").toUpperCase();
+    const status = st === "LIVE" ? "live" : (st === "COMPLETED" || st === "FT" ? "finished" : "upcoming");
+    const homeName = raw.homeName || "", awayName = raw.awayName || "";
+    if (!homeName || !awayName) return null;
+    const hk = String(raw.homeAbbr || homeName).toLowerCase().replace(/[^a-z0-9]/g, "") || normTeam(homeName);
+    const ak = String(raw.awayAbbr || awayName).toLowerCase().replace(/[^a-z0-9]/g, "") || normTeam(awayName);
+    // Register club teams with real ESPN logos so cards render correctly.
+    TEAMS[hk] = { name: homeName, cc: null, color: "#2563eb", flag: "⚽", logo: raw.homeLogo || null };
+    TEAMS[ak] = { name: awayName, cc: null, color: "#ef4444", flag: "⚽", logo: raw.awayLogo || null };
+    const id = "espn_" + (raw.id || (hk + "-vs-" + ak + "-" + (raw.date || "")));
+    let date = "", time = "";
+    if (raw.date) {
+      const d = new Date(raw.date);
+      if (!isNaN(d.getTime())) {
+        date = d.toLocaleDateString("en-CA");
+        time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      }
+    }
+    const detail = String(raw.time || "");
+    return {
+      id, sport: String(sport).toLowerCase(), status,
+      tournament: raw.league || "", format: sport, stage: "",
+      venue: raw.venue || "", date, time, rules: sport,
+      home: hk, away: ak, homeName, awayName,
+      score: { home: raw.homeScore != null ? String(raw.homeScore) : "", away: raw.awayScore != null ? String(raw.awayScore) : "", detail },
+      statusLine: detail,
+      result: status === "finished" ? detail || "Full Time" : "",
+      link: "match-center.html?id=" + encodeURIComponent(id) + "&sport=" + encodeURIComponent(String(sport).toLowerCase())
     };
   }
 
@@ -549,9 +595,11 @@
           normalized.push(item);
         }
 
+        let allSportsOk = false;
         try {
           const allSportsRes = await fetchJson('/all-sports/matches');
           const allSportsMatches = allSportsRes?.matches || [];
+          if (allSportsMatches.length) allSportsOk = true;
           for (const raw of allSportsMatches) {
             const item = normalizeBackendMatch(raw);
             if (!item || !item.id || seen.has(item.id)) continue;
@@ -568,11 +616,31 @@
           console.warn('[matches] AllSports load failed:', e.message);
         }
 
-        const anyEndpointSucceeded = settled.some(r => r.status === 'fulfilled');
+        // Free ESPN club scoreboards cover football / hockey / tennis,
+        // which neither Cricbuzz nor RapidAPI AllSports provide.
+        let espnOk = false;
+        for (const espnSport of ["football", "hockey", "tennis"]) {
+          try {
+            const espnRes = await fetchJson("/matches?sport=" + encodeURIComponent(espnSport));
+            const espnMatches = espnRes?.matches || [];
+            if (espnMatches.length) espnOk = true;
+            for (const raw of espnMatches) {
+              const item = normalizeEspnClubMatch(raw, espnSport);
+              if (!item || !item.id || seen.has(item.id)) continue;
+              seen.add(item.id);
+              normalized.push(item);
+            }
+            console.log("[matches] ESPN " + espnSport + " loaded:", espnMatches.length);
+          } catch (e) {
+            console.warn("[matches] ESPN " + espnSport + " load failed:", e.message);
+          }
+        }
+
+        const anyEndpointSucceeded = settled.some(r => r.status === 'fulfilled') || allSportsOk || espnOk;
 
         // Do not destroy the last good live data because one API request failed.
-        // On the first successful backend response, replace the old static data entirely.
-        if (anyEndpointSucceeded) {
+        // Cricket may be down while AllSports is live — accept either source.
+        if (anyEndpointSucceeded && normalized.length) {
           MATCHES.length = 0;
           normalized.forEach(item => MATCHES.push(item));
           backendHasLoadedOnce = true;

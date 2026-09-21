@@ -22,6 +22,9 @@
   if (!messagesEl) return; // panel not present
 
   // ---- Chat gating: open only when live or <30min to live; closed when finished ----
+  // NOTE: match-center links carry ?id=&sport= (no explicit state/home/away).
+  // MATCHES loads async AFTER chat init, so a lookup miss must NOT lock chat.
+  // Default: any opened match-center (id present) keeps chat open.
   function getMatchState() {
     const p = new URLSearchParams(location.search);
     const state = (p.get('state') || '').toLowerCase();
@@ -46,7 +49,7 @@
       } catch (e) { /* fall through to URL params */ }
     }
     return {
-      state: state || 'upcoming',
+      state: state || (id ? 'live' : 'upcoming'),
       sport: p.get('sport') || 'cricket',
       home: p.get('home') || '',
       away: p.get('away') || ''
@@ -278,6 +281,14 @@
   }
   sendBtn.addEventListener('click', sendText);
   inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') sendText(); });
+  let _typingSent = 0;
+  inputEl.addEventListener('input', () => {
+    const now = Date.now();
+    if (ws && ws.readyState === WebSocket.OPEN && now - _typingSent > 3000) {
+      _typingSent = now;
+      try { ws.send(JSON.stringify({ type: 'typing', isTyping: true })); } catch (e) {}
+    }
+  });
 
   imgBtn.addEventListener('click', () => imgInput.click());
   imgInput.addEventListener('change', () => {
@@ -302,10 +313,13 @@
 
   function connect() {
     try {
-      // Match id is driven by the Match Center URL params (sport/home/away/state)
-      // so the chat room matches the match being viewed.
+      // Match id is driven by the Match Center URL (?id= preferred, ?match= legacy)
+      // prefixed with sport so rooms stay unique per match AND sport-detectable.
       const _p = new URLSearchParams(location.search);
-      const _mid = _p.get('match') || (_p.get('sport') || 'cricket') + '-' + (_p.get('home') || 'ind') + '-' + (_p.get('away') || 'eng');
+      const _id = _p.get('id') || _p.get('match') || '';
+      const _sport = (_p.get('sport') || 'cricket').toLowerCase();
+      const _mid = _id ? (_sport + '-' + _id)
+        : (_p.get('match') || _sport + '-' + (_p.get('home') || 'ind') + '-' + (_p.get('away') || 'eng'));
       ws = new WebSocket(WS_URL + '?match=' + encodeURIComponent(_mid));
       ws.onopen = () => {
         retry = 0; fallback = false; setStatus('live', 'bg-emerald-500/20 text-emerald-400');
@@ -359,6 +373,12 @@
           renderSystem(m.text, m.user);
         } else if (m.type === 'online_count') {
           if (onlineEl) onlineEl.textContent = m.onlineCount;
+        } else if (m.type === 'like_update') {
+          const node = renderedMessages[m.messageId];
+          if (node) {
+            const span = node.querySelector('.lc');
+            if (span) span.textContent = m.likes != null ? m.likes : span.textContent;
+          }
         } else if (m.type === 'typing') {
           if (m.isTyping && m.userName) {
             typingEl.textContent = m.userName + ' is typing…';

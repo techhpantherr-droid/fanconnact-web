@@ -2324,7 +2324,7 @@ document.addEventListener("DOMContentLoaded", () => {
         { id: "table-tennis", name: "Table Tennis" }
       ];
       var promises = sports.map(function(s) {
-        return fetch("/api/rankings/" + s.id + "?limit=100")
+        return fetch(((window.FC_API && window.FC_API.api) ? window.FC_API.api() : "") + "/rankings/" + s.id + "?limit=100")
           .then(function(r) { return r.json(); })
           .then(function(data) {
             if (data && data.players) {
@@ -2390,7 +2390,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "E-Sports": "e-sports", "Table Tennis": "table-tennis"
       };
       var sid = sidMap[sportName] || "cricket";
-      fetch("/api/rankings/" + sid + "?limit=100")
+      fetch(((window.FC_API && window.FC_API.api) ? window.FC_API.api() : "") + "/rankings/" + sid + "?limit=100")
         .then(function(r) { return r.json(); })
         .then(function(data) {
           if (data && data.players) {

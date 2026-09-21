@@ -4095,6 +4095,7 @@ async function fetchEspnScoreboard(path) {
       });
       const h = team(home), a = team(away);
       return {
+        id: ev.id || "",
         sport: ev.league ? (ev.league.abbreviation || ev.league.name) : '',
         league: (ev.league && ev.league.name) || '',
         status,
@@ -4175,7 +4176,104 @@ const ALLSPORTS_CONFIG = {
 };
 
 // ─── NORMALIZED ALL-SPORTS MATCHES (for sport pages) ───────────────────────
-const ALLSPORTS_SUPPORTED = ["basketball", "baseball", "volleyball", "handball", "esport"];
+const ALLSPORTS_SUPPORTED = ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi"];
+
+// ─── PKL KABADDI SCRAPER (free, official prokabaddi.com fixtures) ───────────
+// No key needed. The /fixtures page embeds window.fixtureWidgetData with every
+// Season 12 match: dates, status, scores, teams and player involvements.
+const pklCache = { ts: 0, events: [] };
+
+function pklExtractBlob(html) {
+  const m = html.match(/window\.fixtureWidgetData\s*=\s*\{/);
+  if (!m) return null;
+  const start = html.indexOf("{", m.index);
+  let depth = 0, inStr = false, esc = false;
+  for (let i = start; i < html.length; i++) {
+    const ch = html[i];
+    if (inStr) { if (esc) esc = false; else if (ch === "\\") esc = true; else if (ch === '"') inStr = false; }
+    else {
+      if (ch === '"') inStr = true;
+      else if (ch === "{") depth++;
+      else if (ch === "}") { depth--; if (depth === 0) return html.slice(start, i + 1); }
+    }
+  }
+  return null;
+}
+
+async function fetchPklKabaddi() {
+  if (Date.now() - pklCache.ts < 30 * 60 * 1000 && pklCache.events.length) return pklCache.events;
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 15000);
+  try {
+    const r = await fetch("https://www.prokabaddi.com/fixtures", {
+      signal: ctrl.signal,
+      headers: { "User-Agent": "Mozilla/5.0 (FanConnact live-score widget)" },
+    });
+    if (!r.ok) throw new Error("PKL HTTP " + r.status);
+    const html = await r.text();
+    const blob = pklExtractBlob(html);
+    if (!blob) throw new Error("PKL data blob not found");
+    const data = JSON.parse(blob);
+    const byDate = data.fixtureByDate || {};
+    const events = [];
+    for (const [date, list] of Object.entries(byDate)) {
+      for (const ev of (list || [])) {
+        const parts = ev.participants || [];
+        if (parts.length < 2) continue;
+        events.push({
+          date, start: ev.start_date || "", end: ev.end_date || "",
+          status: ev.event_status || "", state: ev.event_state || "",
+          result: ev.event_sub_status || "", series: ev.series_name || "Pro Kabaddi League",
+          stage: ev.event_stage || "", venue: ev.venue_name || "",
+          home: { name: parts[0].name || "", short: parts[0].short_name || "", score: parts[0].value != null ? String(parts[0].value) : "", players: parts[0].players_involved || [] },
+          away: { name: parts[1].name || "", short: parts[1].short_name || "", score: parts[1].value != null ? String(parts[1].value) : "", players: parts[1].players_involved || [] },
+        });
+      }
+    }
+    pklCache.ts = Date.now();
+    pklCache.events = events;
+    console.log("[PKL] scraped matches:", events.length);
+    return events;
+  } finally {
+    clearTimeout(t);
+  }
+}
+
+function normalizePkl(ev) {
+  const st = String(ev.status || ev.state || "");
+  const status = /complet|result|tie|beat|won|draw/i.test(st) ? "finished"
+    : (/live|progress|break|half|raid/i.test(st) ? "live" : "upcoming");
+  const id = "pkl_" + ev.date + "_" + ev.home.short + "-" + ev.away.short;
+  let time = "";
+  if (ev.start) {
+    const d = new Date(ev.start);
+    if (!isNaN(d.getTime())) time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  }
+  return {
+    id, matchId: id, sport: "kabaddi", status,
+    series: ev.series, matchType: "kabaddi", format: "kabaddi",
+    stage: ev.stage, venue: ev.venue || "",
+    startTime: ev.start ? Date.parse(ev.start) : null,
+    date: ev.date || "", time, rules: "kabaddi",
+    homeTeam: { name: ev.home.name, shortName: ev.home.short },
+    awayTeam: { name: ev.away.name, shortName: ev.away.short },
+    score: { home: ev.home.score, away: ev.away.score, detail: ev.result || "" },
+    result: status === "finished" ? (ev.result || "Full Time") : "",
+    statusText: ev.result || ev.status,
+  };
+}
+
+function pklToDetail(ev) {
+  const toPlayers = (p) => (p.players || []).slice(0, 14).map((x) => ({
+    player: { name: x.name || "Player" }, position: x.type || "", points: x.value || "",
+  }));
+  return {
+    success: true, source: "pkl",
+    match: normalizePkl(ev), events: ev, incidents: [],
+    lineups: { home: { players: toPlayers(ev.home) }, away: { players: toPlayers(ev.away) } },
+    homeStats: [], awayStats: [],
+  };
+}
 
 function normalizeAllSportsEvent(event, sport) {
   if (!event || !event.id) return null;
@@ -4222,11 +4320,124 @@ function normalizeAllSportsEvent(event, sport) {
 
 const allSportsMatchesCache = new Map();
 
+// ─── ESPN/FREE FALLBACK for AllSports (no key needed) ───────────────────────
+// Used when RapidAPI AllSports fails, is rate-limited, or returns nothing.
+// ESPN covers basketball (NBA) + baseball (MLB). Other sports have no free
+// scoreboard and return [] so callers degrade gracefully.
+const ESPN_ALLSPORTS_PATHS = {
+  basketball: "basketball/nba",
+  baseball: "baseball/mlb",
+  football: "soccer/eng.1",
+  hockey: "hockey/nhl",
+  tennis: "tennis/atp",
+};
+
+function normalizeEspnToAllSports(ev, sport) {
+  if (!ev || !ev.id) return null;
+  const comp = (ev.competitions && ev.competitions[0]) || {};
+  const cs = comp.competitors || [];
+  const home = cs.find((c) => c.homeAway === "home") || cs[0] || {};
+  const away = cs.find((c) => c.homeAway === "away") || cs[1] || {};
+  const st = (ev.status && ev.status.type) || {};
+  const state = st.state; // pre | in | post
+  const status = state === "in" ? "live" : state === "post" ? "finished" : "upcoming";
+  const detail = st.shortDetail || st.description || "";
+  const ts = ev.date ? Date.parse(ev.date) : null;
+  const id = "espn_" + ev.id;
+  return {
+    id, matchId: id, sport, status,
+    series: (ev.league && ev.league.name) || "",
+    matchType: sport, format: sport, stage: "",
+    venue: (comp.venue && comp.venue.fullName) || "",
+    startTime: Number.isFinite(ts) ? ts : null,
+    date: Number.isFinite(ts) ? new Date(ts).toLocaleDateString("en-CA") : "",
+    time: Number.isFinite(ts) ? new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "",
+    rules: sport,
+    homeTeam: { name: (home.team && (home.team.displayName || home.team.name)) || "", shortName: (home.team && home.team.abbreviation) || "", id: (home.team && home.team.id) || "" },
+    awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || "", shortName: (away.team && away.team.abbreviation) || "", id: (away.team && away.team.id) || "" },
+    score: { home: home.score != null ? String(home.score) : "", away: away.score != null ? String(away.score) : "", detail },
+    result: status === "finished" ? (detail || "Finished") : "",
+    statusText: detail,
+  };
+}
+
+async function fetchEspnAllSportsMatches(sport) {
+  const path = ESPN_ALLSPORTS_PATHS[sport];
+  if (!path) return [];
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const r = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/${path}/scoreboard`, { signal: ctrl.signal });
+    if (!r.ok) return [];
+    const j = await r.json();
+    return (j.events || []).map((ev) => normalizeEspnToAllSports(ev, sport)).filter(Boolean);
+  } catch (e) {
+    console.error("[AllSports] ESPN fallback failed for", sport, e.message);
+    return [];
+  } finally {
+    clearTimeout(t);
+  }
+}
+
+async function fetchEspnAllSportsDetail(sport, rawId) {
+  const path = ESPN_ALLSPORTS_PATHS[sport];
+  if (!path) return null;
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 10000);
+  try {
+    const r = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/${path}/summary?event=${encodeURIComponent(rawId)}`, { signal: ctrl.signal });
+    if (!r.ok) return null;
+    const j = await r.json();
+    const comp = (j.header && j.header.competitions && j.header.competitions[0]) || {};
+    const cs = comp.competitors || [];
+    const home = cs.find((c) => c.homeAway === "home") || cs[0] || {};
+    const away = cs.find((c) => c.homeAway === "away") || cs[1] || {};
+    const detail = (comp.status && comp.status.type && (comp.status.type.shortDetail || comp.status.type.description)) || "";
+    const homeScore = home.score != null ? String(home.score) : "";
+    const awayScore = away.score != null ? String(away.score) : "";
+    return {
+      success: true, source: "espn",
+      match: {
+        id: "espn_" + rawId, matchId: "espn_" + rawId, sport,
+        status: /final|completed/i.test(detail) ? "finished" : (/1st|2nd|3rd|4th|quarter|half|inning|live|in progress/i.test(detail) ? "live" : "upcoming"),
+        series: (j.header && j.header.league && j.header.league.name) || "",
+        homeTeam: { name: (home.team && (home.team.displayName || home.team.name)) || "", shortName: (home.team && home.team.abbreviation) || "" },
+        awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || "", shortName: (away.team && away.team.abbreviation) || "" },
+        score: { home: homeScore, away: awayScore, detail },
+        statusText: detail, result: detail,
+      },
+      events: comp,
+      boxscore: j.boxscore || null,
+      leaders: j.leaders || null,
+      incidents: [],
+      lineups: null,
+      homeStats: [], awayStats: [],
+    };
+  } catch (e) {
+    console.error("[AllSports] ESPN detail failed for", sport, rawId, e.message);
+    return null;
+  } finally {
+    clearTimeout(t);
+  }
+}
+
 app.get("/api/all-sports/matches/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
     if (!ALLSPORTS_SUPPORTED.includes(sport)) {
       return res.status(400).json({ success: false, message: "Unsupported: " + sport + ". Supported: " + ALLSPORTS_SUPPORTED.join(", ") });
+    }
+    // Kabaddi comes from the free PKL scraper, not RapidAPI/ESPN.
+    if (sport === "kabaddi") {
+      try {
+        const events = await fetchPklKabaddi();
+        const matches = events.map(normalizePkl);
+        allSportsMatchesCache.set("kabaddi_pkld", { ts: Date.now(), data: matches, source: "pkl" });
+        return res.json({ success: true, source: "pkl", count: matches.length, matches });
+      } catch (e) {
+        console.error("[PKL] kabaddi error:", e.message);
+        return res.status(502).json({ success: false, message: e.message });
+      }
     }
     if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
       return res.status(403).json({ success: false, message: "AllSports API key not configured" });
@@ -4236,41 +4447,14 @@ app.get("/api/all-sports/matches/:sport", async (req, res) => {
     const cacheKey = sport + "_" + dateParam;
     const cached = allSportsMatchesCache.get(cacheKey);
     if (cached && Date.now() - cached.ts < 5 * 60 * 1000) {
-      return res.json({ success: true, source: "allsports", cached: true, count: cached.data.length, matches: cached.data });
+      return res.json({ success: true, source: cached.source || "allsports", cached: true, count: cached.data.length, matches: cached.data });
     }
 
-    const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/matches/live?date=${dateParam}`;
-    const apiRes = await fetch(url, {
-      headers: {
-        "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
-        "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
-        "Content-Type": "application/json",
-      },
-      signal: AbortSignal.timeout(12000),
-    });
-    const raw = await apiRes.json();
-    const events = raw?.events || [];
-    const matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
-
-    allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches });
-    res.json({ success: true, source: "allsports", count: matches.length, matches });
-  } catch (e) {
-    console.error("[AllSports] matches error:", req.params.sport, e.message);
-    res.status(502).json({ success: false, message: e.message });
-  }
-});
-
-app.get("/api/all-sports/matches", async (req, res) => {
-  try {
-    const today = new Date().toISOString().slice(0, 10);
-    const dateParam = req.query.date || today;
-    const results = await Promise.allSettled(
-      ALLSPORTS_SUPPORTED.map(async (sport) => {
-        const cacheKey = sport + "_" + dateParam;
-        const cached = allSportsMatchesCache.get(cacheKey);
-        if (cached && Date.now() - cached.ts < 5 * 60 * 1000) return cached.data;
-
-        if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) return [];
+    // Primary: RapidAPI AllSports. Fallback: free ESPN scoreboard.
+    let matches = [];
+    let source = "allsports";
+    if (ALLSPORTS_CONFIG.key && ALLSPORTS_CONFIG.host) {
+      try {
         const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/matches/live?date=${dateParam}`;
         const apiRes = await fetch(url, {
           headers: {
@@ -4282,13 +4466,76 @@ app.get("/api/all-sports/matches", async (req, res) => {
         });
         const raw = await apiRes.json();
         const events = raw?.events || [];
-        const matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
-        allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches });
+        matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
+      } catch (e) {
+        console.error("[AllSports] RapidAPI failed, trying ESPN:", sport, e.message);
+        matches = [];
+      }
+    }
+    if (!matches.length) {
+      matches = await fetchEspnAllSportsMatches(sport);
+      if (matches.length) source = "espn";
+    }
+
+    allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches, source });
+    res.json({ success: true, source, fallback: source === "espn", count: matches.length, matches });
+  } catch (e) {
+    console.error("[AllSports] matches error:", req.params.sport, e.message);
+    try {
+      const fb = await fetchEspnAllSportsMatches(req.params.sport);
+      if (fb.length) return res.json({ success: true, source: "espn", fallback: true, count: fb.length, matches: fb });
+    } catch (_) {}
+    res.status(502).json({ success: false, message: e.message });
+  }
+});
+
+app.get("/api/all-sports/matches", async (req, res) => {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    const dateParam = req.query.date || today;
+    const results = await Promise.allSettled(
+      ALLSPORTS_SUPPORTED.map(async (sport) => {
+        // Kabaddi: free PKL scraper.
+        if (sport === "kabaddi") {
+          try {
+            const cached = allSportsMatchesCache.get("kabaddi_pkld");
+            if (cached && Date.now() - cached.ts < 30 * 60 * 1000) return cached.data;
+            const events = await fetchPklKabaddi();
+            const matches = events.map(normalizePkl);
+            allSportsMatchesCache.set("kabaddi_pkld", { ts: Date.now(), data: matches, source: "pkl" });
+            return matches;
+          } catch (_) { return []; }
+        }
+        const cacheKey = sport + "_" + dateParam;
+        const cached = allSportsMatchesCache.get(cacheKey);
+        if (cached && Date.now() - cached.ts < 5 * 60 * 1000) return cached.data;
+
+        // Primary RapidAPI, fallback free ESPN per sport.
+        let matches = [];
+        if (ALLSPORTS_CONFIG.key && ALLSPORTS_CONFIG.host) {
+          try {
+            const url = `${ALLSPORTS_CONFIG.base}/api/${sport}/matches/live?date=${dateParam}`;
+            const apiRes = await fetch(url, {
+              headers: {
+                "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
+                "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
+                "Content-Type": "application/json",
+              },
+              signal: AbortSignal.timeout(12000),
+            });
+            const raw = await apiRes.json();
+            const events = raw?.events || [];
+            matches = events.map(e => normalizeAllSportsEvent(e, sport)).filter(Boolean);
+          } catch (_) { matches = []; }
+        }
+        if (!matches.length) matches = await fetchEspnAllSportsMatches(sport);
+        allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches, source: "mixed" });
         return matches;
       })
     );
     const all = results.flatMap(r => r.status === "fulfilled" ? r.value : []);
-    res.json({ success: true, source: "allsports", count: all.length, matches: all });
+    const anyEspn = all.some(m => String(m.id || "").startsWith("espn_"));
+    res.json({ success: true, source: anyEspn ? "mixed" : "allsports", count: all.length, matches: all });
   } catch (e) {
     console.error("[AllSports] aggregate error:", e.message);
     res.status(502).json({ success: false, message: e.message });
@@ -4298,15 +4545,38 @@ app.get("/api/all-sports/matches", async (req, res) => {
 // AllSports raw proxy (must come AFTER the specific /matches/:sport routes)
 app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
   try {
-    const { sport, matchId } = req.params;
+    const { sport } = req.params;
+    // List endpoints normalize ids as "as_<numeric>" — upstream expects raw numeric id.
+    // ESPN-fallback ids look like "espn_<numeric>" and use the free ESPN summary.
+    const incoming = String(req.params.matchId || "");
+    const isEspn = /^espn_/i.test(incoming);
+    const rawId = incoming.replace(/^(as_|espn_)/i, "");
     if (!ALLSPORTS_SUPPORTED.includes(sport)) {
       return res.status(400).json({ success: false, message: "Unsupported: " + sport });
+    }
+    if (isEspn) {
+      const espnDetail = await fetchEspnAllSportsDetail(sport, rawId);
+      if (espnDetail) return res.json(espnDetail);
+      return res.status(502).json({ success: false, message: "ESPN detail unavailable" });
+    }
+    // Kabaddi detail comes from the scraped PKL cache.
+    if (/^pkl_/i.test(incoming) || sport === "kabaddi") {
+      try {
+        const events = await fetchPklKabaddi();
+        const id = incoming.replace(/^pkl_/i, "");
+        const ev = events.find((e) => ("pkl_" + e.date + "_" + e.home.short + "-" + e.away.short).toLowerCase() === ("pkl_" + id).toLowerCase())
+          || events.find((e) => (e.date + "_" + e.home.short + "-" + e.away.short).toLowerCase() === id.toLowerCase());
+        if (ev) return res.json(pklToDetail(ev));
+        return res.status(404).json({ success: false, message: "PKL match not found" });
+      } catch (e) {
+        return res.status(502).json({ success: false, message: e.message });
+      }
     }
     if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
       return res.status(403).json({ success: false, message: "AllSports API key not configured" });
     }
     const [matchRes, incidentsRes, lineupsRes] = await Promise.allSettled([
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rawId}`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
@@ -4314,7 +4584,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
         },
         signal: AbortSignal.timeout(12000),
       }),
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/incidents`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rawId}/incidents`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
@@ -4322,7 +4592,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
         },
         signal: AbortSignal.timeout(12000),
       }),
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/lineups`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rawId}/lineups`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
@@ -4338,7 +4608,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
     const incidents = incidentRaw?.incidents || incidentRaw?.data?.incidents || [];
     const lineupRaw = lineupsRes.status === "fulfilled" && lineupsRes.value.ok ? await lineupsRes.value.json() : null;
 
-    const normalized = normalizeAllSportsEvent(events || { id: matchId }, sport);
+    const normalized = normalizeAllSportsEvent(events || { id: rawId }, sport);
 
     const homeStats = events?.homeStatistics || events?.statistics?.home || [];
     const awayStats = events?.awayStatistics || events?.statistics?.away || [];
