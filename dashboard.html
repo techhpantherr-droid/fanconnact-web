@@ -700,85 +700,8 @@
                   >View All</a
                 >
               </div>
-              <div class="space-y-4">
-                <div
-                  class="flex items-center p-4 rounded-2xl cursor-pointer transition-all group border border-transparent dark:hover:bg-white/5 dark:hover:border-white/5 light:hover:bg-gray-50 light:hover:border-gray-100"
-                >
-                  <div
-                    class="w-10 h-10 md:w-11 md:h-11 rounded-2xl flex items-center justify-center mr-4 border dark:bg-yellow-500/10 dark:text-yellow-500 dark:border-yellow-500/20 light:bg-yellow-50 light:text-yellow-600 light:border-yellow-100"
-                  >
-                    <span class="material-symbols-outlined">emoji_events</span>
-                  </div>
-                  <div class="flex-1">
-                    <p
-                      class="text-xs font-bold leading-snug dark:text-white light:text-slate-800"
-                    >
-                      Who will win this match?
-                    </p>
-                    <div
-                      class="flex items-center space-x-4 mt-1.5 text-[10px] text-gray-400"
-                    >
-                      <span class="flex items-center"
-                        ><div
-                          class="w-3 h-3 bg-yellow-500 rounded-full flex items-center justify-center text-[6px] text-black font-bold mr-1.5"
-                        >
-                          F
-                        </div>
-                        2,450</span
-                      >
-                      <span class="flex items-center"
-                        ><span
-                          class="material-symbols-outlined text-[12px] mr-1"
-                          >groups</span
-                        >
-                        8.1K</span
-                      >
-                    </div>
-                  </div>
-                  <span
-                    class="material-symbols-outlined text-gray-600 group-hover:text-brand-green transition-colors"
-                    >chevron_right</span
-                  >
-                </div>
-                <div
-                  class="flex items-center p-4 rounded-2xl cursor-pointer transition-all group border border-transparent dark:hover:bg-white/5 dark:hover:border-white/5 light:hover:bg-gray-50 light:hover:border-gray-100"
-                >
-                  <div
-                    class="w-10 h-10 md:w-11 md:h-11 rounded-2xl flex items-center justify-center mr-4 border dark:bg-red-500/10 dark:text-red-500 dark:border-red-500/20 light:bg-red-50 light:text-red-600 light:border-red-100"
-                  >
-                    <span class="material-symbols-outlined">handshake</span>
-                  </div>
-                  <div class="flex-1">
-                    <p
-                      class="text-xs font-bold leading-snug dark:text-white light:text-slate-800"
-                    >
-                      Will there be a 100+ partnership?
-                    </p>
-                    <div
-                      class="flex items-center space-x-4 mt-1.5 text-[10px] text-gray-400"
-                    >
-                      <span class="flex items-center"
-                        ><div
-                          class="w-3 h-3 bg-yellow-500 rounded-full flex items-center justify-center text-[6px] text-black font-bold mr-1.5"
-                        >
-                          F
-                        </div>
-                        1,850</span
-                      >
-                      <span class="flex items-center"
-                        ><span
-                          class="material-symbols-outlined text-[12px] mr-1"
-                          >groups</span
-                        >
-                        5.6K</span
-                      >
-                    </div>
-                  </div>
-                  <span
-                    class="material-symbols-outlined text-gray-600 group-hover:text-brand-green transition-colors"
-                    >chevron_right</span
-                  >
-                </div>
+              <div class="space-y-4" id="trending-predictions-list">
+                <div class="text-center text-gray-500 text-sm py-4">Loading predictions…</div>
               </div>
             </div>
             <!-- Top Fans Leaderboard -->
@@ -885,6 +808,67 @@
     } catch (e) {
       console.warn("[dashboard] top fans load failed:", e.message);
       container.innerHTML = '<div class="text-center text-gray-500 text-sm py-4">Could not load fans.</div>';
+    }
+  })();
+</script>
+<script>
+  // Populate "Trending Predictions" with REAL Firestore prediction questions.
+  (async function () {
+    var container = document.getElementById("trending-predictions-list");
+    if (!container) return;
+    function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+    function fmt(n) {
+      n = Number(n) || 0;
+      if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+      return String(n);
+    }
+    try {
+      var tries = 0;
+      while (!(window.__FB__ && window.__FB__.db) && tries < 40) {
+        await new Promise(function (r) { setTimeout(r, 100); });
+        tries++;
+      }
+      if (!window.__FB__ || !window.__FB__.db) throw new Error("Firebase not ready");
+      var fs = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+      var snap = await fs.getDocs(fs.collection(window.__FB__.db, "predictions"));
+      var list = [];
+      snap.forEach(function (doc) {
+        var d = doc.data();
+        if (!d.question) return;
+        list.push({
+          q: d.question,
+          players: Number(d.totalPlayers) || 0,
+          pool: (d.rewards && d.rewards.correct && d.rewards.correct.coins) || d.pool || 0
+        });
+      });
+      list.sort(function (a, b) { return b.players - a.players; });
+      list = list.slice(0, 2);
+      if (!list.length) {
+        container.innerHTML = '<div class="text-center text-gray-500 text-sm py-4">No predictions yet.</div>';
+        return;
+      }
+      var icons = ["emoji_events", "handshake"];
+      container.innerHTML = "";
+      list.forEach(function (p, i) {
+        var row = document.createElement("div");
+        row.className = "flex items-center p-4 rounded-2xl cursor-pointer transition-all group border border-transparent dark:hover:bg-white/5 dark:hover:border-white/5 light:hover:bg-gray-50 light:hover:border-gray-100";
+        row.innerHTML =
+          '<div class="w-10 h-10 md:w-11 md:h-11 rounded-2xl flex items-center justify-center mr-4 border dark:bg-yellow-500/10 dark:text-yellow-500 dark:border-yellow-500/20 light:bg-yellow-50 light:text-yellow-600 light:border-yellow-100">' +
+            '<span class="material-symbols-outlined">' + icons[i % icons.length] + '</span></div>' +
+          '<div class="flex-1"><p class="text-xs font-bold leading-snug dark:text-white light:text-slate-800">' + esc(p.q) + '</p>' +
+          '<div class="flex items-center space-x-4 mt-1.5 text-[10px] text-gray-400">' +
+            '<span class="flex items-center"><div class="w-3 h-3 bg-yellow-500 rounded-full flex items-center justify-center text-[6px] text-black font-bold mr-1.5">F</div>' + fmt(p.pool) + '</span>' +
+            '<span class="flex items-center"><span class="material-symbols-outlined text-[12px] mr-1">groups</span>' + fmt(p.players) + '</span>' +
+          '</div></div>' +
+          '<span class="material-symbols-outlined text-gray-600 group-hover:text-brand-green transition-colors">chevron_right</span>';
+        row.addEventListener("click", function () {
+          window.open("https://play.google.com/store/apps", "_blank");
+        });
+        container.appendChild(row);
+      });
+    } catch (e) {
+      console.warn("[dashboard] trending predictions load failed:", e.message);
+      container.innerHTML = '<div class="text-center text-gray-500 text-sm py-4">Could not load predictions.</div>';
     }
   })();
 </script>
