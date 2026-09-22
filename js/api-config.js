@@ -12,15 +12,18 @@
     location.hostname === '127.0.0.1' ||
     location.protocol === 'file:';
 
-  // GitHub Pages (github.io) frontend talks to the deployed Railway backend.
+  // GitHub Pages (github.io) + custom domain (fanconnact.com) frontends
+  // talk to the deployed Railway backend.
   var BACKEND_ORIGIN = 'https://web-production-589a7.up.railway.app';
   var isGitHubPages = /\.github\.io$/.test(location.hostname);
+  var isCustomDomain = /(^|\.)fanconnact\.com$/.test(location.hostname);
+  var useBackend = isGitHubPages || isCustomDomain;
 
   var HTTP_PORT = 5000;
 
   function httpBase() {
     if (isDev) return 'http://localhost:' + HTTP_PORT;
-    if (isGitHubPages) return BACKEND_ORIGIN;
+    if (useBackend) return BACKEND_ORIGIN;
     return location.origin;
   }
 
@@ -31,7 +34,7 @@
   function wsBase() {
     if (isDev) return 'ws://localhost:' + HTTP_PORT;
     var proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-    return proto + '//' + ((isGitHubPages ? BACKEND_ORIGIN : location.origin)).replace(/^https?:\/\//, '');
+    return proto + '//' + ((useBackend ? BACKEND_ORIGIN : location.origin)).replace(/^https?:\/\//, '');
   }
 
   window.FC_API = {

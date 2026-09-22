@@ -573,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-live": "LIVE",
       "matches-completed": "Completed",
       // Footer / Misc
-      "footer-copyright": "© 2024 FanConnact. All rights reserved.",
+      "footer-copyright": "© 2026 FanConnact. All rights reserved.",
       "theme-toggle-label": "Toggle theme",
     },
     hi: {
@@ -677,7 +677,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "आगामी",
       "matches-live": "लाइव",
       "matches-completed": "समाप्त",
-      "footer-copyright": "© 2024 FanConnact. सर्वाधिकार सुरक्षित।",
+      "footer-copyright": "© 2026 FanConnact. सर्वाधिकार सुरक्षित।",
       "theme-toggle-label": "थीम बदलें",
       // New keys
       "nav-global": "ग्लोबल", "nav-player-zone": "खिलाड़ी क्षेत्र",
@@ -917,7 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "আসন্ন",
       "matches-live": "লাইভ",
       "matches-completed": "সম্পন্ন",
-      "footer-copyright": "© 2024 ফ্যানকান্যাক্ট।",
+      "footer-copyright": "© 2026 ফ্যানকান্যাক্ট।",
       "theme-toggle-label": "থিম টগল করুন",
     },
   ta: {
@@ -1104,7 +1104,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "வரவிருக்கிறது",
       "matches-live": "நேரலை",
       "matches-completed": "முடிக்கப்பட்டது",
-      "footer-copyright": "© 2024 FanConnact.",
+      "footer-copyright": "© 2026 FanConnact.",
       "theme-toggle-label": "தீம் மாறு",
     },
   te: {
@@ -1291,7 +1291,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "రాబోయేది",
       "matches-live": "ప్రత్యక్ష ప్రసారం",
       "matches-completed": "పూర్తయింది",
-      "footer-copyright": "© 2024 FanConnact.",
+      "footer-copyright": "© 2026 FanConnact.",
       "theme-toggle-label": "థీమ్‌ను టోగుల్ చేయండి",
     },
   mr: {
@@ -1478,7 +1478,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "आगामी",
       "matches-live": "लाइव्ह",
       "matches-completed": "पूर्ण झाले",
-      "footer-copyright": "© 2024 FanConnact.",
+      "footer-copyright": "© 2026 FanConnact.",
       "theme-toggle-label": "थीम टॉगल करा",
     },
   es: {
@@ -1665,7 +1665,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "Próximo",
       "matches-live": "VIVIR",
       "matches-completed": "Terminado",
-      "footer-copyright": "© 2024 FanConnact.",
+      "footer-copyright": "© 2026 FanConnact.",
       "theme-toggle-label": "Alternar tema",
     },
   fr: {
@@ -1852,7 +1852,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "Prochain",
       "matches-live": "EN DIRECT",
       "matches-completed": "Complété",
-      "footer-copyright": "© 2024 FanConnact.",
+      "footer-copyright": "© 2026 FanConnact.",
       "theme-toggle-label": "Changer de thème",
     },
   ar: {
@@ -2039,7 +2039,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "matches-upcoming": "القادمة",
       "matches-live": "يعيش",
       "matches-completed": "مكتمل",
-      "footer-copyright": "© 2024 فانكوناكت.",
+      "footer-copyright": "© 2026 فانكوناكت.",
       "theme-toggle-label": "تبديل الموضوع",
     },
   };
