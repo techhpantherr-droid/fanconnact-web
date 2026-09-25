@@ -44,81 +44,58 @@ function getLastWeekDates() {
 }
 
 async function fetchApiSports(sport, date) {
-  const config = SPORT_APIS[sport];
-  if (!config) return null;
+  // Real endpoints only (backend is authoritative):
+  // - basketball/baseball/volleyball/handball/esport -> /api/all-sports/matches/:sport
+  // - football/hockey/tennis (+others)              -> /api/matches?sport=:sport (ESPN)
+  const out = [];
   try {
-    // Proxy through backend (key stays server-side, quota + cache applied)
-    const url = `${API_PROXY_BASE}/api/matches/${sport}?date=${encodeURIComponent(date)}`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(5000) });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.matches || [];
-  } catch (e) {
-    return null;
-  }
+    const r1 = await fetch(`${API_PROXY_BASE}/all-sports/matches/${encodeURIComponent(sport)}`, { signal: AbortSignal.timeout(6000) });
+    if (r1.ok) {
+      const j1 = await r1.json();
+      for (const m of (j1.matches || [])) {
+        out.push({
+          fixture: { id: m.id, status: { short: m.status === 'live' ? 'LIVE' : (m.status === 'finished' ? 'FT' : 'UP') } },
+          league: { name: m.series || sport },
+          teams: { home: { name: (m.homeTeam && m.homeTeam.name) || '' }, away: { name: (m.awayTeam && m.awayTeam.name) || '' } },
+          goals: { home: m.score ? m.score.home : '', away: m.score ? m.score.away : '' },
+        });
+      }
+    }
+  } catch (e) { /* fall through to ESPN */ }
+  try {
+    const r2 = await fetch(`${API_PROXY_BASE}/matches?sport=${encodeURIComponent(sport)}`, { signal: AbortSignal.timeout(6000) });
+    if (r2.ok) {
+      const j2 = await r2.json();
+      for (const m of (j2.matches || [])) {
+        out.push({
+          fixture: { id: m.id || (m.homeName + '-vs-' + m.awayName), status: { short: m.status === 'LIVE' ? 'LIVE' : (m.status === 'COMPLETED' ? 'FT' : 'UP') } },
+          league: { name: m.league || sport },
+          teams: { home: { name: m.homeName || '' }, away: { name: m.awayName || '' } },
+          goals: { home: m.homeScore != null ? m.homeScore : '', away: m.awayScore != null ? m.awayScore : '' },
+        });
+      }
+    }
+  } catch (e) { /* no data -> empty state, never fake */ }
+  return out;
 }
 
 async function fetchMatches(sport = 'football') {
-  const today = getTodayDate();
-  const yesterday = getYesterdayDate();
-
-  let matches = [];
-  if (SPORT_APIS[sport]) {
-    const todayMatches = await fetchApiSports(sport, today) || [];
-    const yesterdayMatches = await fetchApiSports(sport, yesterday) || [];
-    matches = [...yesterdayMatches, ...todayMatches];
-  }
-
-  if (!matches.length) {
-    matches = getFallbackMatches(sport);
-  }
-
+  // Backend endpoints are the single source of truth. No invented data:
+  // an empty backend means an empty grid with a "no matches" notice.
+  const matches = await fetchApiSports(sport) || [];
   return matches.slice(0, 8);
 }
 
 function getFallbackMatches(sport) {
-  const timestamp = Date.now();
-  const fallbacks = {
-    cricket: [
-      { fixture: { id: `${timestamp}1`, status: { short: 'FT' } }, league: { name: 'IPL 2025', logo: '' }, teams: { home: { name: 'Mumbai Indians', logo: '' }, away: { name: 'Chennai Super Kings', logo: '' } }, goals: { home: 187, away: 163 } },
-      { fixture: { id: `${timestamp}2`, status: { short: 'FT' } }, league: { name: 'IPL 2025', logo: '' }, teams: { home: { name: 'Royal Challengers', logo: '' }, away: { name: 'Kolkata Knight Riders', logo: '' } }, goals: { home: 175, away: 178 } },
-    ],
-    football: [
-      { fixture: { id: `${timestamp}3`, status: { short: 'FT' } }, league: { name: 'Premier League', logo: '' }, teams: { home: { name: 'Manchester City', logo: '' }, away: { name: 'Arsenal', logo: '' } }, goals: { home: 2, away: 1 } },
-      { fixture: { id: `${timestamp}4`, status: { short: 'FT' } }, league: { name: 'La Liga', logo: '' }, teams: { home: { name: 'Real Madrid', logo: '' }, away: { name: 'Barcelona', logo: '' } }, goals: { home: 3, away: 2 } },
-      { fixture: { id: `${timestamp}5`, status: { short: 'FT' } }, league: { name: 'UEFA Champions League', logo: '' }, teams: { home: { name: 'Bayern Munich', logo: '' }, away: { name: 'PSG', logo: '' } }, goals: { home: 1, away: 1 } },
-    ],
-    basketball: [
-      { id: `${timestamp}6`, status: { short: 3 }, league: { name: 'NBA', logo: '' }, teams: { home: { name: 'Lakers', logo: '' }, away: { name: 'Celtics', logo: '' } }, scores: { home: { points: 112 }, away: { points: 108 } } },
-      { id: `${timestamp}7`, status: { short: 3 }, league: { name: 'NBA', logo: '' }, teams: { home: { name: 'Warriors', logo: '' }, away: { name: 'Nuggets', logo: '' } }, scores: { home: { points: 98 }, away: { points: 105 } } },
-    ],
-    baseball: [
-      { id: `${timestamp}8`, status: { short: 'FT' }, league: { name: 'MLB', logo: '' }, teams: { home: { name: 'Yankees', logo: '' }, away: { name: 'Red Sox', logo: '' } }, scores: { home: { runs: 6 }, away: { runs: 4 } } },
-    ],
-    tennis: [
-      { fixture: { id: `${timestamp}9`, status: { short: 'FT' } }, league: { name: 'ATP Masters', logo: '' }, teams: { home: { name: 'Djokovic', logo: '' }, away: { name: 'Alcaraz', logo: '' } }, goals: { home: 2, away: 1 } },
-    ],
-    hockey: [
-      { id: `${timestamp}10`, status: { short: 'FT' }, league: { name: 'NHL', logo: '' }, teams: { home: { name: 'Maple Leafs', logo: '' }, away: { name: 'Oilers', logo: '' } }, scores: { home: { goals: 4 }, away: { goals: 2 } } },
-    ],
-    kabaddi: [
-      { fixture: { id: `${timestamp}11`, status: { short: 'FT' } }, league: { name: 'Pro Kabaddi', logo: '' }, teams: { home: { name: 'Patna Pirates', logo: '' }, away: { name: 'Bengal Warriors', logo: '' } }, goals: { home: 36, away: 28 } },
-    ],
-    'e-sports': [
-      { fixture: { id: `${timestamp}12`, status: { short: 'FT' } }, league: { name: 'Valorant Champions', logo: '' }, teams: { home: { name: 'Sentinels', logo: '' }, away: { name: 'Fnatic', logo: '' } }, goals: { home: 2, away: 1 } },
-    ],
-    volleyball: [
-      { fixture: { id: `${timestamp}13`, status: { short: 'FT' } }, league: { name: 'VNL', logo: '' }, teams: { home: { name: 'Brazil', logo: '' }, away: { name: 'Poland', logo: '' } }, goals: { home: 3, away: 1 } },
-    ],
-    'table-tennis': [
-      { fixture: { id: `${timestamp}14`, status: { short: 'FT' } }, league: { name: 'WTT Champions', logo: '' }, teams: { home: { name: 'Fan Zhendong', logo: '' }, away: { name: 'Ma Long', logo: '' } }, goals: { home: 4, away: 2 } },
-    ],
-  };
-  return fallbacks[sport] || fallbacks.football;
+  return [];
 }
 
 function getScore(match) {
-  if (match.goals) return `${match.goals.home ?? 0} - ${match.goals.away ?? 0}`;
+  if (match.goals) {
+    const h = match.goals.home, a = match.goals.away;
+    if ((h === '' || h == null) && (a === '' || a == null)) return 'vs';
+    return `${h ?? 0} - ${a ?? 0}`;
+  }
   if (match.scores) {
     const home = match.scores.home?.points ?? match.scores.home?.goals ?? match.scores.home?.runs ?? 0;
     const away = match.scores.away?.points ?? match.scores.away?.goals ?? match.scores.away?.runs ?? 0;
@@ -226,11 +203,11 @@ async function renderHighlights(container, activeSport = 'all') {
   const gridContainer = container.querySelector('#highlight-grid');
   if (!tabsContainer || !gridContainer) return;
 
-  const sports = ['football', 'cricket', 'basketball', 'baseball', 'tennis', 'hockey', 'kabaddi', 'volleyball', 'table-tennis'];
+  const sports = ['football', 'cricket', 'basketball', 'baseball', 'tennis', 'hockey', 'kabaddi', 'volleyball', 'table-tennis', 'e-sports'];
 
   const sportLabels = {
     football: 'Football', cricket: 'Cricket', basketball: 'Basketball', baseball: 'Baseball',
-    tennis: 'Tennis', hockey: 'Hockey', kabaddi: 'Kabaddi', volleyball: 'Volleyball', 'table-tennis': 'Table Tennis',
+    tennis: 'Tennis', hockey: 'Hockey', kabaddi: 'Kabaddi', volleyball: 'Volleyball', 'table-tennis': 'Table Tennis', 'e-sports': 'E-Sports',
   };
 
   tabsContainer.innerHTML = renderSportTabs(sports, activeSport);

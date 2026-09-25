@@ -21,8 +21,20 @@
 
   if (!messagesEl) return; // panel not present
 
-  // ---- Chat gating: open when <30min to live, while live, and for 10 minutes
-  // after the match ends; closed otherwise ----
+// ---- Chat rooms + open/close rules ----
+  // - Each match gets its own room: "<sport>-<id>" from the match-center URL,
+  //   so different matches never share messages.
+  // - Chat is OPEN before the match (upcoming) and while LIVE.
+  // - Chat CLOSES once the match is finished (after a 10-minute grace window).
+  // Match-center card links carry ?id=&sport=&state=, so the state param is
+  // authoritative (no race with the async MATCHES load).
+  function normState(s) {
+    s = String(s || '').toLowerCase();
+    if (/finish|complete|done|result|post/.test(s)) return 'finished';
+    if (/live|progress|^in$/.test(s)) return 'live';
+    return 'upcoming';
+  }
+  // ---- Post-match grace: keep chat open for 10 minutes after a match ends ----
   const POST_MATCH_GRACE_MS = 10 * 60000;
   // Estimated match duration per sport, used to derive when a finished match ended.
   const SPORT_DURATION_MS = {
@@ -44,33 +56,26 @@
   }
   function getMatchState() {
     const p = new URLSearchParams(location.search);
-    const state = (p.get('state') || '').toLowerCase();
-    const id = p.get('id') || '';
+    const id = p.get('id') || p.get('match') || '';
+    const sport = (p.get('sport') || 'cricket').toLowerCase();
+    // 1) Explicit ?state= from the card link wins.
+    if (p.get('state')) {
+      return { state: normState(p.get('state')), sport, home: p.get('home') || '', away: p.get('away') || '' };
+    }
+    // 2) Look up the loaded backend matches by id.
     if (id) {
       try {
         const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
         if (ms) {
           const m = ms.find(x => String(x.id) === String(id));
           if (m && m.status) {
-            const s = String(m.status).toLowerCase();
-            return {
-              state: s === 'in' || /live|progress/.test(s) ? 'live'
-                : s === 'post' || /finish|complete|done|result/.test(s) ? 'finished'
-                : 'upcoming',
-              sport: m.sport || 'cricket',
-              home: m.home || '',
-              away: m.away || ''
-            };
+            return { state: normState(m.status), sport: m.sport || sport, home: m.home || '', away: m.away || '' };
           }
         }
-      } catch (e) { /* fall through to URL params */ }
+      } catch (e) { /* fall through */ }
     }
-    return {
-      state: state || 'upcoming',
-      sport: p.get('sport') || 'cricket',
-      home: p.get('home') || '',
-      away: p.get('away') || ''
-    };
+    // 3) Default: open chat whenever a match is opened.
+    return { state: id ? 'upcoming' : 'upcoming', sport, home: p.get('home') || '', away: p.get('away') || '' };
   }
   function getMatchStart() {
     try {
@@ -97,11 +102,7 @@
       return { enabled: false, reason: 'Chat is closed — this match has finished.' };
     }
     if (s.state === 'live') return { enabled: true, reason: 'Live chat is open.' };
-    const start = getMatchStart();
-    if (!start) return { enabled: false, reason: 'Chat opens 30 minutes before the match.' };
-    const diffMin = (start.getTime() - Date.now()) / 60000;
-    if (diffMin <= 30) return { enabled: true, reason: 'Live chat is open — match starting soon.' };
-    return { enabled: false, reason: 'Chat opens 30 minutes before the match (' + start.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }) + ').' };
+    return { enabled: true, reason: 'Chat is open — the match has not started yet. Talk before the action begins!' };
   }
   const _elig = chatEligibility();
   function lockChat(lockEl) {
@@ -122,7 +123,7 @@
     return;
   }
 
-  // If the chat is open in the post-match grace window, lock it automatically
+// If the chat is open in the post-match grace window, lock it automatically
   // when that 10-minute window expires while the user is still on the page.
   (function scheduleGraceRelock() {
     const s = getMatchState();
@@ -141,6 +142,27 @@
       if (ws && ws.readyState === WebSocket.OPEN) { try { ws.close(); } catch (e) {} }
     }, until);
   })();
+
+  // Stable chat identity: Firebase uid when logged in, else one guest id per
+  // browser (persisted). The server dedupes by this, so reloads/second tabs
+  // never inflate the online count.
+  function chatUid() {
+    try {
+      const au = window.__FB__ && window.__FB__.auth && window.__FB__.auth.currentUser;
+      if (au && au.uid) return 'uid:' + au.uid;
+    } catch (e) {}
+    try {
+      let g = localStorage.getItem('fanconnact:chat-guest-id');
+      if (!g) {
+        g = 'guest_' + Math.random().toString(36).slice(2, 10);
+        localStorage.setItem('fanconnact:chat-guest-id', g);
+      }
+      return g;
+    } catch (e) { return me.id; }
+  }
+  function isMine(m) {
+    return !!((m.user && (m.user.cid === me.id || m.user.id === me.id)) || m.mine);
+  }
 
   // Map of message id -> DOM node, for live "seen" updates
   const renderedMessages = {};
@@ -180,15 +202,79 @@
   setTimeout(refreshIdentity, 800);
   setTimeout(refreshIdentity, 2500);
 
-  // ---- Stickers ----
-  const STICKERS = ['🏏', '🔥', '💥', '👏', '💪', '⭐', '🎯', '🏆', '😂', '😮', '😍', '🥳', '👍', '🤯', '🙌', '❤️'];
-  STICKERS.forEach(s => {
+  // ---- Floating reaction CSS (Hotstar-style) + layer ----
+  // Tapping a sticker/ticker floats it up over the chat, for sender and receivers.
+  (function injectFloatCss() {
+    if (document.getElementById('chat-float-css')) return;
+    const st = document.createElement('style');
+    st.id = 'chat-float-css';
+    st.textContent = '#chat-float-layer{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:30}' +
+      '.chat-float{position:absolute;bottom:10%;animation:chatFloatUp 2.3s ease-out forwards;text-shadow:0 2px 10px rgba(0,0,0,.4);white-space:nowrap}' +
+      '@keyframes chatFloatUp{0%{transform:translateY(30px) scale(.5);opacity:0}15%{opacity:1;transform:translateY(0) scale(1.15)}100%{transform:translateY(-260px) scale(1);opacity:0}}';
+    document.head.appendChild(st);
+  })();
+  function floatSticker(s) {
+    try {
+      if (!s) return;
+      messagesEl.style.position = 'relative';
+      let layer = messagesEl.querySelector(':scope > #chat-float-layer');
+      if (!layer) {
+        layer = document.createElement('div');
+        layer.id = 'chat-float-layer';
+        messagesEl.appendChild(layer);
+      }
+      if (layer.childElementCount > 14) return; // avoid overload
+      const el = document.createElement('div');
+      el.className = 'chat-float';
+      el.textContent = s;
+      el.style.left = (6 + Math.random() * 78) + '%';
+      el.style.fontSize = (26 + Math.random() * 26) + 'px';
+      layer.appendChild(el);
+      setTimeout(function () { el.remove(); }, 2400);
+    } catch (e) {}
+  }
+
+  // ---- Stickers + sport tickers (GOAL / SIX / FOUR / WICKET ...) ----
+  const REACTIONS = ['🏏', '🔥', '💥', '👏', '💪', '⭐', '🎯', '🏆', '😂', '😮', '😍', '🥳', '👍', '🤯', '🙌', '❤️'];
+  const TICKERS_BY_SPORT = {
+    cricket: ['🏏SIX', '🏏FOUR', '🎯OUT', '🔥', '🏆'],
+    football: ['⚽GOAL', '🧤SAVE', '🔥', '🏆'],
+    basketball: ['🏀3PT', '🔥', '🏆'],
+    tennis: ['🎾ACE', '🔥', '🏆'],
+    baseball: ['⚾HR', '🔥', '🏆'],
+    hockey: ['🏒GOAL', '🔥', '🏆'],
+    kabaddi: ['🤼RAID', '🔥', '🏆'],
+    volleyball: ['🏐ACE', '🔥', '🏆'],
+    'e-sports': ['🎮GG', '🔥', '🏆'],
+    tabletennis: ['🏓', '🔥', '🏆'],
+    'default': ['🔥', '👏', '⭐', '🏆']
+  };
+  function sendSticker(s) {
+    floatSticker(s);
+    sendPayload({ kind: 'sticker', sticker: s });
+  }
+  REACTIONS.forEach(s => {
     const b = document.createElement('button');
-    b.className = 'text-2xl hover:scale-110 transition';
+    b.className = 'text-2xl p-1 hover:scale-110 active:scale-95 transition';
     b.textContent = s;
-    b.addEventListener('click', () => sendPayload({ kind: 'sticker', sticker: s }));
+    b.addEventListener('click', () => sendSticker(s));
     stickerBox.appendChild(b);
   });
+  (function buildTickers() {
+    const label = document.createElement('div');
+    label.className = 'w-full text-[10px] font-bold text-gray-400 uppercase tracking-wide mt-1';
+    label.textContent = 'Match tickers';
+    stickerBox.appendChild(label);
+    const st = getMatchState().sport;
+    const tickers = TICKERS_BY_SPORT[st] || TICKERS_BY_SPORT['default'];
+    tickers.forEach(t => {
+      const b = document.createElement('button');
+      b.className = 'px-2.5 py-1.5 rounded-full bg-gray-100 dark:bg-white/10 text-sm font-bold hover:scale-105 active:scale-95 transition';
+      b.textContent = t;
+      b.addEventListener('click', () => sendSticker(t));
+      stickerBox.appendChild(b);
+    });
+  })();
   stickerBtn.addEventListener('click', () => stickerBox.classList.toggle('hidden'));
 
   // ---- Helpers ----
@@ -206,7 +292,7 @@
   function renderMessage(m) {
     const wrap = document.createElement('div');
     wrap.className = 'flex gap-3 items-start';
-    const isMe = (m.user && m.user.id === me.id) || m.mine;
+    const isMe = isMine(m);
     if (m.id) renderedMessages[m.id] = wrap;
     const av = document.createElement('img');
     av.className = 'w-9 h-9 rounded-full border border-gray-200 dark:border-white/10 shrink-0';
@@ -330,6 +416,14 @@
   }
   sendBtn.addEventListener('click', sendText);
   inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') sendText(); });
+  let _typingSent = 0;
+  inputEl.addEventListener('input', () => {
+    const now = Date.now();
+    if (ws && ws.readyState === WebSocket.OPEN && now - _typingSent > 3000) {
+      _typingSent = now;
+      try { ws.send(JSON.stringify({ type: 'typing', isTyping: true })); } catch (e) {}
+    }
+  });
 
   imgBtn.addEventListener('click', () => imgInput.click());
   imgInput.addEventListener('change', () => {
@@ -354,10 +448,13 @@
 
   function connect() {
     try {
-      // Match id is driven by the Match Center URL params (sport/home/away/state)
-      // so the chat room matches the match being viewed.
+      // Match id is driven by the Match Center URL (?id= preferred, ?match= legacy)
+      // prefixed with sport so rooms stay unique per match AND sport-detectable.
       const _p = new URLSearchParams(location.search);
-      const _mid = _p.get('match') || (_p.get('sport') || 'cricket') + '-' + (_p.get('home') || 'ind') + '-' + (_p.get('away') || 'eng');
+      const _id = _p.get('id') || _p.get('match') || '';
+      const _sport = (_p.get('sport') || 'cricket').toLowerCase();
+      const _mid = _id ? (_sport + '-' + _id)
+        : (_p.get('match') || _sport + '-' + (_p.get('home') || 'ind') + '-' + (_p.get('away') || 'eng'));
       ws = new WebSocket(WS_URL + '?match=' + encodeURIComponent(_mid));
       ws.onopen = () => {
         retry = 0; fallback = false; setStatus('live', 'bg-emerald-500/20 text-emerald-400');
@@ -370,7 +467,7 @@
           if (identified) return;
           identified = true;
           refreshIdentity();
-          ws.send(JSON.stringify({ type: 'identify', user: { name: me.name, img: me.img } }));
+          ws.send(JSON.stringify({ type: 'identify', user: { name: me.name, img: me.img, uid: chatUid(), cid: me.id } }));
         };
         // Wait until the real Firestore profile is resolved (it has a non-empty
         // `username`, unlike the early auth-only placeholder). Fall back after 2s.
@@ -397,8 +494,9 @@
           if (m.user && m.user.img) me.img = m.user.img;
         } else if (m.type === 'message') {
           renderMessage(m);
+          if (m.kind === 'sticker' && m.sticker) floatSticker(m.sticker);
           // Mark others' messages as seen (until match is live)
-          if (m.id && !(m.user && m.user.id === me.id) && ws.readyState === WebSocket.OPEN) {
+          if (m.id && !isMine(m) && ws.readyState === WebSocket.OPEN) {
             ws.send(JSON.stringify({ type: 'seen', messageId: m.id }));
           }
         } else if (m.type === 'seen_update') {
@@ -411,6 +509,12 @@
           renderSystem(m.text, m.user);
         } else if (m.type === 'online_count') {
           if (onlineEl) onlineEl.textContent = m.onlineCount;
+        } else if (m.type === 'like_update') {
+          const node = renderedMessages[m.messageId];
+          if (node) {
+            const span = node.querySelector('.lc');
+            if (span) span.textContent = m.likes != null ? m.likes : span.textContent;
+          }
         } else if (m.type === 'typing') {
           if (m.isTyping && m.userName) {
             typingEl.textContent = m.userName + ' is typing…';

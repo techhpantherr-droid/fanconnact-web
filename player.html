@@ -572,7 +572,6 @@
         <a class="hover:text-white transition-colors" href="#">About Us</a>
         <a class="hover:text-white transition-colors" href="#">Contact</a>
       </div>
-      <p class="">© 2024 FanConnect Sports. All rights reserved.</p>
     </footer>
  <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -706,7 +705,7 @@ document.addEventListener("DOMContentLoaded", function() {
       for (var s in sidMap) {
         (function(sport, id) {
           promises.push(
-            fetch("/api/rankings/" + id + "?limit=50")
+            fetch(API_BASE + "/api/rankings/" + id + "?limit=50")
               .then(function(r) { return r.json(); })
               .then(function(d) {
                 if (d && d.players) {

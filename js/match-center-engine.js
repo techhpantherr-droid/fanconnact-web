@@ -24,18 +24,20 @@
 
   window.__MC_MATCH_ID__ = MATCHID;
 
-  // Prediction navigation: always use the actual current Match Center match.
+  // Prediction navigation: redirect to app (Play Store).
   function setupPredictionLink() {
     const link = document.getElementById('prediction-link');
     if (!link) return;
     const sport = String(SPORT || 'cricket').toLowerCase();
     if (MATCHID) {
-      link.href = 'prediction.html?matchId=' + encodeURIComponent(MATCHID) + '&sport=' + encodeURIComponent(sport);
       try {
         sessionStorage.setItem('predictionMatchId', MATCHID);
         sessionStorage.setItem('predictionSport', sport);
       } catch (_) {}
     }
+    link.href = 'https://play.google.com/store/apps';
+    link.target = '_blank';
+    link.rel = 'noopener';
   }
 
   const FORMAT_PARAM = params.get('format') || '';
@@ -163,6 +165,12 @@
 
     async getPartnershipGraph() {
       return await this.request(`/matches/${MATCHID}/partnershipGraph`);
+    },
+
+    async getAllSportsDetail(sport, rawId) {
+      const s = encodeURIComponent(String(sport || 'basketball').toLowerCase());
+      const id = encodeURIComponent(String(rawId || MATCHID || '').replace(/^as_/, ''));
+      return await this.request(`/all-sports/match/${s}/${id}`);
     }
 
   };
@@ -304,17 +312,146 @@
     return value;
   }
 
+  async function loadAllSportsMatchData(sport, rawId) {
+    // Resolve sport when the link lacks ?sport=: dashboard MATCHES first,
+    // then try every supported sport until one returns real teams.
+    const candidates = [];
+    if (sport) candidates.push(sport);
+    if (!sport) {
+      try {
+        const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
+        const found = ms && ms.find(x => String(x.id) === String(rawId || MATCHID));
+        if (found && found.sport) candidates.push(String(found.sport).toLowerCase());
+      } catch (_) {}
+    }
+    for (const s of ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi", "football", "hockey", "tennis"]) {
+      if (!candidates.includes(s)) candidates.push(s);
+    }
+    for (const s of candidates) {
+      let detail = null;
+      try {
+        detail = await API.getAllSportsDetail(s, rawId || MATCHID);
+      } catch (err) {
+        console.warn("[Match Center] AllSports detail unavailable:", s, err);
+        continue;
+      }
+      if (await applyAllSportsDetail(detail, s)) return;
+    }
+    BACKEND_READY = false;
+    setUnavailableModel("Real match data is not available");
+  }
+
+  async function applyAllSportsDetail(detail, sport) {
+    const norm = detail?.match || detail?.data?.match || null;
+    const evt = detail?.events || detail?.event || detail?.data?.event || null;
+    // Reject empty shells (wrong sport tried): need real team names.
+    const hasTeams = !!(norm?.homeTeam?.name || evt?.homeTeam?.name);
+    if (!hasTeams) return false;
+    const incidents = Array.isArray(detail?.incidents) ? detail.incidents
+      : Array.isArray(detail?.data?.incidents) ? detail.data.incidents : [];
+    const lineups = detail?.lineups || detail?.data?.lineups || null;
+    const homeStats = detail?.homeStats || evt?.homeStatistics || [];
+    const awayStats = detail?.awayStats || evt?.awayStatistics || [];
+
+    const homeName = norm?.homeTeam?.name || evt?.homeTeam?.name || HOME_T.name || 'Home';
+    const awayName = norm?.awayTeam?.name || evt?.awayTeam?.name || AWAY_T.name || 'Away';
+    const homeScore = norm?.score?.home ?? evt?.homeScore?.current ?? '';
+    const awayScore = norm?.score?.away ?? evt?.awayScore?.current ?? '';
+    const statusText = norm?.statusText || evt?.status?.description || norm?.result || '';
+    const status = norm?.status || (/finish|result|won|full/i.test(statusText) ? 'finished'
+      : (/1st|2nd|3rd|4th|quarter|half|inning|set|game|live|in progress/i.test(statusText) ? 'live' : 'upcoming'));
+
+    Object.assign(HOME_T, { name: homeName, img: HOME_T.img });
+    Object.assign(AWAY_T, { name: awayName, img: AWAY_T.img });
+    M.home = HOME_T; M.away = AWAY_T;
+    M.sport = sport;
+    M.state = status;
+    M.meta.title = homeName + ' vs ' + awayName;
+    M.meta.sub = norm?.series || evt?.tournament?.name || '';
+    M.meta.series = M.meta.sub;
+    M.meta.venue = evt?.venue?.name || '';
+    M.meta.format = sport;
+    M.meta.date = norm?.date ? (norm.date + (norm?.time ? ' · ' + norm.time : '')) : '';
+    M.score = {
+      status,
+      resultText: status === 'finished' ? (norm?.result || statusText || 'Full Time')
+        : status === 'live' ? (statusText || 'Live') : (norm?.date ? (norm.date + (norm?.time ? ' · ' + norm.time : '')) : 'Upcoming'),
+      subText: M.meta.sub,
+      icon: SC.icon || '🏟️',
+      home: { score: String(homeScore ?? ''), sub: '', detail: statusText },
+      away: { score: String(awayScore ?? ''), sub: '', detail: '' }
+    };
+    const statRows = [];
+    const maxStats = Math.max(Array.isArray(homeStats) ? homeStats.length : 0, Array.isArray(awayStats) ? awayStats.length : 0);
+    for (let i = 0; i < Math.min(maxStats, 12); i++) {
+      const h = Array.isArray(homeStats) ? homeStats[i] : null;
+      const a = Array.isArray(awayStats) ? awayStats[i] : null;
+      const key = h?.name || h?.type || a?.name || a?.type || ('Stat ' + (i + 1));
+      statRows.push({ k: String(key), h: h?.value ?? h?.stat ?? '—', a: a?.value ?? a?.stat ?? '—' });
+    }
+    M.scorecard = statRows.length
+      ? { type: sport, stats: statRows, home: { code: 'HOME' }, away: { code: 'AWAY' } }
+      : { type: 'cricket', innings: [] };
+    M.comm = {
+      label: 'Match Events',
+      items: incidents.slice(0, 100).map((ev, i) => {
+        const h = ev?.homeScore, a = ev?.awayScore;
+        const snap = (h != null && a != null && h !== '' && a !== '') ? ' (' + h + '-' + a + ')' : '';
+        const base = ev?.text || ev?.comment || ev?.description || (ev?.player?.name ? ev.player.name + ' — ' + (ev?.type || 'event') : (ev?.type || 'Event'));
+        return {
+          over: ev?.time ?? ev?.minute ?? ('#' + (i + 1)),
+          text: base + snap,
+          type: /goal|score|win|point/i.test(ev?.type || ev?.text || '') ? 'four' : 'info',
+          timestamp: ev?.timeStamp || Date.now()
+        };
+      })
+    };
+    const lineupToPlayers = (arr) => (Array.isArray(arr) ? arr.slice(0, 18).map(p => ({
+      n: p?.player?.name || p?.name || 'Player', r: p?.position || p?.role || '', id: p?.player?.id || p?.id || ''
+    })) : []);
+    const homeXI = lineupToPlayers(lineups?.home?.players || lineups?.homeTeam?.players || lineups?.home);
+    const awayXI = lineupToPlayers(lineups?.away?.players || lineups?.awayTeam?.players || lineups?.away);
+    M.squads = { home: { xi: homeXI, bench: [], staff: [] }, away: { xi: awayXI, bench: [], staff: [] } };
+    // Real summary + team-filtered news + weather, same builders as cricket.
+    applyRealSummaryData();
+    try {
+      const rawNews = await API.getNews().catch(() => null);
+      REAL_DATA.news = rawNews;
+      applyRealNewsData();
+      const hn = (HOME_T.name || '').toLowerCase(), an = (AWAY_T.name || '').toLowerCase();
+      M.news.articles = (M.news.articles || []).filter(a =>
+        (hn && (((a.title || '') + ' ' + (a.desc || '')).toLowerCase().includes(hn))) ||
+        (an && (((a.title || '') + ' ' + (a.desc || '')).toLowerCase().includes(an))));
+      M.news.source = 'Live backend';
+    } catch (_) { M.news = { source: 'Live backend', articles: [] }; }
+    // Score progression for the Graph tab, from incident scorelines.
+    M.graph.timeline = incidents
+      .filter(ev => ev && ev.homeScore != null && ev.awayScore != null && ev.homeScore !== '' && ev.awayScore !== '')
+      .map(ev => ({ t: String(ev.time ?? ev.minute ?? ''), h: Number(ev.homeScore), a: Number(ev.awayScore) }))
+      .filter(p => Number.isFinite(p.h) && Number.isFinite(p.a))
+      .slice(0, 60);
+    try { await loadRealWeather(); } catch (_) {}
+    BACKEND_READY = true;
+    return true;
+  }
+
   async function loadRealMatchData() {
     setupPredictionLink();
+    // Non-cricket (AllSports/ESPN/PKL) matches use a dedicated real-data path.
+    const sportParam = String(SPORT || '').toLowerCase();
+    const isAllSportsId = /^(as_|espn_|pkl_)/i.test(String(MATCHID || ''));
+    const isAllSportsSport = sportParam && sportParam !== 'cricket';
+    if (isAllSportsId || isAllSportsSport) {
+      const sport = isAllSportsSport ? sportParam : null;
+      console.log('Loading REAL AllSports match data:', MATCHID, sport || '(auto-detect)');
+      if (!MATCHID) { BACKEND_READY = false; setUnavailableModel('Match ID is missing'); return; }
+      await loadAllSportsMatchData(sport, MATCHID);
+      return;
+    }
   console.log('Loading REAL match data:', MATCHID);
     if (!MATCHID) {
       BACKEND_READY = false;
       setUnavailableModel('Match ID is missing');
-      return;
-    }
-
-    if (IS_ALLSPORTS) {
-      await loadAllSportsMatchData();
       return;
     }
 
@@ -416,194 +553,6 @@
     await loadRealWeather();
     applyRealSummaryData();
     applyRealNewsData();
-  }
-
-  // ============================================================================
-  // ALL SPORTS v2 LOADER (basketball / baseball / volleyball / handball / esport)
-  // Consumes /api/all-sports/match/:sport/:id from the backend proxy. The
-  // detail payload contains a normalized event plus incidents / lineups / team
-  // stats which we map onto the same M model the cricket engine renders.
-  // ============================================================================
-
-  function allSportsIncidentToCommItem(inc, i) {
-    const playerName = safeLabel(inc?.player?.name || inc?.playerName || '');
-    const teamName = safeLabel(inc?.team?.name || inc?.teamName || '');
-    const desc = safeLabel(inc?.description || inc?.text || '');
-    const reason = safeLabel(inc?.reason || '');
-    const minute = safeLabel(inc?.time ?? inc?.minute ?? inc?.period ?? '');
-    const textParts = [
-      desc || (playerName ? playerName + (teamName ? ' (' + teamName + ')' : '') : ''),
-      reason && reason !== desc ? reason : ''
-    ].filter(Boolean);
-    const t = String(desc + ' ' + reason).toLowerCase();
-    let type = 'hit';
-    if (/3\s*-?\s*point|three\s*point|threepoint/.test(t)) type = 'three';
-    else if (/goal|score|touchdown/.test(t)) type = 'goal';
-    else if (/point|basket|pitp|layup|assist|rebound|steal|block|turnover/.test(t)) type = 'pts';
-    else if (/card|penalty|foul|violation|offside|fault/.test(t)) type = 'card';
-    else if (/period|quarter|half|end\s*of|timeout|set\s*end|inning/.test(t)) type = 'milestone';
-    else if (/injury|substitution|replaced|yello|red/.test(t)) type = 'hit';
-    return {
-      type,
-      over: minute || '—',
-      striker: playerName || 'Event',
-      bowler: '—',
-      nonstriker: '',
-      badge: type === 'three' ? '3PT' : type === 'goal' ? 'G' : type === 'pts' ? 'P' : type === 'card' ? 'C' : type === 'milestone' ? 'END' : '•',
-      text: textParts.join(' · ') || 'Match event',
-      time: formatCommentaryTime(inc?.timestamp || inc?.id),
-      timestamp: Date.now() + i
-    };
-  }
-
-  function allSportsLineupToSquads(lineups) {
-    const empty = () => ({ xi: [], bench: [], staff: [] });
-    const squads = { home: empty(), away: empty() };
-    if (!lineups) return squads;
-    // Accept a few common AllSports lineup shapes: [ {team, players} ] or { data: [...] }
-    const list = Array.isArray(lineups) ? lineups : (Array.isArray(lineups?.data) ? lineups.data : []);
-    const maestro = (players) => (Array.isArray(players) ? players : (Array.isArray(players?.players) ? players.players : [])).map(p => ({
-      n: safeLabel(p?.player?.name || p?.name || p?.playerName || ''),
-      r: safeLabel(p?.position || p?.poste || p?.role || p?.type || ''),
-      id: safeLabel(p?.player?.id || p?.id || ''),
-      c: !!(p?.captain || p?.isCaptain || false),
-      wk: !!(p?.isGoalkeeper || p?.isGoalkiper || false)
-    })).filter(p => p.n);
-    const homeId = String((REAL_DATA.match?.match)?.homeTeam?.id ?? '');
-    const awayId = String((REAL_DATA.match?.match)?.awayTeam?.id ?? '');
-    list.forEach(entry => {
-      const teamId = String(entry?.team?.id ?? entry?.teamId ?? '');
-      const teamName = safeLabel(entry?.team?.name || entry?.teamName || '');
-      const players = maestro(entry?.players || entry?.lineup || entry);
-      const isHome = (teamId && homeId && teamId === homeId) ||
-        (teamName && safeLabel(REAL_DATA.match?.match?.homeTeam?.name).toLowerCase() === teamName.toLowerCase());
-      const isAway = (teamId && awayId && teamId === awayId) ||
-        (teamName && safeLabel(REAL_DATA.match?.match?.awayTeam?.name).toLowerCase() === teamName.toLowerCase());
-      if (isHome) squads.home.xi = players;
-      else if (isAway) squads.away.xi = players;
-    });
-    if (!squads.home.xi.length && !squads.away.xi.length && list.length) {
-      squads.home.xi = maestro(list[0]?.players || list[0]?.lineup || list[0]);
-      if (list.length > 1) squads.away.xi = maestro(list[1]?.players || list[1]?.lineup || list[1]);
-    }
-    return squads;
-  }
-
-  function buildAllSportsScorecard(detail) {
-    const homeStats = Array.isArray(detail?.homeStats) ? detail.homeStats : [];
-    const awayStats = Array.isArray(detail?.awayStats) ? detail.awayStats : [];
-    const stats = [];
-    const len = Math.max(homeStats.length, awayStats.length);
-    for (let i = 0; i < len; i++) {
-      const h = homeStats[i] || {}, a = awayStats[i] || {};
-      const key = safeLabel(h.name || a.name || h.description || a.description || ('Stat ' + (i + 1)));
-      if (!key) continue;
-      const hv = Number(h.value ?? h.homeValue ?? h.percentage ?? NaN);
-      const av = Number(a.value ?? a.awayValue ?? a.percentage ?? NaN);
-      if (Number.isFinite(hv) && Number.isFinite(av) && (hv + av) > 0) {
-        stats.push({ h: hv, a: av, k: key });
-      }
-    }
-    const sc = REAL_DATA.match?.match?.score || {};
-    if (!stats.length && sc.home !== '' && sc.away !== '') {
-      const hv = Number(sc.home), av = Number(sc.away);
-      if (Number.isFinite(hv) && Number.isFinite(av) && (hv + av) > 0) {
-        stats.push({ h: hv, a: av, k: 'Total Score' });
-      }
-    }
-    return {
-      type: 'stats', // generic home-vs-away stat table (renderScorecard else branch)
-      innings: [{}], // non-empty so renderScorecard renders the table
-      stats,
-      home: { code: HOME_CODE || 'HOME', name: HOME_T.name },
-      away: { code: AWAY_CODE || 'AWY', name: AWAY_T.name }
-    };
-  }
-
-  async function loadAllSportsMatchData() {
-    setupPredictionLink();
-    await loadDynamicTeamRegistry().catch(err => console.warn('[Match Center] team registry unavailable:', err));
-
-    let detail = null;
-    try {
-      detail = await API.getAllSportsMatch();
-    } catch (e) {
-      console.warn('[AllSports] match detail failed:', e);
-    }
-    const norm = detail?.match || null;
-    if (!detail || !norm || !Object.keys(norm).length) {
-      BACKEND_READY = false;
-      setUnavailableModel('Real match data is not available');
-      return;
-    }
-
-    applyAllSportsDetail(detail);
-
-    applyRealSummaryData();
-    await loadRealWeather();
-    BACKEND_READY = true;
-  }
-
-  // Applies a fresh /api/all-sports/match/:sport/:id detail payload onto the M
-  // model. Shared by the initial load and the live refresh loop so both stay
-  // in sync with the same mapping logic (incidents -> commentary, lineups ->
-  // squads, team stats -> scorecard).
-  function applyAllSportsDetail(detail) {
-    const norm = detail?.match || null;
-    if (!norm) return;
-
-    REAL_DATA.match = detail; // getMatchData() reads .match first -> normalized event
-    REAL_DATA.scorecard = null;
-    REAL_DATA.allSportsDetail = detail;
-
-    updateTeamsFromBackend();
-
-    const state = /live|in progress/i.test(String(norm.status || '')) ? 'live'
-      : /finish|completed|result|won/i.test(String(norm.status || '')) ? 'finished' : 'upcoming';
-    M.state = state;
-    M.score.status = state;
-    M.score.icon = state === 'live' ? '🔴' : state === 'finished' ? '🏁' : '⏳';
-    M.score.home.score = safeString(norm.score?.home ?? '');
-    M.score.away.score = safeString(norm.score?.away ?? '');
-    M.score.home.sub = M.score.away.sub = '';
-    M.score.home.detail = safeLabel(norm.score?.detail ?? '');
-    M.score.away.detail = M.score.home.detail;
-    M.score.resultText = safeLabel(norm.result || norm.statusText || norm.status?.description || '');
-    M.score.subText = M.score.home.detail;
-
-    const start = norm.startTime ? parseDateValue(norm.startTime) : null;
-    M.meta.format = safeLabel(norm.matchType || norm.format || norm.rules || SPORT);
-    M.meta.series = safeLabel(norm.series || norm.tournament || '');
-    M.meta.venue = safeLabel(norm.venue?.name || norm.venue || '');
-    M.meta.sub = M.meta.series || M.meta.format;
-    M.meta.toss = '';
-    M.meta.date = start ? formatStartDate(start) + (formatStartTime(start) ? ' · ' + formatStartTime(start) : '') : (norm.date || '');
-    M.meta.realStatusLine = M.score.resultText;
-    M.meta.realResult = M.score.resultText;
-
-    // Winner flags from the backing provider when the status text names a team.
-    const stl = String(M.score.resultText).toLowerCase();
-    const hName = safeLabel(HOME_T.name).toLowerCase();
-    const aName = safeLabel(AWAY_T.name).toLowerCase();
-    if (state === 'finished' && (stl.includes(hName) || stl.includes(aName))) {
-      const homeWon = stl.includes(hName);
-      M.score.home.won = homeWon;
-      M.score.away.won = !homeWon;
-      M.meta.winner = homeWon ? HOME_T.name : AWAY_T.name;
-    }
-
-    // Commentary from the real incidents feed
-    M.comm = {
-      label: SC.label + ' Events',
-      items: (Array.isArray(detail.incidents) ? detail.incidents : []).map(allSportsIncidentToCommItem)
-    };
-
-    // Squads from the real lineups feed
-    M.squads = allSportsLineupToSquads(detail.lineups);
-    M.players = { home: M.squads.home.xi.map(p => p.n), away: M.squads.away.xi.map(p => p.n) };
-
-    // Scorecard comparison table from the real team statistics
-    M.scorecard = buildAllSportsScorecard(detail);
   }
 
   function setUnavailableModel(message) {
@@ -3553,6 +3502,13 @@ if (Array.isArray(model.overs) && model.overs.length) {
   }
   // crex-style commentary item with avatars + new-batsman on wicket
   function commItemHtml(it) {
+    // Generic match events (non-cricket feeds have no striker/bowler avatars).
+    if (!it.striker && !it.bowler) {
+      return '<div class="comm-item flex gap-3 p-4" data-type="' + it.type + '">' +
+        '<span class="shrink-0 w-12 text-right text-xs font-bold text-crexGold mt-1">' + esc(it.over) + '</span>' +
+        '<div class="flex-1 min-w-0"><div class="text-sm text-gray-700 dark:text-gray-200">' + esc(it.text) + '</div>' +
+        (it.time ? '<div class="mt-1 text-[10px] text-gray-400">⏱ ' + esc(it.time) + '</div>' : '') + '</div></div>';
+    }
     const cls = it.type === 'wicket' ? 'text-red-500' : (it.type === 'four' || it.type === 'six' ? 'text-gray-900 dark:text-white' : '');
     const av = (nm, teamCode, z) => '<a href="player.html" class="relative z-' + z + '"><img alt="' + esc(nm) + '" title="' + esc(nm) + '" class="w-9 h-9 rounded-full border-2 border-white dark:border-[#12172D] cursor-pointer hover:ring-2 hover:ring-crexGold transition" src="' + avatarFor(nm, teamCode) + '"></a>';
     const strikerTeam = M.players.home.indexOf(it.striker) >= 0 ? HOME_CODE : (M.players.away.indexOf(it.striker) >= 0 ? AWAY_CODE : '');
@@ -3894,6 +3850,14 @@ if (Array.isArray(model.overs) && model.overs.length) {
 
     }
     if (!sc || !Array.isArray(sc.innings) || !sc.innings.length) {
+      // Non-cricket: no innings model — show the real final/live score instead.
+      if (!SC.isCricket && M.score && (M.score.home.score !== '' || M.score.away.score !== '')) {
+        html += '<section class="rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-[#12172D] border border-gray-200 dark:border-gray-800"><div class="bg-[#0b1626] px-5 py-4"><h3 class="font-bold text-white text-sm uppercase tracking-wide">Match Score · ' + esc(SC.label) + '</h3></div><div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-800">' +
+          teamSummaryCard(HOME_T, M.score.home) + teamSummaryCard(AWAY_T, M.score.away) + '</div>' +
+          (M.score.home.detail || M.score.away.detail ? '<div class="px-5 py-4 border-t border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-600 dark:text-gray-300">' + esc([M.score.home.detail, M.score.away.detail].filter(Boolean).join(' · ')) + '</p></div>' : '') + '</section></div>';
+        p.innerHTML = html;
+        return;
+      }
       html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-400">Real scorecard data is not available from the live feed.</p></section></div>';
       p.innerHTML = html;
       return;
@@ -3974,7 +3938,8 @@ if (Array.isArray(model.overs) && model.overs.length) {
       if (!staff.length) return '';
       return '<div><p class="text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wide">' + esc(tm.name) + '</p><div class="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden divide-y divide-gray-100 dark:divide-gray-800">' + staff.map(s => '<div class="flex items-center gap-3 px-3 py-2"><img alt="' + esc(s.n) + '" class="w-8 h-8 rounded-full border border-gray-200 dark:border-white/10 shrink-0" src="https://ui-avatars.com/api/?name=' + encodeURIComponent(s.n.split(' ').map(w => w[0]).join('')) + '&background=' + tm.color.replace('#', '') + '&color=fff&size=64"><div class="min-w-0 flex-1"><div class="text-sm font-medium text-gray-800 dark:text-white truncate">' + esc(s.n) + '</div><p class="text-[11px] text-gray-400 truncate">' + esc(s.r) + '</p></div></div>').join('') + '</div></div>';
     };
-    p.innerHTML = '<div class="col-span-12 bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-6">Squads</h3><div id="squads" class="grid grid-cols-1 md:grid-cols-2 gap-8">' + squadCol(HOME_T, 'home') + squadCol(AWAY_T, 'away') + '</div><div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Coaches &amp; Support Staff</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8">' + staffCol(HOME_T, 'home') + staffCol(AWAY_T, 'away') + '</div></div></div>';
+    const noSquads = !(M.squads.home.xi.length || M.squads.away.xi.length);
+    p.innerHTML = '<div class="col-span-12 bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-6">Squads</h3>' + (noSquads ? '<p class="text-sm text-gray-400 mb-6">Squad lists have not been published by the live feed for this match.</p>' : '') + '<div id="squads" class="grid grid-cols-1 md:grid-cols-2 gap-8">' + squadCol(HOME_T, 'home') + squadCol(AWAY_T, 'away') + '</div><div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Coaches &amp; Support Staff</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-8">' + staffCol(HOME_T, 'home') + staffCol(AWAY_T, 'away') + '</div></div></div>';
     p.querySelectorAll('a[data-pname]').forEach(a => a.addEventListener('click', () => {
       sessionStorage.setItem('playerSport', SC.label);
       sessionStorage.setItem('playerView', JSON.stringify({ player: { id: a.dataset.pid || '', name: a.dataset.pname, country: a.dataset.pcountry }, sport: SC.label }));
@@ -4354,9 +4319,9 @@ if (Array.isArray(model.overs) && model.overs.length) {
       // AllSports v2: re-fetch the whole match-detail payload (event + incidents
       // + lineups + team stats) and re-apply it through the same mapping used by
       // the initial load. The guard above stops the loop once the match finishes.
-      const detail = await API.getAllSportsMatch().catch(() => null);
+      const detail = await API.getAllSportsDetail(SPORT, MATCHID).catch(() => null);
       if (!detail || !detail.match || !Object.keys(detail.match).length) return;
-      applyAllSportsDetail(detail);
+      await applyAllSportsDetail(detail, SPORT);
       if (M.score.status !== 'live') { stopLiveLoop(); return; }
       renderScoreHeader();
       renderSummary();
@@ -4525,6 +4490,18 @@ if (Array.isArray(model.overs) && model.overs.length) {
       inningsEl.innerHTML = '';
       typeEl.innerHTML = '';
       if (legend) legend.innerHTML = '';
+      // Non-cricket: real score progression from the live incident feed.
+      const tl = Array.isArray(M.graph?.timeline) ? M.graph.timeline : [];
+      if (tl.length) {
+        svg.style.display = 'none';
+        let tbl = $('graph-timeline');
+        if (!tbl) { tbl = document.createElement('div'); tbl.id = 'graph-timeline'; svg.parentNode.appendChild(tbl); }
+        tbl.innerHTML = '<div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Time</th><th class="py-2 px-4 font-medium text-right">' + esc(HOME_T.name) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(AWAY_T.name) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' +
+          tl.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-crexGold font-semibold">' + esc(r.t || '—') + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.h)) + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.a)) + '</td></tr>').join('') +
+          '</tbody></table></div>';
+        if (loading) loading.textContent = 'Real score progression from the live feed.';
+        return;
+      }
       svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="currentColor" opacity=".6" font-size="13">Real graph data is not available from the live feed.</text>';
       return;
     }
@@ -4768,7 +4745,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
         M.meta.series = safeString(match.series || match.tournament || M.meta.series);
         M.meta.venue = safeString(match.venue?.name || match.venue || M.meta.venue);
       } else {
-        M.meta.title = 'Match Center';
+        M.meta.title = M.meta.title || 'Match Center';
       }
       console.log("REAL Match Center loaded", MATCHID);
     } catch (err) {
