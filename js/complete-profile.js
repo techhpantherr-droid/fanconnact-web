@@ -12,6 +12,8 @@ import {
   query,
   where,
   getDocs,
+  addDoc,
+  serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const $ = (id) => document.getElementById(id);
@@ -124,6 +126,17 @@ $("finish-btn")?.addEventListener("click", async () => {
       createdAt: new Date().toISOString(),
     });
     await setDoc(doc(db, "usernames", username), { uid: uid });
+
+    await addDoc(
+      collection(db, "rewards"),
+      {
+        uid: uid,
+        reason: "Signup Coins",
+        xp: 0,
+        coins: 100,
+        createdAt: serverTimestamp(),
+      }
+    );
 
     sessionStorage.removeItem("googleSignup");
     window.location.href = "dashboard.html";

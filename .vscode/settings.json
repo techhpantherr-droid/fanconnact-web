@@ -1,4 +1,5 @@
 {
   "aiderAgent.provider": "local",
-  "compile-hero.disable-compile-files-on-did-save-code": false
+  "compile-hero.disable-compile-files-on-did-save-code": false,
+  "cmake.sourceDirectory": "E:/famconnact/FanConnact/New folder/fanconnactweb/windows"
 }

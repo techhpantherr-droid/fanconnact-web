@@ -520,7 +520,7 @@
       },
       statusLine: match.statusText || match.result || match.status || '',
       result: status === 'finished' ? (match.result || match.statusText || match.status || '') : '',
-      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? ''))
+      link: 'match-center.html?id=' + encodeURIComponent(String(match.id ?? match.matchId ?? '')) + '&sport=' + encodeURIComponent(String(match.sport || 'cricket').toLowerCase())
     };
   }
 

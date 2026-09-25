@@ -1210,6 +1210,18 @@ export async function giveWelcomeBonus(uid){
 
         });
 
+        await saveRewardHistory(
+
+            uid,
+
+            "Welcome Bonus",
+
+            10,
+
+            5
+
+        );
+
         return true;
 
     }

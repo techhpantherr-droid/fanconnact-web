@@ -16,6 +16,11 @@
   const AWAY = (params.get('away') || '').toLowerCase();
   // Match ID is the only authoritative match selector. URL hs/as values are ignored.
   const MATCHID = params.get('id') || params.get('match') || '';
+  // AllSports v2 (RapidAPI allsportsapi2) sports served via the backend
+  // /api/all-sports/* proxy. These use "as_" prefixed ids and a different
+  // response schema (incidents / lineups / team scores) than cricket.
+  const ALLSPORTS_SUPPORTED_LIST = ['basketball', 'baseball', 'volleyball', 'handball', 'esport'];
+  const IS_ALLSPORTS = ALLSPORTS_SUPPORTED_LIST.includes(SPORT) || /^as_/.test(MATCHID);
 
   window.__MC_MATCH_ID__ = MATCHID;
 
@@ -90,6 +95,14 @@
         `/matches/${MATCHID}`
       );
 
+    },
+
+    // AllSports v2 match detail (basketball / baseball / volleyball / handball / esport)
+    async getAllSportsMatch() {
+      const s = SPORT && ALLSPORTS_SUPPORTED_LIST.includes(SPORT) ? SPORT : 'basketball';
+      return await this.request(
+        `/all-sports/match/${encodeURIComponent(s)}/${encodeURIComponent(MATCHID)}`
+      );
     },
 
 
@@ -300,6 +313,11 @@
       return;
     }
 
+    if (IS_ALLSPORTS) {
+      await loadAllSportsMatchData();
+      return;
+    }
+
     REAL_DATA = {
       match: null,
       scorecard: null,
@@ -398,6 +416,194 @@
     await loadRealWeather();
     applyRealSummaryData();
     applyRealNewsData();
+  }
+
+  // ============================================================================
+  // ALL SPORTS v2 LOADER (basketball / baseball / volleyball / handball / esport)
+  // Consumes /api/all-sports/match/:sport/:id from the backend proxy. The
+  // detail payload contains a normalized event plus incidents / lineups / team
+  // stats which we map onto the same M model the cricket engine renders.
+  // ============================================================================
+
+  function allSportsIncidentToCommItem(inc, i) {
+    const playerName = safeLabel(inc?.player?.name || inc?.playerName || '');
+    const teamName = safeLabel(inc?.team?.name || inc?.teamName || '');
+    const desc = safeLabel(inc?.description || inc?.text || '');
+    const reason = safeLabel(inc?.reason || '');
+    const minute = safeLabel(inc?.time ?? inc?.minute ?? inc?.period ?? '');
+    const textParts = [
+      desc || (playerName ? playerName + (teamName ? ' (' + teamName + ')' : '') : ''),
+      reason && reason !== desc ? reason : ''
+    ].filter(Boolean);
+    const t = String(desc + ' ' + reason).toLowerCase();
+    let type = 'hit';
+    if (/3\s*-?\s*point|three\s*point|threepoint/.test(t)) type = 'three';
+    else if (/goal|score|touchdown/.test(t)) type = 'goal';
+    else if (/point|basket|pitp|layup|assist|rebound|steal|block|turnover/.test(t)) type = 'pts';
+    else if (/card|penalty|foul|violation|offside|fault/.test(t)) type = 'card';
+    else if (/period|quarter|half|end\s*of|timeout|set\s*end|inning/.test(t)) type = 'milestone';
+    else if (/injury|substitution|replaced|yello|red/.test(t)) type = 'hit';
+    return {
+      type,
+      over: minute || '—',
+      striker: playerName || 'Event',
+      bowler: '—',
+      nonstriker: '',
+      badge: type === 'three' ? '3PT' : type === 'goal' ? 'G' : type === 'pts' ? 'P' : type === 'card' ? 'C' : type === 'milestone' ? 'END' : '•',
+      text: textParts.join(' · ') || 'Match event',
+      time: formatCommentaryTime(inc?.timestamp || inc?.id),
+      timestamp: Date.now() + i
+    };
+  }
+
+  function allSportsLineupToSquads(lineups) {
+    const empty = () => ({ xi: [], bench: [], staff: [] });
+    const squads = { home: empty(), away: empty() };
+    if (!lineups) return squads;
+    // Accept a few common AllSports lineup shapes: [ {team, players} ] or { data: [...] }
+    const list = Array.isArray(lineups) ? lineups : (Array.isArray(lineups?.data) ? lineups.data : []);
+    const maestro = (players) => (Array.isArray(players) ? players : (Array.isArray(players?.players) ? players.players : [])).map(p => ({
+      n: safeLabel(p?.player?.name || p?.name || p?.playerName || ''),
+      r: safeLabel(p?.position || p?.poste || p?.role || p?.type || ''),
+      id: safeLabel(p?.player?.id || p?.id || ''),
+      c: !!(p?.captain || p?.isCaptain || false),
+      wk: !!(p?.isGoalkeeper || p?.isGoalkiper || false)
+    })).filter(p => p.n);
+    const homeId = String((REAL_DATA.match?.match)?.homeTeam?.id ?? '');
+    const awayId = String((REAL_DATA.match?.match)?.awayTeam?.id ?? '');
+    list.forEach(entry => {
+      const teamId = String(entry?.team?.id ?? entry?.teamId ?? '');
+      const teamName = safeLabel(entry?.team?.name || entry?.teamName || '');
+      const players = maestro(entry?.players || entry?.lineup || entry);
+      const isHome = (teamId && homeId && teamId === homeId) ||
+        (teamName && safeLabel(REAL_DATA.match?.match?.homeTeam?.name).toLowerCase() === teamName.toLowerCase());
+      const isAway = (teamId && awayId && teamId === awayId) ||
+        (teamName && safeLabel(REAL_DATA.match?.match?.awayTeam?.name).toLowerCase() === teamName.toLowerCase());
+      if (isHome) squads.home.xi = players;
+      else if (isAway) squads.away.xi = players;
+    });
+    if (!squads.home.xi.length && !squads.away.xi.length && list.length) {
+      squads.home.xi = maestro(list[0]?.players || list[0]?.lineup || list[0]);
+      if (list.length > 1) squads.away.xi = maestro(list[1]?.players || list[1]?.lineup || list[1]);
+    }
+    return squads;
+  }
+
+  function buildAllSportsScorecard(detail) {
+    const homeStats = Array.isArray(detail?.homeStats) ? detail.homeStats : [];
+    const awayStats = Array.isArray(detail?.awayStats) ? detail.awayStats : [];
+    const stats = [];
+    const len = Math.max(homeStats.length, awayStats.length);
+    for (let i = 0; i < len; i++) {
+      const h = homeStats[i] || {}, a = awayStats[i] || {};
+      const key = safeLabel(h.name || a.name || h.description || a.description || ('Stat ' + (i + 1)));
+      if (!key) continue;
+      const hv = Number(h.value ?? h.homeValue ?? h.percentage ?? NaN);
+      const av = Number(a.value ?? a.awayValue ?? a.percentage ?? NaN);
+      if (Number.isFinite(hv) && Number.isFinite(av) && (hv + av) > 0) {
+        stats.push({ h: hv, a: av, k: key });
+      }
+    }
+    const sc = REAL_DATA.match?.match?.score || {};
+    if (!stats.length && sc.home !== '' && sc.away !== '') {
+      const hv = Number(sc.home), av = Number(sc.away);
+      if (Number.isFinite(hv) && Number.isFinite(av) && (hv + av) > 0) {
+        stats.push({ h: hv, a: av, k: 'Total Score' });
+      }
+    }
+    return {
+      type: 'stats', // generic home-vs-away stat table (renderScorecard else branch)
+      innings: [{}], // non-empty so renderScorecard renders the table
+      stats,
+      home: { code: HOME_CODE || 'HOME', name: HOME_T.name },
+      away: { code: AWAY_CODE || 'AWY', name: AWAY_T.name }
+    };
+  }
+
+  async function loadAllSportsMatchData() {
+    setupPredictionLink();
+    await loadDynamicTeamRegistry().catch(err => console.warn('[Match Center] team registry unavailable:', err));
+
+    let detail = null;
+    try {
+      detail = await API.getAllSportsMatch();
+    } catch (e) {
+      console.warn('[AllSports] match detail failed:', e);
+    }
+    const norm = detail?.match || null;
+    if (!detail || !norm || !Object.keys(norm).length) {
+      BACKEND_READY = false;
+      setUnavailableModel('Real match data is not available');
+      return;
+    }
+
+    applyAllSportsDetail(detail);
+
+    applyRealSummaryData();
+    await loadRealWeather();
+    BACKEND_READY = true;
+  }
+
+  // Applies a fresh /api/all-sports/match/:sport/:id detail payload onto the M
+  // model. Shared by the initial load and the live refresh loop so both stay
+  // in sync with the same mapping logic (incidents -> commentary, lineups ->
+  // squads, team stats -> scorecard).
+  function applyAllSportsDetail(detail) {
+    const norm = detail?.match || null;
+    if (!norm) return;
+
+    REAL_DATA.match = detail; // getMatchData() reads .match first -> normalized event
+    REAL_DATA.scorecard = null;
+    REAL_DATA.allSportsDetail = detail;
+
+    updateTeamsFromBackend();
+
+    const state = /live|in progress/i.test(String(norm.status || '')) ? 'live'
+      : /finish|completed|result|won/i.test(String(norm.status || '')) ? 'finished' : 'upcoming';
+    M.state = state;
+    M.score.status = state;
+    M.score.icon = state === 'live' ? '🔴' : state === 'finished' ? '🏁' : '⏳';
+    M.score.home.score = safeString(norm.score?.home ?? '');
+    M.score.away.score = safeString(norm.score?.away ?? '');
+    M.score.home.sub = M.score.away.sub = '';
+    M.score.home.detail = safeLabel(norm.score?.detail ?? '');
+    M.score.away.detail = M.score.home.detail;
+    M.score.resultText = safeLabel(norm.result || norm.statusText || norm.status?.description || '');
+    M.score.subText = M.score.home.detail;
+
+    const start = norm.startTime ? parseDateValue(norm.startTime) : null;
+    M.meta.format = safeLabel(norm.matchType || norm.format || norm.rules || SPORT);
+    M.meta.series = safeLabel(norm.series || norm.tournament || '');
+    M.meta.venue = safeLabel(norm.venue?.name || norm.venue || '');
+    M.meta.sub = M.meta.series || M.meta.format;
+    M.meta.toss = '';
+    M.meta.date = start ? formatStartDate(start) + (formatStartTime(start) ? ' · ' + formatStartTime(start) : '') : (norm.date || '');
+    M.meta.realStatusLine = M.score.resultText;
+    M.meta.realResult = M.score.resultText;
+
+    // Winner flags from the backing provider when the status text names a team.
+    const stl = String(M.score.resultText).toLowerCase();
+    const hName = safeLabel(HOME_T.name).toLowerCase();
+    const aName = safeLabel(AWAY_T.name).toLowerCase();
+    if (state === 'finished' && (stl.includes(hName) || stl.includes(aName))) {
+      const homeWon = stl.includes(hName);
+      M.score.home.won = homeWon;
+      M.score.away.won = !homeWon;
+      M.meta.winner = homeWon ? HOME_T.name : AWAY_T.name;
+    }
+
+    // Commentary from the real incidents feed
+    M.comm = {
+      label: SC.label + ' Events',
+      items: (Array.isArray(detail.incidents) ? detail.incidents : []).map(allSportsIncidentToCommItem)
+    };
+
+    // Squads from the real lineups feed
+    M.squads = allSportsLineupToSquads(detail.lineups);
+    M.players = { home: M.squads.home.xi.map(p => p.n), away: M.squads.away.xi.map(p => p.n) };
+
+    // Scorecard comparison table from the real team statistics
+    M.scorecard = buildAllSportsScorecard(detail);
   }
 
   function setUnavailableModel(message) {
@@ -2865,8 +3071,8 @@ if (Array.isArray(model.overs) && model.overs.length) {
 
     const homeName = safeLabel(resolvedHome.teamname || resolvedHome.teamName || resolvedHome.name || resolvedHome.team_name || resolvedHome.batteamname);
     const awayName = safeLabel(resolvedAway.teamname || resolvedAway.teamName || resolvedAway.name || resolvedAway.team_name || resolvedAway.batteamname);
-    const homeShort = safeLabel(resolvedHome.teamsname || resolvedHome.teamSName || resolvedHome.short || resolvedHome.abbreviation || resolvedHome.teamCode || resolvedHome.batteamsname).toLowerCase();
-    const awayShort = safeLabel(resolvedAway.teamsname || resolvedAway.teamSName || resolvedAway.short || resolvedAway.abbreviation || resolvedAway.teamCode || resolvedAway.batteamsname).toLowerCase();
+    const homeShort = safeLabel(resolvedHome.teamsname || resolvedHome.teamSName || resolvedHome.short || resolvedHome.shortName || resolvedHome.abbreviation || resolvedHome.teamCode || resolvedHome.batteamsname).toLowerCase();
+    const awayShort = safeLabel(resolvedAway.teamsname || resolvedAway.teamSName || resolvedAway.short || resolvedAway.shortName || resolvedAway.abbreviation || resolvedAway.teamCode || resolvedAway.batteamsname).toLowerCase();
 
     HOME_CODE = homeShort || HOME_CODE || '';
     AWAY_CODE = awayShort || AWAY_CODE || '';
@@ -2915,8 +3121,10 @@ if (Array.isArray(model.overs) && model.overs.length) {
     tennis: { label: 'Tennis', xUnit: 'Games', xMax: 40, icon: '🎾', isBall: false },
     baseball: { label: 'Baseball', xUnit: 'Inn', xMax: 9, icon: '⚾', isBall: false },
     hockey: { label: 'Hockey', xUnit: 'Min', xMax: 60, icon: '🏒', isBall: false },
+    handball: { label: 'Handball', xUnit: 'Min', xMax: 60, icon: '🤾', isBall: false },
     kabaddi: { label: 'Kabaddi', xUnit: 'Min', xMax: 40, icon: '🤼', isKabaddi: true },
     'e-sports': { label: 'E-Sports', xUnit: 'Min', xMax: 60, icon: '🎮', isKabaddi: true },
+    esport: { label: 'E-Sports', xUnit: 'Min', xMax: 60, icon: '🎮', isKabaddi: true },
     tabletennis: { label: 'Table Tennis', xUnit: 'Games', xMax: 11, icon: '🏓', isBall: false },
     volleyball: { label: 'Volleyball', xUnit: 'Sets', xMax: 5, icon: '🏐', isBall: false }
   };
@@ -3024,6 +3232,17 @@ if (Array.isArray(model.overs) && model.overs.length) {
         'Back-row players may not attack the ball above the net from in front of the attack line.'
       ]
     },
+    handball: {
+      title: 'Handball — Rules & Regulations',
+      points: [
+        'Two teams of seven (six outfield + goalkeeper) throw a ball into the opponent’s goal.',
+        'A match is two 30-minute halves; most goals at full time wins.',
+        'Players may take up to three steps and hold the ball for three seconds without dribbling.',
+        'Contact is allowed only for controlling the opponent’s body with bent arms; tackles must be front-on.',
+        'Only the goalkeeper may enter the 6-metre goal area.',
+        'Free throws, 7-metre penalty throws and two-minute suspensions penalise rule breaches.'
+      ]
+    },
     kabaddi: {
       title: 'Kabaddi — Rules & Regulations',
       points: [
@@ -3036,6 +3255,17 @@ if (Array.isArray(model.overs) && model.overs.length) {
       ]
     },
     'e-sports': {
+      title: 'E-Sports — Rules & Regulations',
+      points: [
+        'Team-based competitive gaming; formats vary by title (5v5, battle royale, 1v1).',
+        'Matches are played on official patches with approved hardware and settings.',
+        'Objectives differ by game (destroy base, eliminate opponents, capture control points).',
+        'Pauses require an admin; intentional disconnects are penalised.',
+        'Behavioural rules forbid cheating, scripting, toxicity and collusion.',
+        'Series are best-of-3/5; the bracket or league table decides the champion.'
+      ]
+    },
+    esport: {
       title: 'E-Sports — Rules & Regulations',
       points: [
         'Team-based competitive gaming; formats vary by title (5v5, battle royale, 1v1).',
@@ -4119,7 +4349,23 @@ if (Array.isArray(model.overs) && model.overs.length) {
   }
   // Live score refresh is backend-only. No simulated clock, innings, winner or score path.
   async function refreshRealLiveData() {
-    if (!SC.isCricket || !MATCHID || M.score.status !== 'live') return;
+    if (!MATCHID || M.score.status !== 'live') return;
+    if (IS_ALLSPORTS) {
+      // AllSports v2: re-fetch the whole match-detail payload (event + incidents
+      // + lineups + team stats) and re-apply it through the same mapping used by
+      // the initial load. The guard above stops the loop once the match finishes.
+      const detail = await API.getAllSportsMatch().catch(() => null);
+      if (!detail || !detail.match || !Object.keys(detail.match).length) return;
+      applyAllSportsDetail(detail);
+      if (M.score.status !== 'live') { stopLiveLoop(); return; }
+      renderScoreHeader();
+      renderSummary();
+      renderScorecard();
+      renderCommentary();
+      renderSquads();
+      return;
+    }
+    if (!SC.isCricket) return;
     const match = await API.getMatch().catch(() => null);
     const scorecard = await API.getScorecard().catch(() => null);
     if (match) REAL_DATA.match = match;
@@ -4163,6 +4409,10 @@ if (Array.isArray(model.overs) && model.overs.length) {
       refreshRealLiveData().catch(err => console.warn('Live refresh failed', err));
     }, 30000);
     refreshRealLiveData().catch(err => console.warn('Live refresh failed', err));
+  }
+
+  function stopLiveLoop() {
+    if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
   }
 
   // Big centre animation (between the two team scores) on a real score event.

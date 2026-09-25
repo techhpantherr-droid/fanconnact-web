@@ -21,7 +21,27 @@
 
   if (!messagesEl) return; // panel not present
 
-  // ---- Chat gating: open only when live or <30min to live; closed when finished ----
+  // ---- Chat gating: open when <30min to live, while live, and for 10 minutes
+  // after the match ends; closed otherwise ----
+  const POST_MATCH_GRACE_MS = 10 * 60000;
+  // Estimated match duration per sport, used to derive when a finished match ended.
+  const SPORT_DURATION_MS = {
+    cricket: 3.5 * 3600000,
+    football: 2 * 3600000,
+    basketball: 2.5 * 3600000,
+    baseball: 3 * 3600000,
+    tennis: 3 * 3600000,
+    hockey: 2.5 * 3600000,
+    handball: 1.5 * 3600000,
+    volleyball: 2 * 3600000,
+    kabaddi: 1.5 * 3600000,
+    'e-sports': 2 * 3600000,
+    esport: 2 * 3600000,
+    tabletennis: 1.5 * 3600000
+  };
+  function sportDurationMs(sport) {
+    return SPORT_DURATION_MS[sport] || 2 * 3600000;
+  }
   function getMatchState() {
     const p = new URLSearchParams(location.search);
     const state = (p.get('state') || '').toLowerCase();
@@ -66,7 +86,16 @@
   }
   function chatEligibility() {
     const s = getMatchState();
-    if (s.state === 'finished') return { enabled: false, reason: 'Chat is closed — this match has finished.' };
+    if (s.state === 'finished') {
+      const start = getMatchStart();
+      const end = start ? start.getTime() + sportDurationMs(s.sport) : 0;
+      const closeAt = end ? end + POST_MATCH_GRACE_MS : 0;
+      if (closeAt && Date.now() < closeAt) {
+        const remainMin = Math.max(1, Math.ceil((closeAt - Date.now()) / 60000));
+        return { enabled: true, reason: 'Match ended — chat stays open for ' + remainMin + ' more min.' };
+      }
+      return { enabled: false, reason: 'Chat is closed — this match has finished.' };
+    }
     if (s.state === 'live') return { enabled: true, reason: 'Live chat is open.' };
     const start = getMatchStart();
     if (!start) return { enabled: false, reason: 'Chat opens 30 minutes before the match.' };
@@ -75,20 +104,43 @@
     return { enabled: false, reason: 'Chat opens 30 minutes before the match (' + start.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' }) + ').' };
   }
   const _elig = chatEligibility();
+  function lockChat(lockEl) {
+    if (inputEl) { inputEl.disabled = true; inputEl.placeholder = 'Chat is closed'; }
+    if (sendBtn) sendBtn.disabled = true;
+    if (stickerBtn) stickerBtn.disabled = true;
+    if (imgBtn) imgBtn.disabled = true;
+    if (statusEl) { statusEl.textContent = 'closed'; statusEl.className = 'text-[10px] px-2 py-0.5 rounded-full bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-gray-400'; }
+    if (lockEl && lockEl.parentNode !== messagesEl) messagesEl.appendChild(lockEl);
+  }
   if (!_elig.enabled) {
     const lock = document.createElement('div');
     lock.className = 'flex flex-col items-center justify-center text-center gap-2 py-10 px-4 text-gray-400';
     const ic = document.createElement('div'); ic.className = 'text-3xl'; ic.textContent = '🔒';
     const tx = document.createElement('p'); tx.className = 'text-sm'; tx.textContent = _elig.reason;
     lock.appendChild(ic); lock.appendChild(tx);
-    messagesEl.appendChild(lock);
-    if (inputEl) { inputEl.disabled = true; inputEl.placeholder = 'Chat is closed'; }
-    if (sendBtn) sendBtn.disabled = true;
-    if (stickerBtn) stickerBtn.disabled = true;
-    if (imgBtn) imgBtn.disabled = true;
-    if (statusEl) { statusEl.textContent = 'closed'; statusEl.className = 'text-[10px] px-2 py-0.5 rounded-full bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-gray-400'; }
+    lockChat(lock);
     return;
   }
+
+  // If the chat is open in the post-match grace window, lock it automatically
+  // when that 10-minute window expires while the user is still on the page.
+  (function scheduleGraceRelock() {
+    const s = getMatchState();
+    if (s.state !== 'finished') return;
+    const start = getMatchStart();
+    if (!start) return;
+    const closeAt = start.getTime() + sportDurationMs(s.sport) + POST_MATCH_GRACE_MS;
+    const until = closeAt - Date.now();
+    if (until <= 0) return;
+    setTimeout(() => {
+      const lock = document.createElement('div');
+      lock.className = 'flex flex-col items-center justify-center text-center gap-2 py-10 px-4 text-gray-400';
+      lock.innerHTML = '<div class="text-3xl">🔒</div><p class="text-sm">Chat is closed — this match has finished.</p>';
+      lockChat(lock);
+      if (typeof renderSystem === 'function') renderSystem('Chat is now closed — this match has finished.');
+      if (ws && ws.readyState === WebSocket.OPEN) { try { ws.close(); } catch (e) {} }
+    }, until);
+  })();
 
   // Map of message id -> DOM node, for live "seen" updates
   const renderedMessages = {};

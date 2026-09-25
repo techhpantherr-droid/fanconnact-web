@@ -4305,8 +4305,10 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
     if (!ALLSPORTS_CONFIG.key || !ALLSPORTS_CONFIG.host) {
       return res.status(403).json({ success: false, message: "AllSports API key not configured" });
     }
+    // Match IDs are prefixed "as_" in our app; RapidAPI expects the raw numeric id.
+    const rapidId = String(matchId).replace(/^as_/, "");
     const [matchRes, incidentsRes, lineupsRes] = await Promise.allSettled([
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rapidId}`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
@@ -4314,7 +4316,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
         },
         signal: AbortSignal.timeout(12000),
       }),
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/incidents`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rapidId}/incidents`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,
@@ -4322,7 +4324,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
         },
         signal: AbortSignal.timeout(12000),
       }),
-      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${matchId}/lineups`, {
+      fetch(`${ALLSPORTS_CONFIG.base}/api/${sport}/match/${rapidId}/lineups`, {
         headers: {
           "X-RapidAPI-Key": ALLSPORTS_CONFIG.key,
           "X-RapidAPI-Host": ALLSPORTS_CONFIG.host,

@@ -2154,12 +2154,16 @@ document.addEventListener("DOMContentLoaded", () => {
       // Desktop: collapse/expand via width (sidebar is static here)
       sidebar.classList.remove("sidebar-collapsed");
     } else {
+      // Mobile: slide the drawer in. Must ALSO drop `sidebar-collapsed`
+      // because its CSS forces width:0 on every screen size — otherwise the
+      // drawer stays invisible on phones (the hamburger "does nothing").
       sidebar.classList.remove("-translate-x-full");
+      sidebar.classList.remove("sidebar-collapsed");
+      sidebarBackdrop?.classList.remove("opacity-0", "pointer-events-none");
     }
     localStorage.setItem("sidebar-hidden", "false");
     headerLogo?.classList.add("header-logo-hidden");
     headerLogo?.classList.remove("header-logo-show");
-    sidebarBackdrop?.classList.add("opacity-0", "pointer-events-none");
   }
   function closeSidebar() {
     if (!sidebar) return;
@@ -2168,11 +2172,12 @@ document.addEventListener("DOMContentLoaded", () => {
       sidebar.classList.add("sidebar-collapsed");
     } else {
       sidebar.classList.add("-translate-x-full");
+      sidebar.classList.add("sidebar-collapsed");
+      sidebarBackdrop?.classList.add("opacity-0", "pointer-events-none");
     }
     localStorage.setItem("sidebar-hidden", "true");
     headerLogo?.classList.remove("header-logo-hidden");
     headerLogo?.classList.add("header-logo-show");
-    sidebarBackdrop?.classList.add("opacity-0", "pointer-events-none");
   }
 
   // 3. Sidebar Toggle (works on every screen size)
