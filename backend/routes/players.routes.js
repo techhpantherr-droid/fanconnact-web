@@ -11,6 +11,83 @@ require("../providers/cricbuzz/players.provider");
 const { normalizePlayer } =
 require("../normalizers/playerNormalizer");
 
+const fs = require("fs");
+const path = require("path");
+
+const SYNCED_PLAYERS_PATH = path.join(__dirname, "..", "..", "data", "player-rankings.json");
+
+/* ==========================================
+        FREE SOURCE FALLBACK (synced data)
+        Real player records collected by
+        rankings-sync from ESPN / FIFA / ICC
+        etc. Used when the RapidAPI Cricbuzz
+        provider is down or quota exhausted.
+========================================== */
+
+function loadSyncedPlayers() {
+    try {
+        return JSON.parse(fs.readFileSync(SYNCED_PLAYERS_PATH, "utf8"));
+    } catch (e) {
+        return {};
+    }
+}
+
+function findSyncedPlayer(name, id) {
+    const db = loadSyncedPlayers();
+    const wanted = String(name || "").toLowerCase().trim();
+    for (const [sport, cats] of Object.entries(db)) {
+        if (!cats || typeof cats !== "object") continue;
+        for (const [cat, list] of Object.entries(cats)) {
+            if (!Array.isArray(list)) continue;
+            for (const rec of list) {
+                if (!rec || typeof rec !== "object") continue;
+                const recName = String(rec.name || rec.player || "").toLowerCase().trim();
+                const recId = String(rec.playerId ?? rec.id ?? rec.pid ?? rec.player_id ?? "");
+                const nameHit = wanted && recName === wanted;
+                const idHit = id && (recId === String(id) || recName && String(recName).includes(String(id).toLowerCase()));
+                if (nameHit || idHit) return { sport, category: cat, rec };
+            }
+        }
+    }
+    return null;
+}
+
+function profileFromSynced(found) {
+    const rec = found.rec;
+    const statKeys = Object.keys(rec).filter(k =>
+        !["rank", "name", "team", "country", "position", "_source", "playerId", "id", "pid", "player_id", "image", "rating"].includes(k)
+    );
+    const stats = {};
+    statKeys.forEach(k => { stats[k] = rec[k]; });
+    const rating = rec.rating || rec.points || 0;
+    return {
+        success: true,
+        _fallback: "sync",
+        _source: rec._source || null,
+        id: "sync:" + rec.name,
+        name: rec.name,
+        basic: {
+            id: "sync:" + rec.name,
+            name: rec.name,
+            image: rec.image || "",
+            country: rec.country || "",
+            team: rec.team || "",
+            role: rec.position || "",
+            rank: rec.rank ?? null,
+            rating,
+            battingStyle: rec._source ? "Source: " + rec._source : ""
+        },
+        career: { stats },
+        stats,
+        profile: { rank: rec.rank ?? null, rating },
+        sport: found.sport,
+        category: found.category,
+        rank: rec.rank ?? null,
+        rating,
+        ranking: { rank: rec.rank ?? null, rating }
+    };
+}
+
 
 /* ==========================================
         TRENDING PLAYERS
@@ -99,14 +176,51 @@ async (req,res)=>{
 
 try{
 
-const id=
+let id;
 
-await players.resolvePlayerId(
+try {
+
+id = await players.resolvePlayerId(
 req.params.name
-
 );
 
-if(!id){
+}
+catch (e) {
+
+console.warn("[players/resolve] Cricbuzz failed, using synced data:", e.message);
+
+}
+
+if (id) {
+
+return res.json({
+
+success:true,
+id
+
+});
+
+}
+
+const found = findSyncedPlayer(req.params.name);
+
+if (found) {
+
+return res.json({
+
+success:true,
+
+id: "sync:" + found.rec.name,
+
+name: found.rec.name,
+
+sport: found.sport,
+
+_source: found.rec._source || "synced"
+
+});
+
+}
 
 return res.status(404).json({
 
@@ -116,23 +230,13 @@ success:false
 
 }
 
-res.json({
-
-success:true,
-
-id
-
-});
-
-}
-
 catch(err){
 
-res.status(500).json({
+console.warn("[players/resolve] unexpected error:", err.message);
 
-success:false,
+res.status(404).json({
 
-message:err.message
+success:false
 
 });
 
@@ -286,13 +390,13 @@ router.get("/:id/career", async (req, res) => {
 
     catch (err) {
 
-        console.error(err);
+        console.warn("[players/career] failed:", err.message);
 
-        res.status(500).json({
+        res.status(404).json({
 
             success: false,
 
-            message: "Unable to fetch career"
+            message: "Career data unavailable"
 
         });
 
@@ -326,13 +430,13 @@ router.get("/:id/news", async (req, res) => {
 
     catch (err) {
 
-        console.error(err);
+        console.warn("[players/news] failed:", err.message);
 
-        res.status(500).json({
+        res.status(404).json({
 
             success: false,
 
-            message: "Unable to fetch player news"
+            message: "Player news unavailable"
 
         });
 
@@ -345,6 +449,13 @@ router.get("/:id/profile", async (req, res) => {
     try {
 
     const { id } = req.params;
+
+    // Free-source fallback: "sync:" ids resolve straight from player-rankings.json
+    if (String(id).indexOf("sync:") === 0) {
+        const found = findSyncedPlayer(id.replace(/^sync:/, ""));
+        if (found) return res.json(profileFromSynced(found));
+        return res.status(404).json({ success: false, message: "Player not found" });
+    }
 
     const key = `PLAYER_PROFILE_${id}`;
 
@@ -440,19 +551,32 @@ return player;
 
     );
 
+    // Empty shell returned by Cricbuzz while it is down / quota-exhausted:
+    // fall back to the real synced record before giving up.
+    const shellName = String(player?.basic?.name || player?.name || "").trim();
+    if (!shellName) {
+        const found = findSyncedPlayer("", id);
+        if (found) return res.json(profileFromSynced(found));
+        return res.status(404).json({ success: false, message: "Player data unavailable" });
+    }
+
     res.json(player);
 
 }
 
     catch(err){
 
-        console.error(err);
+        console.warn("[players/profile] failed:", err.message);
 
-        res.status(500).json({
+        const found = findSyncedPlayer("", req.params.id);
+
+        if (found) return res.json(profileFromSynced(found));
+
+        res.status(404).json({
 
             success:false,
 
-            message:"Failed to load player profile."
+            message:"Player data unavailable."
 
         });
 
