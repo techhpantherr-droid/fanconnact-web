@@ -446,15 +446,71 @@
     statusEl.className = 'text-[10px] px-2 py-0.5 rounded-full ' + (cls || 'bg-gray-200 dark:bg-white/10 text-gray-500 dark:text-gray-400');
   }
 
+  // ---- Room scope: per-match room (default) OR per-game room ----
+  // Every game gets its own room (game-cricket, game-football, game-basketball,
+  // ...) so fans of a game can talk in one place, while each match keeps its
+  // own room. The chip in the chat header switches between the two.
+  let gameRoomMode = false;
+  let manualRoomSwitch = false;
+
+  function sportKey() {
+    const p = new URLSearchParams(location.search);
+    return (p.get('sport') || 'cricket').toLowerCase();
+  }
+
+  function gameRoomId() {
+    return 'game-' + sportKey();
+  }
+
+  function currentRoomId() {
+    if (gameRoomMode) return gameRoomId();
+    const p = new URLSearchParams(location.search);
+    if (p.get('room') === 'game') return gameRoomId();
+    // Match id is driven by the Match Center URL (?id= preferred, ?match= legacy)
+    // prefixed with sport so rooms stay unique per match AND sport-detectable.
+    const _id = p.get('id') || p.get('match') || '';
+    const _sport = sportKey();
+    return _id ? (_sport + '-' + _id)
+      : (_p_match(p) || _sport + '-' + (p.get('home') || 'ind') + '-' + (p.get('away') || 'eng'));
+  }
+
+  function _p_match(p) {
+    return p.get('match') || '';
+  }
+
+  function renderRoomToggle() {
+    if (!statusEl || !statusEl.parentElement) return;
+    if (document.getElementById('chat-room-toggle')) return;
+    const sport = sportKey();
+    const btn = document.createElement('button');
+    btn.id = 'chat-room-toggle';
+    btn.type = 'button';
+    btn.className = 'text-[10px] px-2 py-0.5 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 dark:text-gray-400 transition-colors whitespace-nowrap';
+    const paint = () => {
+      btn.textContent = gameRoomMode ? (sport + ' game room') : 'Match room';
+      btn.title = gameRoomMode
+        ? 'In the ' + sport + ' game room - tap to go back to this match room'
+        : 'In this match room - tap to open the ' + sport + ' game room';
+    };
+    paint();
+    btn.addEventListener('click', () => {
+      gameRoomMode = !gameRoomMode;
+      paint();
+      manualRoomSwitch = true;
+      if (ws) { try { ws.close(); } catch (e) {} }
+      ws = null;
+      retry = 0;
+      if (messagesEl) messagesEl.innerHTML = '';
+      connect();
+      manualRoomSwitch = false;
+    });
+    statusEl.parentElement.insertBefore(btn, statusEl);
+  }
+
   function connect() {
     try {
-      // Match id is driven by the Match Center URL (?id= preferred, ?match= legacy)
-      // prefixed with sport so rooms stay unique per match AND sport-detectable.
-      const _p = new URLSearchParams(location.search);
-      const _id = _p.get('id') || _p.get('match') || '';
-      const _sport = (_p.get('sport') || 'cricket').toLowerCase();
-      const _mid = _id ? (_sport + '-' + _id)
-        : (_p.get('match') || _sport + '-' + (_p.get('home') || 'ind') + '-' + (_p.get('away') || 'eng'));
+      const _mid = currentRoomId();
+      renderRoomToggle();
       ws = new WebSocket(WS_URL + '?match=' + encodeURIComponent(_mid));
       ws.onopen = () => {
         retry = 0; fallback = false; setStatus('live', 'bg-emerald-500/20 text-emerald-400');
@@ -523,7 +579,7 @@
           }
         }
       };
-      ws.onclose = () => { if (retry < MAX_RETRY) { retry++; setTimeout(connect, 1500); } else enableFallback(); };
+      ws.onclose = () => { if (manualRoomSwitch) return; if (retry < MAX_RETRY) { retry++; setTimeout(connect, 1500); } else enableFallback(); };
       ws.onerror = () => { try { ws.close(); } catch (e) {} };
     } catch (e) { enableFallback(); }
   }
