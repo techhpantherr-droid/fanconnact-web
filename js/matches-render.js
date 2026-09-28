@@ -341,6 +341,36 @@ as =
     }, 30000);
   }
 
+  // Providers are not consistent about sport ids ("esport" vs "e-sports",
+  // "kabbaddi" vs "kabaddi", ...). Every page filters on the canonical id, so
+  // normalise once here instead of duplicating alias lists per page.
+  const SPORT_ALIASES = {
+    "esport": "e-sports", "esports": "e-sports", "e-sport": "e-sports",
+    "e_sports": "e-sports", "eSports": "e-sports",
+    "kabaddi": "kabbaddi", "kabaddi": "kabbaddi",
+    "table-tennis": "tabletennis", "table_tennis": "tabletennis",
+    "table tennis": "tabletennis",
+    "volley-ball": "volleyball", "vollyeball": "volleyball",
+    "cricket-": "cricket", "american football": "football", "soccer": "football"
+  };
+
+  function canonicalSport(value) {
+    if (!value) return "";
+    const raw = String(value);
+    const lower = raw.toLowerCase().trim();
+    if (SPORT_ALIASES[lower]) return SPORT_ALIASES[lower];
+    if (SPORT_ALIASES[raw]) return SPORT_ALIASES[raw];
+    return lower;
+  }
+
+  function applySportAliases(list) {
+    (list || []).forEach((m) => {
+      const c = canonicalSport(m.sport);
+      if (c) m.sport = c;
+    });
+    return list;
+  }
+
   // ---- render into a container, optionally filtered ----
   // horizontal=true => fixed-width cards for horizontal scrollers (dashboard)
   // horizontal=false => full-width cards for vertical lists (game pages, live matches)
@@ -349,7 +379,10 @@ as =
     if (filter === "live") list = list.filter(m => m.status === "live");
     else if (filter === "upcoming") list = list.filter(m => m.status === "upcoming");
     else if (filter === "finished") list = list.filter(m => m.status === "finished");
-    else if (filter && filter !== "all") list = list.filter(m => m.sport === filter);
+    else if (filter && filter !== "all") {
+      const want = canonicalSport(filter);
+      list = list.filter(m => canonicalSport(m.sport) === want);
+    }
 
     if (!list.length) {
       container.innerHTML = '<div class="text-center text-gray-500 py-10 text-sm">No matches found.</div>';
@@ -417,6 +450,10 @@ as =
 
     console.log("Renderer Loaded:", MATCHES.length, "backend:", !!window.FANCONNECT_BACKEND_MATCHES_READY);
 
+    // Normalise provider sport ids once so page filters, labels, colours and
+    // counts all agree (e.g. backend "esport" -> page "e-sports").
+    applySportAliases(MATCHES);
+
     // 0) dashboard hero carousel
     renderDashboardHero();
 
@@ -458,6 +495,11 @@ as =
 
   // Backend refreshes announce new data; render exactly once from that data.
   window.addEventListener("fanconnact:matches-data-updated", () => init());
+
+  // Expose the mapping so other modules (sport filter pills, match center)
+  // resolve provider sport ids the same way.
+  window.FC_CANONICAL_SPORT = canonicalSport;
+  window.FC_SPORT_ALIASES = SPORT_ALIASES;
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
