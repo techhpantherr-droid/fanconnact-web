@@ -95,11 +95,17 @@
   // ---- build a single card ----
   // NOTE: all colors are theme-aware (bg-card-bg / text-on-surface / etc.)
   // so the card is readable in light, dark and every named theme.
+  function isDarkSurface() {
+    if (document.documentElement && document.documentElement.classList.contains("dark")) return true;
+    var b = document.body ? document.body.className : "";
+    return /(^|\s)(theme-stadium|theme-esports|theme-royal|theme-custom|theme-dark)(\s|$)/.test(b);
+  }
+
   function cardHTML(m, horizontal, compact) {
     const h = team(m.home), a = team(m.away);
     const col = SPORT_COLOR[m.sport] || "blue";
     const label = SPORT_LABEL[m.sport] || m.sport;
-    const darkNow = !!(document.documentElement && document.documentElement.classList.contains("dark"));
+    const darkNow = isDarkSurface();
     const S = darkNow
       ? { card: "#12172D", border: "#243347", on: "#ffffff", variant: "#aab6c4", accent: "#34d399" }
       : { card: "#ffffff", border: "#e2e8f0", on: "#0f172a", variant: "#475569", accent: "#2196f3" };
@@ -441,17 +447,22 @@ as =
     if (window.__FANCONNECT_CARD_THEME_CSS__) return;
     window.__FANCONNECT_CARD_THEME_CSS__ = true;
     const s = document.createElement("style");
+    // Light overrides must ONLY apply on a true light surface (no `.dark`
+    // class, no dark named theme on <body>) so they never darken text on
+    // stadium/esports/royal/custom/dark bodies (where the page is dark).
+    const notNamedDark = "html:not(.dark) body:not(.theme-stadium):not(.theme-esports):not(.theme-royal):not(.theme-custom):not(.theme-dark)";
     s.textContent = [
-      ":root:not(.dark) .bg-card-bg { background: #ffffff !important; }",
-      ":root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }",
-      ":root:not(.dark) .text-on-surface { color: #0f172a !important; }",
-      ":root:not(.dark) .text-on-surface-variant { color: #475569 !important; }",
-      ":root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }",
+      notNamedDark + " .bg-card-bg { background: #ffffff !important; }",
+      notNamedDark + " .border-border-subtle { border-color: #e2e8f0 !important; }",
+      notNamedDark + " .text-on-surface { color: #0f172a !important; }",
+      notNamedDark + " .text-on-surface-variant { color: #475569 !important; }",
+      notNamedDark + " .text-emerald-accent { color: #2196f3 !important; }",
+      notNamedDark + " .score-home, " + notNamedDark + " .score-away { color: #0f172a !important; }",
       ".dark .text-on-surface { color: #ffffff !important; }",
       ".dark .text-on-surface-variant { color: #aab6c4 !important; }",
       ".dark .text-emerald-accent { color: #34d399 !important; }",
       ".dark .score-home, .dark .score-away { color: #ffffff !important; }",
-      ":root:not(.dark) .score-home, :root:not(.dark) .score-away { color: #0f172a !important; }"
+      ".dark .bg-card-bg { background: #12172D !important; }"
     ].join("\n");
     document.head.appendChild(s);
   }
