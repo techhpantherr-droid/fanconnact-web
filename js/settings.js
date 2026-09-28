@@ -257,6 +257,9 @@ function createDropdown(config) {
       if (config.settingKey === "language" && typeof window.applyLanguage === "function") {
         const codes = window.LANG_CODES || {};
         const langCode = codes[opt] || opt;
+        // Persist under the key the shared bundle reads on the next page load,
+        // otherwise the choice silently reverts to English after a refresh.
+        try { localStorage.setItem("fanconnect-lang", langCode); } catch (e) {}
         window.applyLanguage(langCode);
       }
       if (config.settingKey === "language") {
@@ -722,6 +725,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize auth provider connection status
   updateProviderUI();
+
+  // Keep the saved language in sync with the key the shared bundle reads, so
+  // the dropdown shows the active language and it survives a refresh.
+  try {
+    const codes = window.LANG_CODES || {};
+    const activeCode = localStorage.getItem("fanconnect-lang") || "en";
+    const name = Object.keys(codes).find((k) => codes[k] === activeCode);
+    if (name) {
+      settings.language = name;
+      saveSettings();
+      if (typeof window.applyLanguage === "function") window.applyLanguage(activeCode);
+    }
+  } catch (e) {}
 
   // Initialize all custom dropdown displays from saved settings
   dropdownConfigs.forEach((cfg) => {
