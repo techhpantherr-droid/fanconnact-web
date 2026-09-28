@@ -15,7 +15,7 @@
     <meta name="twitter:image" content="assets/fancoin/fanconnactlogo.png" />
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Fanconnact | Table Tennis Dashboard</title>
+    <title>Fanconnact - Table Tennis Live Scores, ITTF & World Table Tennis Results</title>
     <script src="js/api-config.js"></script>
     <script>
       if (localStorage.getItem("color-theme") === "dark") {
@@ -328,8 +328,8 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
   <!-- fc-seo-meta-v1 -->
-<meta name="description" content="Fanconnact table tennis matches - live scores and fixtures for table tennis tournaments." />
-<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="description" content="Table tennis live scores on Fanconnact - ITTF events, World Table Tennis, tournament results. Matches, games and schedules." />
+<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities, table tennis live, ittf, world table tennis, table tennis score, table tennis results" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://fanconnact.com/tabletennis.html" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -667,7 +667,13 @@
             </p>
           </div>
           <!-- Tournament Tabs -->
-          <div
+          <nav class="mb-6 flex flex-wrap items-center gap-2" data-purpose="seo-series-links" aria-label="Popular tabletennis series and tournaments">
+  <span class="text-xs text-slate-500 dark:text-gray-300 pr-1 font-medium">Trending series:</span>
+  <a href="top-players.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">ITTF</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">WTT Champions</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">World Table Tennis</a>
+</nav>
+<div
             class="flex items-center gap-md mb-lg mt-md border-b border-outline-variant/30 pb-sm"
             data-purpose="tournament-filters"
           >

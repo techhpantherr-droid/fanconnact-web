@@ -23,7 +23,7 @@
         document.documentElement.classList.remove("dark");
       }
     </script>
-    <title>Fanconnact - Hockey Matches</title>
+    <title>Fanconnact - Hockey Live Score, NHL & World Cup Hockey Results</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Google Fonts: Lexend -->
@@ -149,8 +149,8 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
   <!-- fc-seo-meta-v1 -->
-<meta name="description" content="Fanconnact hockey matches - live scores and fixtures for NHL and international hockey." />
-<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="description" content="Hockey live scores on Fanconnact - NHL, World Cup hockey, international matches. Goals, results and standings." />
+<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities, hockey live, nhl scores, world cup hockey, hockey results, ice hockey" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://fanconnact.com/hockey.html" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -491,7 +491,13 @@
                 </p>
               </div>
               <!-- Tournament Filter Tabs -->
-              <div
+              <nav class="mb-6 flex flex-wrap items-center gap-2" data-purpose="seo-series-links" aria-label="Popular hockey series and tournaments">
+  <span class="text-xs text-slate-500 dark:text-gray-300 pr-1 font-medium">Trending series:</span>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">NHL</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">World Cup Hockey</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">NHL Playoffs</a>
+</nav>
+<div
                 class="flex items-center space-x-8 border-b border-gray-800 mb-8 overflow-x-auto pb-1 whitespace-nowrap"
                 data-purpose="tournament-filters"
               >

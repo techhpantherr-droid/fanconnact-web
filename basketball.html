@@ -23,7 +23,7 @@
         document.documentElement.classList.remove("dark");
       }
     </script>
-    <title>Fanconnact - Basketball Matches</title>
+    <title>Fanconnact - Live Basketball Scores, NBA, FIBA World Cup & League Games</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Google Fonts: Lexend -->
@@ -149,8 +149,8 @@
     />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
   <!-- fc-seo-meta-v1 -->
-<meta name="description" content="Fanconnact basketball matches - live scores and fixtures for NBA and international basketball." />
-<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="description" content="NBA live scores and basketball results on Fanconnact - FIBA World Cup, NBA playoffs, college basketball. Scores, stats and schedules." />
+<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities, basketball live score, nba scores, fiba world cup, nba live, basketball results" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://fanconnact.com/basketball.html" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -491,7 +491,13 @@
               </div>
 
               <!-- Category Filter Tabs -->
-              <div
+              <nav class="mb-6 flex flex-wrap items-center gap-2" data-purpose="seo-series-links" aria-label="Popular basketball series and tournaments">
+  <span class="text-xs text-slate-500 dark:text-gray-300 pr-1 font-medium">Trending series:</span>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">NBA</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">FIBA World Cup</a>
+  <a href="livematches.html" class="text-xs px-2.5 py-1 rounded-full bg-gray-100 dark:bg-white/5 text-slate-700 dark:text-gray-200 hover:text-emerald-accent hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">NBA Playoffs</a>
+</nav>
+<div
                 class="flex items-center space-x-8 border-b border-gray-200 dark:border-border-subtle mb-8 overflow-x-auto pb-0 whitespace-nowrap"
                 data-purpose="tournament-filters"
               >
