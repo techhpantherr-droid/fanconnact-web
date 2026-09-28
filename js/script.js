@@ -324,7 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           // Expose the complete real database profile for other modules.
           const xp = Number.isFinite(Number(data.xp)) ? Number(data.xp) : 0;
-          const rawCoins = Number.isFinite(Number(data.coins)) ? Number(data.coins) : 0;\n          const coins = Math.max(0, rawCoins); // never negative
+          const rawCoins = Number.isFinite(Number(data.coins)) ? Number(data.coins) : 0;
+          const coins = Math.max(0, rawCoins); // never negative
           const level = Number.isFinite(Number(data.level))
             ? Number(data.level)
             : calculateLevel(xp);
