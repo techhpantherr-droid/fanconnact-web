@@ -202,38 +202,38 @@
 <!-- END: ScoreHeader -->
 <!-- BEGIN: SecondaryNavigation -->
 <nav class="md:sticky md:top-[76px] z-20 bg-[#0b1626] text-white border-b border-gray-700">
-<div class="max-w-7xl mx-auto flex space-x-8 px-8 overflow-x-auto" id="match-tabs">
-<a class="tab-link py-4 border-b-4 border-crexGold text-crexGold font-bold cursor-pointer whitespace-nowrap" data-tab="match-info" href="#">Match Info</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="summary" href="#">Summary</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="scorecard" href="#">Scorecard</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="commentary" href="#">Commentary</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="squads" href="#">Squads</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="rules" href="#">Rules</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" id="prediction-link" href="https://play.google.com/store/apps" target="_blank" rel="noopener">Prediction</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="live-chat" href="#">Live Chat</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="graph" href="#">Graph</a>
-<a class="tab-link py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="news" href="#">News</a>
+<div class="max-w-7xl mx-auto flex gap-4 sm:gap-8 px-3 sm:px-8 overflow-x-auto" id="match-tabs" style="-webkit-overflow-scrolling:touch;scrollbar-width:thin;">
+<a class="tab-link py-3 sm:py-4 border-b-4 border-crexGold text-crexGold font-bold cursor-pointer whitespace-nowrap text-xs sm:text-sm" data-tab="match-info" href="#">Match Info</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="summary" href="#">Summary</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="scorecard" href="#">Scorecard</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="commentary" href="#">Commentary</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="squads" href="#">Squads</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="rules" href="#">Rules</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" id="prediction-link" href="https://play.google.com/store/apps" target="_blank" rel="noopener">Prediction</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="live-chat" href="#">Live Chat</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="graph" href="#">Graph</a>
+<a class="tab-link py-3 sm:py-4 border-b-4 border-transparent hover:text-crexGold transition-all cursor-pointer whitespace-nowrap" data-tab="news" href="#">News</a>
 </div>
 </nav>
 <!-- END: SecondaryNavigation -->
 <!-- BEGIN: MainContent -->
-<main class="max-w-7xl mx-auto p-6 relative z-10">
+<main class="max-w-7xl mx-auto p-3 sm:p-6 relative z-10">
 <!-- PANEL: Match Info -->
-<div class="tab-panel grid grid-cols-12 gap-6" id="panel-match-info"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6" id="panel-match-info"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Match Info -->
 <!-- PANEL: Summary (crex-style Win Summary) -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-summary"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-summary"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Summary -->
 <!-- PANEL: Scorecard (crex-style) -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-scorecard"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-scorecard"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Scorecard -->
 <!-- PANEL: Commentary (crex-style) -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-commentary"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-commentary"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Commentary -->
 <!-- PANEL: Live Chat -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-live-chat">
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-live-chat">
 <div class="col-span-12 lg:col-span-8">
-<div class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 flex flex-col h-[70vh]">
+<div class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm border border-gray-200 dark:border-gray-800 flex flex-col h-[62vh] sm:h-[70vh] min-h-[380px]">
 <!-- Header -->
 <div class="flex flex-wrap items-center justify-between gap-2 px-3 sm:px-5 py-3 border-b border-gray-200 dark:border-gray-800">
 <div class="flex items-center gap-2 min-w-0">
@@ -258,7 +258,7 @@
 <button class="shrink-0 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gray-100 dark:bg-white/5 flex items-center justify-center text-lg hover:bg-gray-200 dark:hover:bg-white/10 transition" id="chat-img-btn" title="Send image">🖼️</button>
 <input accept="image/*" class="hidden" id="chat-img-input" type="file"/>
 <input class="flex-1 min-w-0 px-4 py-2.5 rounded-full bg-gray-100 dark:bg-white/5 text-sm text-gray-800 dark:text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-crexGold/50" id="chat-input" maxlength="500" placeholder="Type a message…" type="text"/>
-<button class="shrink-0 px-4 sm:px-5 py-2.5 rounded-full bg-crexGold text-white text-sm font-semibold hover:opacity-90 transition active:scale-95" id="chat-send">Send</button>
+<button class="shrink-0 px-3 sm:px-5 py-2.5 rounded-full bg-crexGold text-white text-xs sm:text-sm font-semibold hover:opacity-90 transition active:scale-95" id="chat-send">Send</button>
 </div>
 </div>
 </div>
@@ -273,16 +273,16 @@
 </div>
 <!-- END: PANEL Live Chat -->
 <!-- PANEL: Graph (placeholder) -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-graph"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-graph"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Graph -->
 <!-- PANEL: News -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-news"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-news"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL News -->
 <!-- PANEL: Squads -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-squads"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-squads"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Squads -->
 <!-- PANEL: Rules & Regulations (sport-aware) -->
-<div class="tab-panel grid grid-cols-12 gap-6 hidden" id="panel-rules"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
+<div class="tab-panel grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-6 hidden" id="panel-rules"><div class="max-w-7xl mx-auto p-6 text-center text-sm text-gray-400">Loading real match data…</div></div>
 <!-- END: PANEL Rules -->
 </main>
 <!-- END: MainContent -->

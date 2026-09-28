@@ -3676,13 +3676,13 @@ if (Array.isArray(model.overs) && model.overs.length) {
       const resBadge = hasWinner
         ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full ' + (won ? 'bg-emerald-500/15 dark:text-emerald-300' : 'bg-red-500/15 text-red-600 dark:text-red-300') + ' text-[10px] font-bold uppercase tracking-wide">' + (won ? 'Won' : 'Lost') + '</span>'
         : '';
-      return '<div class="flex items-center gap-4 p-5 md:p-6 ' + (reverse ? 'md:flex-row-reverse md:text-right' : '') + '">' +
+      return '<div class="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 md:p-6 ' + (reverse ? 'md:flex-row-reverse md:text-right' : '') + '">' +
         '<img alt="' + esc(tm.name) + '" class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-slate-200 dark:border-white/20 shadow-lg shrink-0" src="' + tm.img + '" onerror="this.src=\'https://ui-avatars.com/api/?name=' + encodeURIComponent(tm.code.toUpperCase()) + '&background=6B7280&color=fff&size=64\'">' +
         '<div class="min-w-0">' +
         '<div class="flex items-center gap-2 ' + (reverse ? 'md:justify-end' : '') + '"><p class="text-base font-semibold text-slate-900 dark:text-white">' + esc(tm.name) + '</p>' + resBadge + '</div>' +
         (st.status === 'upcoming'
           ? '<div class="flex items-center gap-2 mt-2 ' + (reverse ? 'md:justify-end' : '') + '"><span class="text-2xl md:text-3xl font-extrabold tracking-tight text-slate-500 dark:text-gray-300">VS</span></div>'
-          : '<div class="flex items-baseline gap-1.5 mt-1 ' + (reverse ? 'md:justify-end' : '') + '"><span class="score-flash text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">' + esc(sc.score) + '</span><span class="text-xl font-semibold text-slate-500 dark:text-gray-300">' + esc(sc.sub) + '</span></div>' +
+          : '<div class="flex items-baseline gap-1.5 mt-1 ' + (reverse ? 'md:justify-end' : '') + '"><span class="score-flash text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white">' + esc(sc.score) + '</span><span class="text-xl font-semibold text-slate-500 dark:text-gray-300">' + esc(sc.sub) + '</span></div>' +
              '<p class="text-xs text-slate-500 dark:text-gray-400 mt-1 ' + (reverse ? 'md:text-right' : '') + '">' + esc(sc.detail || '') + '</p>') +
         '</div></div>';
     };
