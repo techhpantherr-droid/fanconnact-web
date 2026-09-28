@@ -8,13 +8,13 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <script src="js/api-config.js"></script>
   <script>
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    if (localStorage.getItem('color-theme') === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
   </script>
-  <title>FanConnect Leaderboard</title>
+  <title>Fanconnact Leaderboard</title>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/fancoin/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/fancoin/favicon-16x16.png" />
   <meta property="og:site_name" content="Fanconnact" />
@@ -243,6 +243,21 @@
 
 <body
   class="min-h-screen w-full flex flex-row overflow-x-hidden overflow-y-auto transition-colors duration-300 bg-[#F8F9FF] dark:bg-[#0B0E11]">
+<!-- fc-seo-meta-v1 -->
+<meta name="description" content="Fanconnact leaderboard - top fans ranked by coins, predictions and community activity." />
+<meta name="keywords" content="fanconnact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://fanconnact.com/leaderboard.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Fanconnact Leaderboard" />
+<meta name="twitter:description" content="Fanconnact leaderboard - top fans ranked by coins, predictions and community activity." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Fanconnact" />
+<meta property="og:title" content="Fanconnact Leaderboard" />
+<meta property="og:description" content="Fanconnact leaderboard - top fans ranked by coins, predictions and community activity." />
+<meta property="og:url" content="https://fanconnact.com/leaderboard.html" />
+<meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+
   <!-- BEGIN: Sidebar -->
   <aside id="sidebar"
     class="fixed inset-y-0 left-0 z-[60] w-64 flex-shrink-0 flex flex-col h-screen transition-all duration-300 bg-white dark:bg-brand-dark border-r border-gray-200 dark:border-brand-border shadow-xl lg:shadow-none -translate-x-full lg:translate-x-0 lg:static overflow-y-auto custom-scrollbar"
@@ -1416,6 +1431,6 @@ localStorage.setItem(
 
   <script src="js/theme.js"></script>
   <script src="js/sidebar.js"></script>
-<script src="js/notif-ws.js"></script></body>
+<script src="js/notif-ws.js"></script><script src="js/seo-footer.js"></script></body>
 
 </html>

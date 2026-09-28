@@ -1435,8 +1435,9 @@ function readAllSportsLKG() {
 
 function writeAllSportsLKG(sport, matches, source) {
   try {
+    if (!Array.isArray(matches) || !matches.length) return;
     const all = readAllSportsLKG();
-    all[sport] = { ts: Date.now(), source: source || "unknown", matches };
+    all[sport] = { ts: Date.now(), source: source || "unknown", matches: matches.slice(0, 200) };
     fs.mkdirSync(DATA_DIR, { recursive: true });
     fs.writeFileSync(ALLSPORTS_LKG_FILE, JSON.stringify(all));
   } catch (e) {
@@ -1694,15 +1695,19 @@ app.get("/api/all-sports/matches", async (req, res) => {
         return matches;
       })
     );
-    const all = results.flatMap(r => r.status === "fulfilled" ? r.value : []);
+    const all = results.flatMap(r => r.status === "fulfilled" && Array.isArray(r.value) ? r.value : []);
     // Any sport whose providers returned nothing falls back to its last
     // real payload, so a provider quota spike never empties the whole page.
-    const missing = ALLSPORTS_SUPPORTED.filter(
-      s => s !== "kabaddi" && !all.some(m => String(m.sport || "").toLowerCase() === s)
-    );
-    for (const sport of missing) {
-      const lkg = readAllSportsLKG(sport);
-      if (lkg) all.push(...lkg.matches);
+    try {
+      const present = new Set(all.map(m => String(m.sport || "").toLowerCase()));
+      for (const sport of ALLSPORTS_SUPPORTED) {
+        if (sport === "kabaddi" || present.has(sport)) continue;
+        const lkg = readAllSportsLKG(sport);
+        if (!lkg) continue;
+        for (const m of lkg.matches) all.push(m);
+      }
+    } catch (e) {
+      console.warn("[AllSports] last-known-good merge skipped:", e.message);
     }
     const anyEspn = all.some(m => String(m.id || "").startsWith("espn_"));
     res.json({ success: true, source: anyEspn ? "mixed" : "allsports", count: all.length, matches: all });

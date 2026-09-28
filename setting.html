@@ -5,7 +5,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <script src="js/api-config.js"></script>
 <script>
-  if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  if (localStorage.getItem('color-theme') === 'dark') {
     document.documentElement.classList.add('dark');
   } else {
     document.documentElement.classList.remove('dark');
@@ -88,6 +88,20 @@
   }
 </script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- fc-seo-meta-v1 -->
+<meta name="description" content="Change your Fanconnact language, timezone, region and app preferences." />
+<meta name="keywords" content="fanconnact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://fanconnact.com/setting.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="FanConnact - Settings" />
+<meta name="twitter:description" content="Change your Fanconnact language, timezone, region and app preferences." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Fanconnact" />
+<meta property="og:title" content="FanConnact - Settings" />
+<meta property="og:description" content="Change your Fanconnact language, timezone, region and app preferences." />
+<meta property="og:url" content="https://fanconnact.com/setting.html" />
+<meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
 </head>
 <body id="appBody" class="bg-background text-on-surface">
 <script>
@@ -783,5 +797,5 @@
     });
   })();
 </script>
-<script src="js/notif-ws.js"></script></body>
+<script src="js/notif-ws.js"></script><script src="js/seo-footer.js"></script></body>
 </html>

@@ -17,7 +17,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <script src="js/api-config.js"></script>
     <script>
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (localStorage.getItem('color-theme') === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
@@ -270,6 +270,20 @@
             #sidebar.sidebar-collapsed { display: none !important; }
         }
     </style>
+<!-- fc-seo-meta-v1 -->
+<meta name="description" content="Your Fanconnact dashboard - live scores, wallet, predictions and community activity in one place." />
+<meta name="keywords" content="fanconnact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://fanconnact.com/dashboard.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Fanconnact Dashboard" />
+<meta name="twitter:description" content="Your Fanconnact dashboard - live scores, wallet, predictions and community activity in one place." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Fanconnact" />
+<meta property="og:title" content="Fanconnact Dashboard" />
+<meta property="og:description" content="Your Fanconnact dashboard - live scores, wallet, predictions and community activity in one place." />
+<meta property="og:url" content="https://fanconnact.com/dashboard.html" />
+<meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
 </head>
 
     <body class="h-screen w-full flex flex-row overflow-hidden transition-colors duration-300 bg-[#F8F9FF] dark:bg-[#0B0E11]">
@@ -872,5 +886,5 @@
     }
   })();
 </script>
-</body>
+<script src="js/seo-footer.js"></script></body>
 </html>
