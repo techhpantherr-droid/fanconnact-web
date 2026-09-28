@@ -333,9 +333,14 @@ res.json({
 
     console.error(err);
 
-    res.status(500).json({
-      success: false,
-      message: "Unable to fetch rankings"
+    res.json({
+      success: true,
+      sport: "cricket",
+      players: [],
+      count: 0,
+      source: "unavailable",
+      notice: "Live ICC rankings are temporarily unavailable (free daily API limit reached). They return automatically once the limit resets.",
+      cached: false
     });
 
   }

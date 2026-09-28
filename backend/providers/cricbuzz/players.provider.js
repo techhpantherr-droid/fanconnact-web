@@ -74,10 +74,28 @@ class PlayersProvider {
 
     async getPlayerInfo(id) {
 
-        const { data } =
-        await api.get(endpoints.PLAYER_INFO(id));
+        try {
 
-        return data;
+            const { data } =
+            await api.get(endpoints.PLAYER_INFO(id));
+
+            // Guard against an empty 200 (provider sometimes answers {}).
+            if (data && typeof data === "object" && Object.keys(data).length) {
+                return data;
+            }
+
+        } catch (e) {
+
+            // free daily limit reached or endpoint down -> try the fallback
+
+        }
+
+        // Last API: forecast allPlayers lookup. Cheap and only reached when
+        // the main player endpoint failed, so it does not burn the budget.
+        const { data: fallback } =
+        await api.get(endpoints.PLAYER_ALLPLAYERS(id));
+
+        return fallback;
 
     }
 

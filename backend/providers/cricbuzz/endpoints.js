@@ -127,6 +127,11 @@ module.exports = {
     PLAYER_CAREER: id =>
         `/stats/v1/player/${id}/career`,
 
+    // Last-resort player lookup. Used only when the calls above fail or the
+    // provider's free daily limit is spent, so it is never a hot-path call.
+    PLAYER_ALLPLAYERS: id =>
+        `/forecast/v1/allPlayers/${id}`,
+
     PLAYER_NEWS: id =>
         `/news/v1/player/${id}`,
 

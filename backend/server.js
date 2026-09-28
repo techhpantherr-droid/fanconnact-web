@@ -18,6 +18,7 @@ const fs = require("fs");
 const http = require("http");
 const https = require("https");
 const cheerio = require("cheerio");
+const cricbuzzRankings = require("./providers/cricbuzz/rankings.provider");
 const cron = require('node-cron');
 const rankingsSync = require("./rankings-sync");
 const { createChatServer } = require("./chat-server");
@@ -833,6 +834,33 @@ app.get("/api/rankings/:sport/:category?", async (req, res) => {
     // API-only: real providers (synced DB, ESPN, SportScore). No invented data —
     // uncovered categories return an empty list instead of generated players.
     switch (sportId) {
+      case "cricket": {
+        // Live ICC player rankings from Cricbuzz: "<format>_<role>_<gender>"
+        // e.g. odi_bat_men, test_bowl_women, t20_ar_men
+        const cParts = cat.split("_");
+        const cFormat = ["odi", "t20", "test"].includes(cParts[0])
+          ? cParts[0]
+          : "odi";
+        const cRole = ["bat", "bowl", "ar"].includes(cParts[1]) ? cParts[1] : "bat";
+        const cWomen = (cParts[2] || cParts[1] || "men") === "women" ? 1 : 0;
+        try {
+          if (cRole === "bowl") {
+            players = (await cricbuzzRankings.getBowlers(cFormat, cWomen)) || [];
+          } else if (cRole === "ar") {
+            players = (await cricbuzzRankings.getAllrounders(cFormat, cWomen)) || [];
+          } else {
+            players = (await cricbuzzRankings.getBatsmen(cFormat, cWomen)) || [];
+          }
+          players = players.map(function (p) {
+            return Object.assign({}, p, { _source: "ICC (Cricbuzz)" });
+          });
+        } catch (e) {
+          // Free daily quota / provider down: render an empty list rather than
+          // a 500, and mark the source so the UI can explain itself.
+          players = [];
+        }
+        break;
+      }
       case "football": {
         const fParts = cat.split("_");
         const fStat = fParts[0];

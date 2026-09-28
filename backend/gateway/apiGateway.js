@@ -182,7 +182,7 @@ api.interceptors.response.use(
         errors or rate-limits, the last good copy is returned instead of a 500.
 ========================================== */
 
-const { getCached, setCached } = require("../api-quota");
+const { getCached, setCached, consumeQuota, quotaStatus } = require("../api-quota");
 
 const LIVE_URL_RE = /(\/live|\/upcoming|\/recent|scorecard|commentary)/i;
 
@@ -198,6 +198,20 @@ function attachPersistentCache(instance) {
             const params = (requestConfig && requestConfig.params) || null;
             const cached = getCached(url, params, ttl);
             if (cached.hit) return { data: cached.data, status: 200, fromCache: true };
+
+            // The provider gives us ~100 requests/day in total. Never exceed
+            // it: when the daily budget is spent we serve the last good copy
+            // instead of making a call that would only return HTTP 429.
+            if (!consumeQuota(1)) {
+                const q = quotaStatus();
+                const staleCopy = getCached(url, params, 365 * 24 * 60 * 60 * 1000);
+                if (staleCopy.stale) {
+                    return { data: staleCopy.data, status: 200, fromCache: true, stale: true, quotaExhausted: true };
+                }
+                console.warn(`[quota] daily limit reached (${q.used}/${q.limit}), skipping ${url}`);
+                return { data: null, status: 200, fromCache: true, quotaExhausted: true };
+            }
+
             try {
                 const response = await original(url, requestConfig);
                 if (response && response.status === 200 && response.data !== null && response.data !== undefined) {
