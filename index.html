@@ -198,6 +198,7 @@
         <div class="relative group">
           <!-- Navigation Buttons -->
           <button
+            id="match-carousel-prev"
             aria-label="Previous slide"
             class="absolute -left-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white text-black rounded-full shadow-xl flex items-center justify-center z-10 transition-transform active:scale-95"
           >
@@ -217,6 +218,7 @@
             </svg>
           </button>
           <button
+            id="match-carousel-next"
             aria-label="Next slide"
             class="absolute -right-5 top-1/2 -translate-y-1/2 w-10 h-10 bg-white text-black rounded-full shadow-xl flex items-center justify-center z-10 transition-transform active:scale-95"
           >
@@ -235,7 +237,7 @@
               ></path>
             </svg>
           </button>
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-fr" data-purpose="match-card-grid">
+          <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2" data-purpose="match-card-grid">
             <!-- Real match cards injected here from js/matches-data.js -->
           </div>
         </div>
@@ -401,8 +403,58 @@
         });
       });
     </script>
+    <style>
+      /* Keep the exact 1 / 2 / 3 cards per row look, but allow the carousel
+         arrows to move through the matches. */
+      [data-purpose="match-card-grid"] > * {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+      }
+      @media (min-width: 768px) {
+        [data-purpose="match-card-grid"] > * { flex: 0 0 calc(50% - 12px); }
+      }
+      @media (min-width: 1280px) {
+        [data-purpose="match-card-grid"] > * { flex: 0 0 calc(33.3333% - 16px); }
+      }
+      [data-purpose="match-card-grid"]::-webkit-scrollbar { display: none; }
+      [data-purpose="match-card-grid"] { scrollbar-width: none; }
+    </style>
   <script src="js/notif-ws.js"></script>
   <script src="js/matches-data.js"></script>
   <script src="js/matches-render.js"></script>
+  <script>
+    (function () {
+      const track = document.querySelector('[data-purpose="match-card-grid"]');
+      const prev = document.getElementById('match-carousel-prev');
+      const next = document.getElementById('match-carousel-next');
+      if (!track || !prev || !next) return;
+
+      function step() {
+        const card = track.querySelector(':scope > *');
+        const w = card ? card.getBoundingClientRect().width + 24 : track.clientWidth;
+        return Math.max(200, w);
+      }
+      function syncArrows() {
+        const max = track.scrollWidth - track.clientWidth - 4;
+        const atStart = track.scrollLeft <= 4;
+        const atEnd = track.scrollLeft >= max;
+        [prev, next].forEach(b => b.classList.remove('opacity-0', 'pointer-events-none'));
+        if (atStart) prev.classList.add('opacity-0', 'pointer-events-none');
+        if (atEnd) next.classList.add('opacity-0', 'pointer-events-none');
+        if (max <= 4) {
+          prev.classList.add('opacity-0', 'pointer-events-none');
+          next.classList.add('opacity-0', 'pointer-events-none');
+        }
+      }
+      prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+      next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+      track.addEventListener('scroll', syncArrows, { passive: true });
+      window.addEventListener('resize', syncArrows);
+      window.addEventListener('load', syncArrows);
+      document.addEventListener('DOMContentLoaded', syncArrows);
+      syncArrows();
+      setTimeout(syncArrows, 800);
+    })();
+  </script>
 </body>
 </html>
