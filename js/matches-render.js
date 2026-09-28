@@ -141,8 +141,8 @@
         '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
         '<div class="flex items-center min-w-0"><span class="text-[11px] text-on-surface-variant font-medium truncate">Real-time · ' + esc(m.rules) + '</span></div>' +
         '<div class="flex flex-wrap gap-2 shrink-0">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-emerald-accent/15 border border-emerald-accent/40 text-emerald-accent px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 hover:bg-emerald-accent hover:text-black transition-all"><span class="">Live Chat</span></button>' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-surface-container-low text-on-surface border border-border-subtle px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 hover:bg-surface-container-high transition-all"><span class="">Scorecard</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent border border-emerald-accent/40 text-emerald-accent hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Live Chat</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent text-on-surface border border-border-subtle hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Scorecard</span></button>' +
         '</div>' +
         '</div>';
     } else if (m.status === "upcoming") {
@@ -156,7 +156,7 @@
         '</div>';
       footer =
         '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-emerald-accent/15 border border-emerald-accent/40 text-emerald-accent px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 hover:bg-emerald-accent hover:text-black transition-all"><span class="">View Details</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent border border-emerald-accent/40 text-emerald-accent hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">View Details</span></button>' +
         '<button onclick="window.location.href=\'livematches.html\'" class="text-on-surface-variant text-xs font-bold flex items-center space-x-1 hover:text-on-surface"><span class="">View All</span></button>' +
         '</div>';
     } else { // finished
@@ -198,7 +198,7 @@ const detail = m.score?.detail
         '</div>';
       footer =
         '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-surface-container-low text-on-surface border border-border-subtle px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 hover:bg-surface-container-high transition-all"><span class="">Highlights</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent text-on-surface border border-border-subtle hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Highlights</span></button>' +
         '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="text-on-surface-variant text-xs font-bold flex items-center space-x-1 hover:text-on-surface"><span class="">View Details</span></button>' +
         '</div>';
     }
@@ -300,7 +300,7 @@ as =
       '</div>' +
       '<div class="mt-8 md:mt-10 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">' +
       '<div class="space-y-3 text-center sm:text-left"><p class="font-bold text-sm text-emerald-400">' + statusText + '</p></div>' +
-      '<a href="' + linkFor(m) + '" class="w-full sm:w-auto bg-brand-green text-black font-bold px-6 py-3 rounded-xl flex items-center justify-center space-x-3 glow-green hover:scale-105 transition-transform shadow-lg shadow-emerald-500/20">' +
+      '<a href="' + linkFor(m) + '" class="w-full sm:w-auto font-bold px-6 py-3 rounded-xl flex items-center justify-center space-x-3 hover:scale-105 hover:opacity-90 transition-transform" style="background:rgba(255,255,255,0.12)!important;border:1px solid rgba(255,255,255,0.45)!important;color:#ffffff!important;box-shadow:none!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">' +
       '<span class="font-headline text-sm uppercase tracking-wider">View Match Center</span>' +
       '<span class="material-symbols-outlined text-lg">arrow_forward</span>' +
       '</a>' +
