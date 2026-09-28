@@ -451,9 +451,19 @@ export async function addCoins(
 
         const user =
 
-        await getUser(uid);
+            await getUser(uid);
 
         if(!user) return false;
+
+        // FanCoins can never go negative: clamp the resulting balance at 0 and
+        // treat non-numeric stored values as 0.
+        const current = Number(user.coins);
+
+        const base = Number.isFinite(current) ? current : 0;
+
+        const delta = Number(amount);
+
+        const next = Math.max(0, base + (Number.isFinite(delta) ? delta : 0));
 
         await updateUser(
 
@@ -463,7 +473,7 @@ export async function addCoins(
 
                 coins:
 
-                user.coins + amount
+                next
 
             }
 

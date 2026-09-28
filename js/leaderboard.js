@@ -86,6 +86,7 @@ async function loadRealUsers() {
       var level = fanConnactCalculateLevel(xp);
       var coins = parseInt(d.coins, 10);
       if (isNaN(coins)) coins = 100; // default 100 coins for every registered user
+      if (coins < 0) coins = 0; // FanCoins can never be negative
       var name = d.username || d.fullName || d.email || "Fan";
       var img = d.photoURL || (d.email ? ("https://i.pravatar.cc/100?u=" + encodeURIComponent(d.email)) : "assets/images/default-avatar.png?w=150");
       // The document ID IS the uid. The data may NOT contain a `uid` field,

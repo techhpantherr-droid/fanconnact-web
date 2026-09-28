@@ -111,7 +111,7 @@
                 <p>YOUR FAN COINS</p>
                 <div class="coins">
                   <div class="coin-icon">FC</div>
-                  <h2 id="fancoin-balance">—</h2>
+                  <h2 id="fancoin-balance">â€”</h2>
                 </div>
                 <div class="buttons">
                   <button type="button" onclick="window.open('https://play.google.com/store/apps','_blank')" class="green-btn">Earn Coins</button>
@@ -156,11 +156,11 @@
             <div class="level-card">
               <div>
                 <h2 id="fancoin-tier">&#x1F6E1; Bronze Fan</h2>
-                <p id="fancoin-level-message">Level —</p>
+                <p id="fancoin-level-message">Level â€”</p>
                 <div class="progress">
                   <div id="fancoin-xp-progress" class="progress-fill" style="width:0%;"></div>
                 </div>
-                <small id="fancoin-xp-text">— XP</small>
+                <small id="fancoin-xp-text">â€” XP</small>
               </div>
               <div>
                 <h4>LEVEL BENEFITS</h4>
@@ -241,14 +241,14 @@
           }
 
           function getFanTier(coins) {
-            if (coins >= 5000) return { key: "diamond", icon: "💎", name: "Diamond Fan", next: "Maximum Fan Tier" };
-            if (coins >= 2000) return { key: "gold", icon: "🏆", name: "Gold Fan", next: "Diamond Fan" };
-            if (coins >= 500) return { key: "silver", icon: "🛡️", name: "Silver Fan", next: "Gold Fan" };
-            return { key: "bronze", icon: "🛡️", name: "Bronze Fan", next: "Silver Fan" };
+            if (coins >= 5000) return { key: "diamond", icon: "ðŸ’Ž", name: "Diamond Fan", next: "Maximum Fan Tier" };
+            if (coins >= 2000) return { key: "gold", icon: "ðŸ†", name: "Gold Fan", next: "Diamond Fan" };
+            if (coins >= 500) return { key: "silver", icon: "ðŸ›¡ï¸", name: "Silver Fan", next: "Gold Fan" };
+            return { key: "bronze", icon: "ðŸ›¡ï¸", name: "Bronze Fan", next: "Silver Fan" };
           }
 
           function renderProfile(data) {
-            const coins = toNumber(data.coins, 0);
+            // Balance can never be shown as negative.\n            const coins = Math.max(0, toNumber(data.coins, 0));
             const xp = toNumber(data.xp, 0);
             const firestoreLevel = Number(data.level);
             const level = Number.isFinite(firestoreLevel)
@@ -265,8 +265,8 @@
             const levelMsg = document.getElementById("fancoin-level-message");
             if (levelMsg) {
               levelMsg.textContent = tier.key === "diamond"
-                ? `Level ${level} · ${tier.next}`
-                : `Level ${level} · Keep going! Next tier is ${tier.next}`;
+                ? `Level ${level} Â· ${tier.next}`
+                : `Level ${level} Â· Keep going! Next tier is ${tier.next}`;
             }
 
             const currentThreshold = getRequiredXP(level);
@@ -311,7 +311,7 @@
 
           function formatTxDate(value) {
             const date = timestampToDate(value);
-            if (!date) return "—";
+            if (!date) return "â€”";
             return date.toLocaleDateString("en-IN", {
               year: "numeric",
               month: "2-digit",

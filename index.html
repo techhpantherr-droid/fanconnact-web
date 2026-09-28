@@ -127,6 +127,9 @@
     >
       <div class="flex items-center gap-2">
         <!-- Fanconnact Logo -->
+        <button class="text-gray-400 hover:text-emerald-accent lg:hidden" id="mobile-menu-btn" aria-label="Open menu">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
         <img src="assets/fancoin/fanconnactlogo.png" alt="Fanconnact" class="w-8 h-8 md:w-10 md:h-10" />
         <span class="text-lg md:text-2xl font-bold tracking-tight"><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span>
       </div>
@@ -165,6 +168,196 @@
       </div>
     </header>
     <!-- END: MainHeader -->
+    <div class="flex flex-1 overflow-hidden">
+<!-- BEGIN: SidebarNav -->
+      <aside
+        id="sidebar"
+        class="w-64 fixed inset-y-0 left-0 z-[60] transition-all duration-300 bg-white dark:bg-black border-r border-gray-200 dark:border-border-subtle p-6 overflow-y-auto -translate-x-full lg:translate-x-0 lg:static h-full"
+      >
+        <!-- Mobile Close Button -->
+        <button
+          id="close-sidebar-btn"
+          class="lg:hidden p-2 absolute top-4 right-4 text-gray-400"
+        >
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <!-- Logo Container for collapsed state -->
+        <div
+          class="p-6 flex items-center space-x-2 logo-container cursor-pointer"
+          onclick="window.location.href = 'dashboard.html'"
+        >
+          <img src="assets/fancoin/fanconnactlogo.png" alt="Fanconnact" class="w-8 h-8 flex-shrink-0" />
+          <span
+            class="text-xl font-bold tracking-tight font-headline logo-text"
+            ><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span
+          >
+        </div>
+
+
+        <div class="mb-8">
+          <h3
+            class="text-xs font-bold text-slate-500 dark:text-gray-300 uppercase tracking-wider mb-4"
+          >
+            SPORTS
+          </h3>
+          <ul class="space-y-1">
+            <li>
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="livematches.html"
+              >
+                <span class="material-symbols-outlined text-xl">grid_view</span>
+                <span class="nav-text">All Sports</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="cricket.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_cricket</span
+                >
+                <span class="nav-text">Cricket</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link nav-link-active"
+                href="football.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_soccer</span
+                >
+                <span class="nav-text">Football</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="basketball.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_basketball</span
+                >
+                <span class="nav-text">Basketball</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="tennis.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_tennis</span
+                >
+                <span class="nav-text">Tennis</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="hockey.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_hockey</span
+                >
+                <span class="nav-text">Hockey</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="kabbaddi.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_kabaddi</span
+                >
+                <span class="nav-text">Kabaddi</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="e-sports.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_esports</span
+                >
+                <span class="nav-text">E-Sports</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="baseball.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_baseball</span
+                >
+                <span class="nav-text">Baseball</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="vollyeball.html"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >sports_volleyball</span
+                >
+                <span class="nav-text">Volleyball</span>
+              </a>
+            </li>
+            <li class="">
+              <a
+                class="flex items-center space-x-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group nav-link"
+                href="tabletennis.html"
+              >
+                <span class="material-symbols-outlined text-xl">sports_tennis</span>
+                <span class="nav-text">Table Tennis</span>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+
+
+        <!-- Premium Promo -->
+        <div
+          class="mt-auto bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl p-5 border border-gray-700 text-center"
+        >
+          <div class="flex justify-center mb-3">
+            <div
+              class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/20"
+            >
+              <svg
+                class="w-6 h-6 text-black"
+                fill="currentColor"
+                viewbox="0 0 20 20"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <h4 class="font-bold text-sm mb-1">Fanconnact Premium</h4>
+          <p class="text-[11px] text-gray-400 mb-4 leading-tight">
+            Ad-free experience, exclusive badges &amp; more!
+          </p>
+          <button
+            onclick="window.location.href='https://play.google.com/store/apps'"
+            class="w-full bg-emerald-accent text-black font-bold py-2 rounded-lg text-xs hover:bg-emerald-400 transition-colors"
+          >
+            Go Premium
+          </button>
+        </div>
+      </aside>
+      <!-- END: SidebarNav -->
+
+
     <main class="max-w-[1400px] mx-auto px-4 md:px-8 py-4 md:py-8 space-y-8 md:space-y-12">
       <!-- BEGIN: LiveMatchesSection -->
       <section id="live-matches">
@@ -188,7 +381,7 @@
             class="inline-flex h-2 w-2 rounded-full bg-red-500 animate-pulse ml-1"
           ></span>
           <span class="text-red-500 text-sm font-bold uppercase tracking-wider"
-            >((●))</span
+            >((ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ÂÃƒâ€šÃ‚Â))</span
           >
           <a
             href="livematches.html"
@@ -312,6 +505,7 @@
       </section>
       <!-- END: CTAFooter -->
     </main>
+    </div>
     <script src="js/level-system.js"></script>
     <script type="module" src="js/script.js"></script>
     <script type="module">
@@ -405,7 +599,7 @@
       });
     </script>
   <script src="js/notif-ws.js"></script>
-  <script src="js/matches-data.js"></script>
+    <script src="js/matches-data.js"></script>
   <script src="js/matches-render.js"></script>
 </body>
 </html>

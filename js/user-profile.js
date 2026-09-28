@@ -79,9 +79,9 @@ async function loadProfile() {
     el("pFollowing").textContent = following.length;
 
     // Coins + level progress
-    const coins = parseInt(d.coins, 10) || 0;
+    const coins = Math.max(0, parseInt(d.coins, 10) || 0); // never negative
     const coinEl = el("pCoins");
-    if (coinEl) coinEl.textContent = coins.toLocaleString() + " 🪙";
+    if (coinEl) coinEl.textContent = coins.toLocaleString() + " ðŸª™";
     if (window.LevelSystem) {
       const pct = window.LevelSystem.xpProgress ? Math.round(window.LevelSystem.xpProgress(xp) * 100) : 0;
       const bar = el("pLevelBar");
@@ -89,7 +89,7 @@ async function loadProfile() {
       const next = el("pNextLevel");
       if (next) {
         const toGo = window.LevelSystem.xpToNextLevel ? window.LevelSystem.xpToNextLevel(xp) : 0;
-        next.textContent = "Next Level " + (level + 1) + " · " + toGo.toLocaleString() + " XP to go";
+        next.textContent = "Next Level " + (level + 1) + " Â· " + toGo.toLocaleString() + " XP to go";
       }
     }
 
@@ -124,9 +124,9 @@ async function loadProfile() {
       });
       all.sort((a, b) => b.xp - a.xp);
       const idx = all.findIndex((u) => u.uid === VIEW_UID);
-      el("pRank").textContent = idx >= 0 ? "#" + (idx + 1) : "—";
+      el("pRank").textContent = idx >= 0 ? "#" + (idx + 1) : "â€”";
     } catch (e) {
-      el("pRank").textContent = "—";
+      el("pRank").textContent = "â€”";
     }
 
     renderFollowButton(followers);
@@ -146,7 +146,7 @@ function renderFollowButton(followers) {
   btn.className = isFollowing
     ? "w-full py-2.5 rounded-lg border border-gray-400 text-slate-300 font-semibold hover:bg-white/5 transition"
     : "w-full py-2.5 rounded-lg bg-emerald-500 text-black font-bold hover:bg-emerald-400 transition";
-  btn.textContent = isFollowing ? "Following ✓" : "Follow";
+  btn.textContent = isFollowing ? "Following âœ“" : "Follow";
   btn.addEventListener("click", () => toggleFollow(isFollowing));
   wrap.appendChild(btn);
 }
@@ -192,7 +192,7 @@ async function showTab(which) {
   const card = el("followListCard");
   card.classList.remove("hidden");
   el("followListTitle").textContent = which === "followers" ? "Followers" : "Following";
-  el("followList").innerHTML = '<div class="text-slate-400 text-sm py-4 text-center">Loading…</div>';
+  el("followList").innerHTML = '<div class="text-slate-400 text-sm py-4 text-center">Loadingâ€¦</div>';
 
   const field = which; // "followers" or "following"
   try {
