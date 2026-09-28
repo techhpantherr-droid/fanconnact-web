@@ -33,11 +33,17 @@ router.get("/batsmen", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        // Never fail hard: the provider's free daily quota is limited, so the
+        // page must still render (empty list + notice) instead of a 500.
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch batsmen rankings"
+            data: [],
+
+            notice: "Live rankings temporarily unavailable (provider free quota). Showing last saved data.",
+
+            source: "unavailable"
 
         });
 
@@ -73,11 +79,15 @@ router.get("/bowlers", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch bowlers rankings"
+            data: [],
+
+            notice: "Live rankings temporarily unavailable (provider free quota). Showing last saved data.",
+
+            source: "unavailable"
 
         });
 
@@ -112,11 +122,15 @@ router.get("/allrounders", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch all-rounders rankings"
+            data: [],
+
+            notice: "Live rankings temporarily unavailable (provider free quota). Showing last saved data.",
+
+            source: "unavailable"
 
         });
 

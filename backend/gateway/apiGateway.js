@@ -173,4 +173,51 @@ api.interceptors.response.use(
 
 );
 
+/* ==========================================
+        PERSISTENT CACHE (protects the daily quota)
+
+        The provider's free plan allows a small number of requests per day.
+        Every response is written to the shared on-disk cache and served from
+        there afterwards, so one fetch serves every visitor. If the provider
+        errors or rate-limits, the last good copy is returned instead of a 500.
+========================================== */
+
+const { getCached, setCached } = require("../api-quota");
+
+const LIVE_URL_RE = /(\/live|\/upcoming|\/recent|scorecard|commentary)/i;
+
+function cacheTtlFor(url) {
+    return LIVE_URL_RE.test(String(url || "")) ? 60 * 1000 : 6 * 60 * 60 * 1000;
+}
+
+function attachPersistentCache(instance) {
+    ["get", "post"].forEach((method) => {
+        const original = instance[method].bind(instance);
+        instance[method] = async function cachedRequest(url, requestConfig) {
+            const ttl = cacheTtlFor(url);
+            const params = (requestConfig && requestConfig.params) || null;
+            const cached = getCached(url, params, ttl);
+            if (cached.hit) return { data: cached.data, status: 200, fromCache: true };
+            try {
+                const response = await original(url, requestConfig);
+                if (response && response.status === 200 && response.data !== null && response.data !== undefined) {
+                    setCached(url, params, response.data, ttl);
+                }
+                return response;
+            } catch (err) {
+                // 429 / 5xx / network: serve the last good copy when we have one.
+                const fallback = getCached(url, params, 365 * 24 * 60 * 60 * 1000);
+                if (fallback.stale) {
+                    console.warn(`[cache] stale serve for ${url} (${err.message})`);
+                    return { data: fallback.data, status: 200, fromCache: true, stale: true };
+                }
+                throw err;
+            }
+        };
+    });
+    return instance;
+}
+
+attachPersistentCache(api);
+
 module.exports = api;
