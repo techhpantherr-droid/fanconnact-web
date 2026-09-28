@@ -1,3 +1,5 @@
+const interceptorThrottle = {};
+
 const axios = require("axios");
 const http = require("http");
 const https = require("https");
@@ -138,34 +140,26 @@ api.interceptors.response.use(
         // label it as an application/API crash or retry it here.
         if (status === 429) {
 
-            console.warn(
-                "⚠️ RapidAPI rate limit (429)",
-                {
-                    url: configReq.url,
-                    status,
-                    message: error.message
-                }
-            );
+            // Log each rate-limited URL at most once a minute: the free plan
+            // stays exhausted for hours and the raw axios error object is
+            // huge, which floods the log pipeline.
+            const logKey = `429:${configReq.url}`;
+            const nowTs = Date.now();
+            if (!interceptorThrottle[logKey] || nowTs - interceptorThrottle[logKey] > 60000) {
+                interceptorThrottle[logKey] = nowTs;
+                console.warn(`429 provider daily limit -> ${configReq.url}`);
+            }
 
-            throw error;
+            const quotaError = new Error("Provider daily limit reached (429)");
+            quotaError.status = 429;
+            quotaError.quotaExhausted = true;
+            quotaError.url = configReq.url;
+            quotaError.response = { status: 429 };
+            throw quotaError;
 
         }
 
-        console.error(
-
-            "❌ API ERROR",
-
-            {
-
-                url: configReq.url,
-
-                status,
-
-                message: error.message
-
-            }
-
-        );
+        console.error(`API ERROR ${configReq.url} -> ${status || error.message}`);
 
         throw error;
 
