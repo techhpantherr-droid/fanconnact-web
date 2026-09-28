@@ -271,9 +271,13 @@ router.get("/:id", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
             success: false,
+
+            data: null,
+
+            notice: "Player details are temporarily unavailable (free daily API limit reached). Try again once the limit resets.",
 
             message: "Unable to fetch player"
 
