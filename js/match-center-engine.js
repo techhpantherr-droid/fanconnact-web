@@ -19,8 +19,8 @@
   // AllSports v2 (RapidAPI allsportsapi2) sports served via the backend
   // /api/all-sports/* proxy. These use "as_" prefixed ids and a different
   // response schema (incidents / lineups / team scores) than cricket.
-  const ALLSPORTS_SUPPORTED_LIST = ['basketball', 'baseball', 'volleyball', 'handball', 'esport'];
-  const IS_ALLSPORTS = ALLSPORTS_SUPPORTED_LIST.includes(SPORT) || /^as_/.test(MATCHID);
+  const ALLSPORTS_SUPPORTED_LIST = ['basketball', 'baseball', 'volleyball', 'handball', 'esport', 'football', 'hockey', 'tennis', 'kabaddi'];
+  const IS_ALLSPORTS = ALLSPORTS_SUPPORTED_LIST.includes(SPORT) || /^(as_|espn_|pkl_)/i.test(String(MATCHID || ''));
 
   window.__MC_MATCH_ID__ = MATCHID;
 
@@ -171,6 +171,10 @@
       const s = encodeURIComponent(String(sport || 'basketball').toLowerCase());
       const id = encodeURIComponent(String(rawId || MATCHID || '').replace(/^as_/, ''));
       return await this.request(`/all-sports/match/${s}/${id}`);
+    },
+
+    async getAllSportsList() {
+      return await this.request('/all-sports/matches');
     }
 
   };
@@ -313,32 +317,156 @@
   }
 
   async function loadAllSportsMatchData(sport, rawId) {
-    // Resolve sport when the link lacks ?sport=: dashboard MATCHES first,
-    // then try every supported sport until one returns real teams.
+    // Fast path: the id prefix tells us the provider, and the dashboard
+    // MATCHES list tells us the sport. One request instead of nine.
+    const id = String(rawId || MATCHID || '');
     const candidates = [];
-    if (sport) candidates.push(sport);
-    if (!sport) {
+    if (sport) candidates.push(String(sport).toLowerCase());
+    if (!candidates.length) {
       try {
         const ms = window.FANCONNECT_MATCHES && window.FANCONNECT_MATCHES.MATCHES;
-        const found = ms && ms.find(x => String(x.id) === String(rawId || MATCHID));
+        const found = ms && ms.find(x => String(x.id) === id);
         if (found && found.sport) candidates.push(String(found.sport).toLowerCase());
       } catch (_) {}
     }
-    for (const s of ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi", "football", "hockey", "tennis"]) {
-      if (!candidates.includes(s)) candidates.push(s);
+    // Only auto-probe other sports when the id carries no provider prefix.
+    const genericId = !/^(as_|espn_|pkl_)/i.test(id);
+    if (genericId) {
+      for (const s of ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi", "football", "hockey", "tennis"]) {
+        if (!candidates.includes(s)) candidates.push(s);
+      }
     }
     for (const s of candidates) {
       let detail = null;
       try {
-        detail = await API.getAllSportsDetail(s, rawId || MATCHID);
+        detail = await API.getAllSportsDetail(s, id);
       } catch (err) {
-        console.warn("[Match Center] AllSports detail unavailable:", s, err);
+        console.warn("[Match Center] AllSports detail unavailable:", s, err && err.message);
         continue;
       }
       if (await applyAllSportsDetail(detail, s)) return;
     }
+    // Detail feed is gone for many finished / older matches, but the provider's
+    // match list still carries real teams, scores, venue and status. Use it so
+    // the page shows real data instead of "not available".
+    if (await applyMatchListEntry(rawId || MATCHID, sport)) return;
+    // Nothing live left for this match (very old / finished). Still render the
+    // match we already know (teams, date, competition) instead of an error.
+    if (applyKnownMatchFallback(sport)) return;
     BACKEND_READY = false;
     setUnavailableModel("Real match data is not available");
+  }
+
+  // Last-resort model from the match the page was opened with, so finished and
+  // upcoming games always show something real instead of "not available".
+  function applyKnownMatchFallback(sport) {
+    const sp = String(sport || SPORT || 'cricket').toLowerCase();
+    const homeName = HOME_T.name || M.home?.name || 'Home';
+    const awayName = AWAY_T.name || M.away?.name || 'Away';
+    if (!homeName || !awayName || homeName === 'Home' || awayName === 'Away') return false;
+    const status = M.state || 'upcoming';
+    const dateTxt = M.meta?.date || '';
+    M.home = HOME_T; M.away = AWAY_T;
+    M.sport = sp;
+    M.state = status;
+    M.meta.title = homeName + ' vs ' + awayName;
+    M.meta.sub = M.meta.sub || '';
+    M.meta.venue = M.meta.venue || '';
+    M.meta.format = sp;
+    M.meta.date = dateTxt;
+    // Keep the shared hero/summary path fed so it never shows "not available".
+    REAL_DATA.match = {
+      homeTeam: { name: homeName }, awayTeam: { name: awayName },
+      matchType: sp, format: sp, status, statusText: M.score?.resultText || '',
+      series: M.meta.sub, venue: M.meta.venue, date: M.meta.date
+    };
+    M.score = {
+      status,
+      resultText: status === 'finished' ? 'Full Time'
+        : status === 'live' ? 'Live' : (dateTxt || 'Upcoming'),
+      subText: M.meta.sub,
+      icon: SC.icon || '🏟️',
+      home: { score: String(M.score?.home?.score ?? ''), sub: '', detail: '' },
+      away: { score: String(M.score?.away?.score ?? ''), sub: '', detail: '' }
+    };
+    M.scorecard = { type: sp, stats: [], home: { code: 'HOME' }, away: { code: 'AWAY' } };
+    M.comm = { label: 'Match Events', items: [] };
+    M.squads = { home: { xi: [], bench: [], staff: [] }, away: { xi: [], bench: [], staff: [] } };
+    M.news = { source: 'Live backend', articles: M.news?.articles || [] };
+    BACKEND_READY = true;
+    return true;
+  }
+
+  // Real-data fallback built from the backend match list (finished + upcoming).
+  async function applyMatchListEntry(id, sport) {
+    let list = null;
+    try {
+      list = await getTimedClientCache('aslist', 120000, () => API.getAllSportsList());
+    } catch (e) {
+      return false;
+    }
+    const arr = Array.isArray(list) ? list : (list?.matches || list?.data || list?.results || []);
+    if (!Array.isArray(arr) || !arr.length) return false;
+    const target = String(id || '').replace(/^as_/, '');
+    const rec = arr.find(x => String(x?.id ?? '').replace(/^as_/, '') === target)
+      || arr.find(x => String(x?.matchId ?? '').replace(/^as_/, '') === target);
+    if (!rec) return false;
+
+    const sp = String(rec.sport || sport || 'cricket').toLowerCase();
+    const homeName = rec.homeTeam?.name || rec.home?.name || HOME_T.name || 'Home';
+    const awayName = rec.awayTeam?.name || rec.away?.name || AWAY_T.name || 'Away';
+    const homeScore = rec.score?.home ?? rec.homeScore ?? rec.home?.score ?? '';
+    const awayScore = rec.score?.away ?? rec.awayScore ?? rec.away?.score ?? '';
+    const statusText = rec.statusText || rec.result || rec.status || '';
+    const status = /finish|result|won|full|completed/i.test(statusText) ? 'finished'
+      : /live|in progress|1st|2nd|3rd|4th|quarter|half|inning/i.test(statusText) ? 'live' : 'upcoming';
+    const series = rec.series || rec.tournament || rec.matchType || '';
+    const dateTxt = rec.date ? (rec.date + (rec.time ? ' · ' + rec.time : '')) : '';
+
+    Object.assign(HOME_T, { name: homeName, img: HOME_T.img });
+    Object.assign(AWAY_T, { name: awayName, img: AWAY_T.img });
+    M.home = HOME_T; M.away = AWAY_T;
+    M.sport = sp;
+    M.state = status;
+    M.meta.title = homeName + ' vs ' + awayName;
+    M.meta.sub = series;
+    M.meta.series = series;
+    M.meta.venue = rec.venue || rec.venue?.name || '';
+    M.meta.format = sp;
+    M.meta.date = dateTxt;
+    M.score = {
+      status,
+      resultText: status === 'finished' ? (rec.result || statusText || 'Full Time')
+        : status === 'live' ? (statusText || 'Live') : (dateTxt || 'Upcoming'),
+      subText: series,
+      icon: SC.icon || '🏟️',
+      home: { score: String(homeScore ?? ''), sub: '', detail: statusText },
+      away: { score: String(awayScore ?? ''), sub: '', detail: '' }
+    };
+    M.scorecard = { type: sp, stats: [], home: { code: 'HOME' }, away: { code: 'AWAY' } };
+    M.comm = { label: 'Match Events', items: (rec.events || []).slice(0, 60).map((ev, i) => ({
+      over: ev?.time ?? ev?.minute ?? ('#' + (i + 1)),
+      text: ev?.text || ev?.comment || ev?.description || 'Event',
+      type: 'info',
+      timestamp: ev?.timeStamp || Date.now()
+    })) };
+    M.squads = { home: { xi: [], bench: [], staff: [] }, away: { xi: [], bench: [], staff: [] } };
+    REAL_DATA.match = {
+      homeTeam: { name: homeName }, awayTeam: { name: awayName },
+      matchType: sp, format: sp, status, statusText: statusText || '',
+      series: series, venue: rec.venue || rec.venue?.name || '',
+      date: rec.date, time: rec.time,
+      score: { home: homeScore, away: awayScore }, result: rec.result || ''
+    };
+    applyRealSummaryData();
+    try {
+      const rawNews = await API.getNews().catch(() => null);
+      REAL_DATA.news = rawNews;
+      applyRealNewsData();
+    } catch (_) { M.news = { source: 'Live backend', articles: [] }; }
+    try { await loadRealWeather(); } catch (_) {}
+    BACKEND_READY = true;
+    return true;
   }
 
   async function applyAllSportsDetail(detail, sport) {
@@ -4372,7 +4500,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
     // Live updates come only from the backend.
     liveTimer = setInterval(() => {
       refreshRealLiveData().catch(err => console.warn('Live refresh failed', err));
-    }, 30000);
+    }, 20000);
     refreshRealLiveData().catch(err => console.warn('Live refresh failed', err));
   }
 

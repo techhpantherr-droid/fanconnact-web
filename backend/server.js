@@ -1243,7 +1243,9 @@ const ALLSPORTS_CONFIG = {
 };
 
 // ─── NORMALIZED ALL-SPORTS MATCHES (for sport pages) ───────────────────────
-const ALLSPORTS_SUPPORTED = ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi"];
+const ALLSPORTS_SUPPORTED = ["basketball", "baseball", "volleyball", "handball", "esport", "kabaddi", "football", "hockey", "tennis"];
+// Sports served by RapidAPI AllSports; the rest come from free ESPN scoreboards.
+const ALLSPORTS_RAPIDAPI_SPORTS = ["basketball", "baseball", "volleyball", "handball", "esport"];
 
 // ─── PKL KABADDI SCRAPER (free, official prokabaddi.com fixtures) ───────────
 // No key needed. The /fixtures page embeds window.fixtureWidgetData with every
@@ -1392,11 +1394,11 @@ const allSportsMatchesCache = new Map();
 // ESPN covers basketball (NBA) + baseball (MLB). Other sports have no free
 // scoreboard and return [] so callers degrade gracefully.
 const ESPN_ALLSPORTS_PATHS = {
-  basketball: "basketball/nba",
-  baseball: "baseball/mlb",
-  football: "soccer/eng.1",
-  hockey: "hockey/nhl",
-  tennis: "tennis/atp",
+  basketball: ["basketball/nba"],
+  baseball: ["baseball/mlb"],
+  football: ["soccer/eng.1", "soccer/uefa.champions", "soccer/esp.1", "soccer/ger.1", "soccer/ita.1"],
+  hockey: ["hockey/nhl"],
+  tennis: ["tennis/atp"]
 };
 
 function normalizeEspnToAllSports(ev, sport) {
@@ -1411,17 +1413,21 @@ function normalizeEspnToAllSports(ev, sport) {
   const detail = st.shortDetail || st.description || "";
   const ts = ev.date ? Date.parse(ev.date) : null;
   const id = "espn_" + ev.id;
+  // Tennis / golf style events have no home/away competitors: use the
+  // tournament name so the Match Center still shows real data.
+  const tournamentName = (ev.name || ev.shortName || ev.league?.name || "Tournament").toString();
+  const roundName = (ev.shortName && ev.shortName !== tournamentName) ? ev.shortName : "";
   return {
     id, matchId: id, sport, status,
     series: (ev.league && ev.league.name) || "",
-    matchType: sport, format: sport, stage: "",
+    matchType: sport, format: sport, stage: roundName,
     venue: (comp.venue && comp.venue.fullName) || "",
     startTime: Number.isFinite(ts) ? ts : null,
     date: Number.isFinite(ts) ? new Date(ts).toLocaleDateString("en-CA") : "",
     time: Number.isFinite(ts) ? new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "",
     rules: sport,
-    homeTeam: { name: (home.team && (home.team.displayName || home.team.name)) || "", shortName: (home.team && home.team.abbreviation) || "", id: (home.team && home.team.id) || "" },
-    awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || "", shortName: (away.team && away.team.abbreviation) || "", id: (away.team && away.team.id) || "" },
+    homeTeam: { name: (home.team && (home.team.displayName || home.team.name)) || tournamentName, shortName: (home.team && home.team.abbreviation) || "", id: (home.team && home.team.id) || "" },
+    awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || roundName, shortName: (away.team && away.team.abbreviation) || "", id: (away.team && away.team.id) || "" },
     score: { home: home.score != null ? String(home.score) : "", away: away.score != null ? String(away.score) : "", detail },
     result: status === "finished" ? (detail || "Finished") : "",
     statusText: detail,
@@ -1429,31 +1435,41 @@ function normalizeEspnToAllSports(ev, sport) {
 }
 
 async function fetchEspnAllSportsMatches(sport) {
-  const path = ESPN_ALLSPORTS_PATHS[sport];
-  if (!path) return [];
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 8000);
-  try {
-    const r = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/${path}/scoreboard`, { signal: ctrl.signal });
-    if (!r.ok) return [];
-    const j = await r.json();
-    return (j.events || []).map((ev) => normalizeEspnToAllSports(ev, sport)).filter(Boolean);
-  } catch (e) {
-    console.error("[AllSports] ESPN fallback failed for", sport, e.message);
-    return [];
-  } finally {
-    clearTimeout(t);
+  const paths = ESPN_ALLSPORTS_PATHS[sport];
+  if (!paths) return [];
+  const list = Array.isArray(paths) ? paths : [paths];
+  const out = [];
+  const seen = new Set();
+  for (const path of list) {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 8000);
+    try {
+      const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard`, { signal: ctrl.signal });
+      if (!r.ok) continue;
+      const j = await r.json();
+      for (const ev of (j.events || [])) {
+        const n = normalizeEspnToAllSports(ev, sport);
+        if (n && !seen.has(n.id)) { seen.add(n.id); out.push(n); }
+      }
+    } catch (e) {
+      console.error("[AllSports] ESPN scoreboard failed for", path, e.message);
+    } finally {
+      clearTimeout(t);
+    }
   }
+  return out;
 }
 
 async function fetchEspnAllSportsDetail(sport, rawId) {
-  const path = ESPN_ALLSPORTS_PATHS[sport];
-  if (!path) return null;
+  const pathsCfg = ESPN_ALLSPORTS_PATHS[sport];
+  if (!pathsCfg) return null;
+  const pathList = Array.isArray(pathsCfg) ? pathsCfg : [pathsCfg];
+  for (const path of pathList) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), 10000);
   try {
-    const r = await fetch(`https://site.web.api.espn.com/apis/site/v2/sports/${path}/summary?event=${encodeURIComponent(rawId)}`, { signal: ctrl.signal });
-    if (!r.ok) return null;
+    const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/summary?event=${encodeURIComponent(rawId)}`, { signal: ctrl.signal });
+    if (!r.ok) { clearTimeout(t); continue; }
     const j = await r.json();
     const comp = (j.header && j.header.competitions && j.header.competitions[0]) || {};
     const cs = comp.competitors || [];
@@ -1482,10 +1498,11 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
     };
   } catch (e) {
     console.error("[AllSports] ESPN detail failed for", sport, rawId, e.message);
-    return null;
   } finally {
     clearTimeout(t);
   }
+  }
+  return null;
 }
 
 app.get("/api/all-sports/matches/:sport", async (req, res) => {

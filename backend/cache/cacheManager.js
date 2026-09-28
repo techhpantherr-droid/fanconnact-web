@@ -26,10 +26,9 @@ class CacheManager {
     set(key, value, ttl) {
         cache.set(key, value, ttl);
 
-        // Only keep successful match-list responses as stale fallbacks.
-        if (MATCH_LIST_KEYS.has(key)) {
-            staleValues.set(key, value);
-        }
+        // Keep the last successful value in memory so any upstream failure
+        // (403 / 429 / timeout / DNS) can still serve real data.
+        staleValues.set(key, value);
     }
 
     has(key) {
@@ -131,6 +130,18 @@ class CacheManager {
 
                 console.error(`❌ API ERROR  : ${cacheKey}`);
                 console.error(err.message);
+
+                // Upstream failed for any reason (403 not subscribed, timeout,
+                // DNS, 5xx). Serve the last known real data instead of a 500 so
+                // the site keeps showing real cricket data.
+                if (staleValues.has(cacheKey)) {
+                    console.warn(`♻️ STALE FALLBACK: ${cacheKey}`);
+                    return staleValues.get(cacheKey);
+                }
+
+                if (MATCH_LIST_KEYS.has(cacheKey)) {
+                    return [];
+                }
 
                 throw err;
 
