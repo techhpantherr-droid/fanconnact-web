@@ -152,40 +152,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!user) {
       const path = window.location.pathname;
       const page = path.split("/").pop();
-      // Pages guests are allowed to see
-      // Guests may only open the landing page and the public Match Center
-      // (plus auth/legal pages so they can sign in). Every other page
-      // redirects back to index.html.
+      // Pages guests are allowed to see.
+      // Home, Match Center and Live Matches are public for everyone.
+      // The auth pages stay open as well, otherwise a guest landing on
+      // index.html could never reach the sign-in form to log in.
+      // Every other page (dashboard, predictions, FanCoins, profile, settings,
+      // leaderboards, per-sport pages, ...) redirects back to the pre-login
+      // landing page.
       const guestAllowedPages = [
         "index.html",
         "match-center.html",
+        "livematches.html",
         "login.html",
         "signup.html",
         "forget-password.html",
         "reset-password.html",
         "terms.html",
-        "football.html",
-        "cricket.html",
-        "basketball.html",
-        "tennis.html",
-        "baseball.html",
-        "hockey.html",
-        "vollyeball.html",
-        "kabbaddi.html",
-        "e-sports.html",
-        "tabletennis.html",
-        "top-players.html",
-        "leaderboard.html",
-        "livematches.html",
-        "news&update.html",
-        "calendar.html",
-        "profile.html",
-        "setting.html",
-        "notification.html",
-        "prediction.html",
-        "player.html",
-        "fancoin.html",
-        "dashboard.html",
       ];
 
       // Default landing page for unauthenticated users visiting root or protected pages
