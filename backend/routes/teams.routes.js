@@ -27,11 +27,13 @@ router.get("/international", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch international teams"
+            teams: [],
+
+            notice: "Team list temporarily unavailable (free daily API limit reached).",
 
         });
 
@@ -62,11 +64,13 @@ router.get("/league", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch league teams"
+            teams: [],
+
+            notice: "Team list temporarily unavailable (free daily API limit reached).",
 
         });
 
@@ -97,11 +101,13 @@ router.get("/domestic", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch domestic teams"
+            teams: [],
+
+            notice: "Team list temporarily unavailable (free daily API limit reached).",
 
         });
 
@@ -131,11 +137,13 @@ router.get("/women", async (req, res) => {
 
         console.error(err);
 
-        res.status(500).json({
+        res.json({
 
-            success: false,
+            success: true,
 
-            message: "Unable to fetch women teams"
+            teams: [],
+
+            notice: "Team list temporarily unavailable (free daily API limit reached).",
 
         });
 
