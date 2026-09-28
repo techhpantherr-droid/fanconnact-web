@@ -430,9 +430,32 @@ as =
     });
   }
 
+  // Card theme CSS is injected at runtime so cards look correct even when the
+  // page HTML itself is stale/cached and lacks the light/dark card overrides.
+  function ensureCardThemeCss() {
+    if (window.__FANCONNECT_CARD_THEME_CSS__) return;
+    window.__FANCONNECT_CARD_THEME_CSS__ = true;
+    const s = document.createElement("style");
+    s.textContent = [
+      ":root:not(.dark) .bg-card-bg { background: #ffffff !important; }",
+      ":root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }",
+      ":root:not(.dark) .text-on-surface { color: #0f172a !important; }",
+      ":root:not(.dark) .text-on-surface-variant { color: #475569 !important; }",
+      ":root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }",
+      ".dark .text-on-surface { color: #ffffff !important; }",
+      ".dark .text-on-surface-variant { color: #aab6c4 !important; }",
+      ".dark .text-emerald-accent { color: #34d399 !important; }",
+      ".dark .score-home, .dark .score-away { color: #ffffff !important; }",
+      ":root:not(.dark) .score-home, :root:not(.dark) .score-away { color: #0f172a !important; }"
+    ].join("\n");
+    document.head.appendChild(s);
+  }
+
   async function init() {
     if (initRunning) return;
     initRunning = true;
+
+    ensureCardThemeCss();
 
     let retry = 0;
 
@@ -453,37 +476,50 @@ as =
     // Normalise provider sport ids once so page filters, labels, colours and
     // counts all agree (e.g. backend "esport" -> page "e-sports").
     applySportAliases(MATCHES);
+    renderAll();
 
-    // 0) dashboard hero carousel
-    renderDashboardHero();
-
-    const hero = document.querySelector('[data-purpose="match-card-grid"]');
-
-    if (hero) {
-      // Tile live matches side-by-side in the grid (bigger than the compact
-      // horizontal scrollers), keeping the score prominent. No full-width
-      // column so several games are always visible next to each other.
-      const live = MATCHES.filter(m => m.status === "live");
-      const rest = MATCHES.filter(m => m.status !== "live");
-      const list = live.concat(rest).slice(0, 6);
-      hero.innerHTML = list.map(m => cardHTML(m, false)).join("");
+    // Re-render cards whenever the theme changes so inline colours follow the
+    // active theme (covers both the page toggle and the dashboard hero).
+    if (!window.__FANCONNECT_THEME_OBSERVER__) {
+      window.__FANCONNECT_THEME_OBSERVER__ = true;
+      new MutationObserver(function () { renderAll(); }).observe(
+        document.documentElement,
+        { attributes: true, attributeFilter: ["class"] }
+      );
     }
 
-    document.querySelectorAll('[data-purpose="matches-list"]').forEach(c => {
-      renderInto(c, c.dataset.filter || "all", false, false);
-    });
+    function renderAll() {
+      // 0) dashboard hero carousel
+      renderDashboardHero();
 
-    document.querySelectorAll('[data-purpose="matches-live"]').forEach(c => {
-      renderInto(c, "live", true, true);
-    });
+      const hero = document.querySelector('[data-purpose="match-card-grid"]');
 
-    document.querySelectorAll('[data-purpose="matches-upcoming"]').forEach(c => {
-      renderInto(c, "upcoming", true, true);
-    });
+      if (hero) {
+        // Tile live matches side-by-side in the grid (bigger than the compact
+        // horizontal scrollers), keeping the score prominent. No full-width
+        // column so several games are always visible next to each other.
+        const live = MATCHES.filter(m => m.status === "live");
+        const rest = MATCHES.filter(m => m.status !== "live");
+        const list = live.concat(rest).slice(0, 6);
+        hero.innerHTML = list.map(m => cardHTML(m, false)).join("");
+      }
 
-    document.querySelectorAll('[data-purpose="matches-finished"]').forEach(c => {
-      renderInto(c, "finished", true, true);
-    });
+      document.querySelectorAll('[data-purpose="matches-list"]').forEach(c => {
+        renderInto(c, c.dataset.filter || "all", false, false);
+      });
+
+      document.querySelectorAll('[data-purpose="matches-live"]').forEach(c => {
+        renderInto(c, "live", true, true);
+      });
+
+      document.querySelectorAll('[data-purpose="matches-upcoming"]').forEach(c => {
+        renderInto(c, "upcoming", true, true);
+      });
+
+      document.querySelectorAll('[data-purpose="matches-finished"]').forEach(c => {
+        renderInto(c, "finished", true, true);
+      });
+    }
 
     // Tell sport-filters.js that the cards now exist so counts are correct
     // immediately; users do not need to click another tab.
