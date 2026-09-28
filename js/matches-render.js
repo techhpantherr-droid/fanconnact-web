@@ -99,6 +99,10 @@
     const h = team(m.home), a = team(m.away);
     const col = SPORT_COLOR[m.sport] || "blue";
     const label = SPORT_LABEL[m.sport] || m.sport;
+    const darkNow = !!(document.documentElement && document.documentElement.classList.contains("dark"));
+    const S = darkNow
+      ? { card: "#12172D", border: "#243347", on: "#ffffff", variant: "#aab6c4", accent: "#34d399" }
+      : { card: "#ffffff", border: "#e2e8f0", on: "#0f172a", variant: "#475569", accent: "#2196f3" };
     // In a horizontal-scroll carousel, cards need a fixed width so they
     // don't stretch to full container width and break the scroll on mobile.
     // In a vertical list (game pages / live matches) cards must be full width.
@@ -127,22 +131,22 @@
         '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
         '<div class="flex items-center justify-start space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '">' +
-        '<div class="min-w-0 text-left"><h2 class="text-on-surface ' + scoreSize + ' font-bold score-home truncate leading-tight">' + esc(hs) + '</h2>' +
-        (detail ? '<p class="text-[10px] sm:text-xs text-on-surface-variant font-medium score-detail truncate">' + detail + '</p>' : '') + '</div>' +
+        '<div class="min-w-0 text-left"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(hs) + '</h2>' +
+        (detail ? '<p class="text-[10px] sm:text-xs font-medium truncate" style="color:' + S.variant + '">' + detail + '</p>' : '') + '</div>' +
         '</div>' +
-        '<div class="text-center min-w-0"><span class="text-on-surface-variant font-bold text-sm sm:text-lg md:text-xl">VS</span>' +
-        (line ? '<p class="text-emerald-accent text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide status-line truncate">' + line + '</p>' : '') + '</div>' +
+        '<div class="text-center min-w-0"><span class="font-bold text-sm sm:text-lg md:text-xl" style="color:' + S.variant + '">VS</span>' +
+        (line ? '<p class="text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide truncate" style="color:' + S.accent + '">' + line + '</p>' : '') + '</div>' +
         '<div class="flex items-center justify-end space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(a) + '">' +
-        '<div class="min-w-0 text-right"><h2 class="text-on-surface ' + scoreSize + ' font-bold score-away truncate leading-tight">' + esc(as) + '</h2></div>' +
+        '<div class="min-w-0 text-right"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(as) + '</h2></div>' +
         '</div>' +
         '</div>';
       footer =
-        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
-        '<div class="flex items-center min-w-0"><span class="text-[11px] text-on-surface-variant font-medium truncate">Real-time · ' + esc(m.rules) + '</span></div>' +
+        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t" style="border-color:' + S.border + '">' +
+        '<div class="flex items-center min-w-0"><span class="text-[11px] font-medium truncate" style="color:' + S.variant + '">Real-time · ' + esc(m.rules) + '</span></div>' +
         '<div class="flex flex-wrap gap-2 shrink-0">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent border border-emerald-accent/40 text-emerald-accent hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Live Chat</span></button>' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent text-on-surface border border-border-subtle hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Scorecard</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all hover:opacity-80" style="background:transparent;border:1px solid ' + S.accent + '80;color:' + S.accent + '"><span class="">Live Chat</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all hover:opacity-80" style="background:transparent;border:1px solid ' + S.border + ';color:' + S.on + '"><span class="">Scorecard</span></button>' +
         '</div>' +
         '</div>';
     } else if (m.status === "upcoming") {
@@ -150,17 +154,17 @@
       const when = (m.date ? esc(m.date) : "") + (m.time ? " · " + esc(m.time) : "");
       midBlock =
         '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
-        '<div class="flex items-center justify-start space-x-1 sm:space-x-2 min-w-0"><img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '"><span class="font-bold text-on-surface text-[11px] sm:text-sm truncate">' + esc(h.name) + '</span></div>' +
-        '<div class="text-center min-w-0 px-1"><p class="text-xs sm:text-sm font-bold text-on-surface truncate">' + when + '</p><p class="text-on-surface-variant text-[10px] sm:text-xs truncate">' + esc(m.rules) + '</p></div>' +
-        '<div class="flex items-center justify-end space-x-1 sm:space-x-2 min-w-0"><span class="font-bold text-on-surface text-[11px] sm:text-sm truncate">' + esc(a.name) + '</span><img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(a) + '"></div>' +
+        '<div class="flex items-center justify-start space-x-1 sm:space-x-2 min-w-0"><img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '"><span class="font-bold text-[11px] sm:text-sm truncate" style="color:' + S.on + '">' + esc(h.name) + '</span></div>' +
+        '<div class="text-center min-w-0 px-1"><p class="text-xs sm:text-sm font-bold truncate" style="color:' + S.on + '">' + when + '</p><p class="text-[10px] sm:text-xs truncate" style="color:' + S.variant + '">' + esc(m.rules) + '</p></div>' +
+        '<div class="flex items-center justify-end space-x-1 sm:space-x-2 min-w-0"><span class="font-bold text-[11px] sm:text-sm truncate" style="color:' + S.on + '">' + esc(a.name) + '</span><img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(a) + '"></div>' +
         '</div>';
       footer =
-        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent border border-emerald-accent/40 text-emerald-accent hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">View Details</span></button>' +
-        '<button onclick="window.location.href=\'livematches.html\'" class="text-on-surface-variant text-xs font-bold flex items-center space-x-1 hover:text-on-surface"><span class="">View All</span></button>' +
+        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t" style="border-color:' + S.border + '">' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all hover:opacity-80" style="background:transparent;border:1px solid ' + S.accent + '80;color:' + S.accent + '"><span class="">View Details</span></button>' +
+        '<button onclick="window.location.href=\'livematches.html\'" class="text-xs font-bold flex items-center space-x-1 hover:opacity-80" style="color:' + S.variant + '"><span class="">View All</span></button>' +
         '</div>';
     } else { // finished
-      statusBadge = '<span class="bg-on-surface-variant/15 text-on-surface-variant text-[10px] font-bold px-2 py-0.5 rounded uppercase">Finished</span>';
+      statusBadge = '<span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase" style="background:' + S.variant + '26;color:' + S.variant + '">Finished</span>';
    
       const hs =
     m.score?.home ||
@@ -187,29 +191,30 @@ const detail = m.score?.detail
         '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
         '<div class="flex items-center justify-start space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '">' +
-        '<div class="min-w-0 text-left"><h2 class="text-on-surface ' + scoreSize + ' font-bold truncate leading-tight">' + esc(hs) + '</h2>' + (detail ? '<p class="text-[10px] sm:text-xs text-on-surface-variant font-medium truncate">' + detail + '</p>' : '') + '</div>' +
+        '<div class="min-w-0 text-left"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(hs) + '</h2>' + (detail ? '<p class="text-[10px] sm:text-xs font-medium truncate" style="color:' + S.variant + '">' + detail + '</p>' : '') + '</div>' +
         '</div>' +
-        '<div class="text-center min-w-0"><span class="text-on-surface-variant font-bold text-sm sm:text-lg md:text-xl">VS</span>' +
-        (res ? '<p class="text-emerald-accent text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide truncate">' + res + '</p>' : '') + '</div>' +
+        '<div class="text-center min-w-0"><span class="font-bold text-sm sm:text-lg md:text-xl" style="color:' + S.variant + '">VS</span>' +
+        (res ? '<p class="text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide truncate" style="color:' + S.accent + '">' + res + '</p>' : '') + '</div>' +
         '<div class="flex items-center justify-end space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(a) + '">' +
-        '<div class="min-w-0 text-right"><h2 class="text-on-surface ' + scoreSize + ' font-bold truncate leading-tight">' + esc(as) + '</h2></div>' +
+        '<div class="min-w-0 text-right"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(as) + '</h2></div>' +
         '</div>' +
         '</div>';
       footer =
-        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t border-border-subtle">' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="bg-transparent text-on-surface border border-border-subtle hover:opacity-80 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all"><span class="">Highlights</span></button>' +
-        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="text-on-surface-variant text-xs font-bold flex items-center space-x-1 hover:text-on-surface"><span class="">View Details</span></button>' +
+        '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t" style="border-color:' + S.border + '">' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="px-3 py-1.5 rounded-lg text-xs font-bold flex items-center space-x-2 transition-all hover:opacity-80" style="background:transparent;border:1px solid ' + S.border + ';color:' + S.on + '"><span class="">Highlights</span></button>' +
+        '<button onclick="window.location.href=\'' + linkFor(m) + '\'" class="text-xs font-bold flex items-center space-x-1 hover:opacity-80" style="color:' + S.variant + '"><span class="">View Details</span></button>' +
         '</div>';
     }
 
     const sub = esc(m.tournament) + (m.stage ? " • " + esc(m.stage) : "") + (m.venue ? " • " + esc(m.venue) : "");
     return (
-      '<div class="bg-card-bg rounded-2xl ' + pad + ' border border-border-subtle hover:border-primary transition-all cursor-pointer group h-full ' + widthCls + ' min-w-0 overflow-hidden flex flex-col" ' +
+      '<div class="rounded-2xl ' + pad + ' hover:border-primary transition-all cursor-pointer group h-full ' + widthCls + ' min-w-0 overflow-hidden flex flex-col" ' +
+      'style="background:' + S.card + ';border:1px solid ' + S.border + '" ' +
       'data-match-id="' + esc(m.id) + '" data-sport="' + esc(m.sport) + '" data-status="' + esc(m.status) + '" data-tournament="' + esc(m.tournament || m.sport) + '"' + (m.status === 'live' && m.link ? ' data-match-link="' + esc(linkFor(m)) + '"' : '') + '>' +
       '<div class="flex items-center justify-between ' + headMb + '">' +
       '<div class="flex items-center space-x-3">' + statusBadge +
-      '<span class="text-xs font-semibold text-on-surface-variant truncate max-w-[140px] sm:max-w-[240px]">' + sub + '</span>' +
+      '<span class="text-xs font-semibold truncate max-w-[140px] sm:max-w-[240px]" style="color:' + S.variant + '">' + sub + '</span>' +
       '</div>' +
       '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-' + col + '-900/40 text-' + col + '-400">' + esc(label) + '</span>' +
       '</div>' +
