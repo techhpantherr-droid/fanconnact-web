@@ -1417,6 +1417,39 @@ function normalizeAllSportsEvent(event, sport) {
 
 const allSportsMatchesCache = new Map();
 
+// ─── PERSISTENT LAST-KNOWN-GOOD (AllSports + ESPN) ───────────────────────────
+// RapidAPI AllSports has a small daily quota and ESPN has no scoreboard for
+// some sports, so a page can legitimately return nothing even though real
+// fixtures existed earlier. Keep the last real payload per sport on disk and
+// serve it (flagged stale) instead of showing an empty page. Real data always
+// wins; this only runs when both providers return zero matches.
+const ALLSPORTS_LKG_FILE = path.join(DATA_DIR, "all-sports-lkg.json");
+
+function readAllSportsLKG() {
+  try {
+    return JSON.parse(fs.readFileSync(ALLSPORTS_LKG_FILE, "utf8")) || {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function writeAllSportsLKG(sport, matches, source) {
+  try {
+    const all = readAllSportsLKG();
+    all[sport] = { ts: Date.now(), source: source || "unknown", matches };
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.writeFileSync(ALLSPORTS_LKG_FILE, JSON.stringify(all));
+  } catch (e) {
+    console.warn("[AllSports] could not persist last-known-good:", e.message);
+  }
+}
+
+function readAllSportsLKG(sport) {
+  const entry = readAllSportsLKG()[sport];
+  if (!entry || !Array.isArray(entry.matches) || !entry.matches.length) return null;
+  return entry;
+}
+
 // ─── ESPN/FREE FALLBACK for AllSports (no key needed) ───────────────────────
 // Used when RapidAPI AllSports fails, is rate-limited, or returns nothing.
 // ESPN covers basketball (NBA) + baseball (MLB). Other sports have no free
@@ -1426,7 +1459,8 @@ const ESPN_ALLSPORTS_PATHS = {
   baseball: ["baseball/mlb"],
   football: ["soccer/eng.1", "soccer/uefa.champions", "soccer/esp.1", "soccer/ger.1", "soccer/ita.1"],
   hockey: ["hockey/nhl"],
-  tennis: ["tennis/atp"]
+  tennis: ["tennis/atp"],
+  volleyball: ["volleyball/mens-college-volleyball", "volleyball/womens-college-volleyball"]
 };
 
 function normalizeEspnToAllSports(ev, sport) {
@@ -1589,6 +1623,20 @@ app.get("/api/all-sports/matches/:sport", async (req, res) => {
       if (matches.length) source = "espn";
     }
 
+    if (matches.length) {
+      allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches, source });
+      writeAllSportsLKG(sport, matches, source);
+    } else {
+      const lkg = readAllSportsLKG(sport);
+      if (lkg) {
+        allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: lkg.matches, source: lkg.source, stale: true });
+        return res.json({
+          success: true, source: lkg.source, stale: true,
+          staleSince: lkg.ts, count: lkg.matches.length, matches: lkg.matches,
+          notice: "Showing the last available " + sport + " fixtures. The live provider is temporarily unavailable."
+        });
+      }
+    }
     allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches, source });
     res.json({ success: true, source, fallback: source === "espn", count: matches.length, matches });
   } catch (e) {
@@ -1641,11 +1689,21 @@ app.get("/api/all-sports/matches", async (req, res) => {
           } catch (_) { matches = []; }
         }
         if (!matches.length) matches = await fetchEspnAllSportsMatches(sport);
+        if (matches.length) writeAllSportsLKG(sport, matches, "mixed");
         allSportsMatchesCache.set(cacheKey, { ts: Date.now(), data: matches, source: "mixed" });
         return matches;
       })
     );
     const all = results.flatMap(r => r.status === "fulfilled" ? r.value : []);
+    // Any sport whose providers returned nothing falls back to its last
+    // real payload, so a provider quota spike never empties the whole page.
+    const missing = ALLSPORTS_SUPPORTED.filter(
+      s => s !== "kabaddi" && !all.some(m => String(m.sport || "").toLowerCase() === s)
+    );
+    for (const sport of missing) {
+      const lkg = readAllSportsLKG(sport);
+      if (lkg) all.push(...lkg.matches);
+    }
     const anyEspn = all.some(m => String(m.id || "").startsWith("espn_"));
     res.json({ success: true, source: anyEspn ? "mixed" : "allsports", count: all.length, matches: all });
   } catch (e) {
