@@ -1,127 +1,84 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Main pages -->
   <url>
     <loc>https://fanconnact.com/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://fanconnact.com/index.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
+
   <url>
     <loc>https://fanconnact.com/dashboard.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
 
-  <!-- Match and sports pages -->
   <url>
     <loc>https://fanconnact.com/livematches.html</loc>
-    <changefreq>hourly</changefreq>
-    <priority>0.9</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/match-center.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/cricket.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/football.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/basketball.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/baseball.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/tennis.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/tabletennis.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/volleyball.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/hockey.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/kabaddi.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
+
   <url>
     <loc>https://fanconnact.com/e-sports.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
   </url>
 
-  <!-- Players, rankings and engagement -->
   <url>
     <loc>https://fanconnact.com/player.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fanconnact.com/top-players.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fanconnact.com/leaderboard.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fanconnact.com/fancoin.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://fanconnact.com/prediction.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://fanconnact.com/news&amp;update.html</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
   </url>
 
-  <!-- User-facing public pages -->
   <url>
-    <loc>https://fanconnact.com/profile.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://fanconnact.com/top-players.html</loc>
   </url>
+
   <url>
-    <loc>https://fanconnact.com/user-profile.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://fanconnact.com/leaderboard.html</loc>
+  </url>
+
+  <url>
+    <loc>https://fanconnact.com/fancoin.html</loc>
+  </url>
+
+  <url>
+    <loc>https://fanconnact.com/prediction.html</loc>
+  </url>
+
+  <url>
+    <loc>https://fanconnact.com/news&amp;update.html</loc>
   </url>
 
 </urlset>
