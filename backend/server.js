@@ -1374,11 +1374,25 @@ function pklToDetail(ev) {
 
 function normalizeAllSportsEvent(event, sport) {
   if (!event || !event.id) return null;
-  const t = event.status?.type || "";
+  const t = String(event.status?.type || "").toLowerCase();
+  const desc = String(event.status?.description || "");
+  const code = Number(event.status?.code);
+  // Status lives in type (inprogress/live/finished) but for many competitions
+  // only the description/code is populated — e.g. "Pause", "Break", "HT",
+  // "1st Half", "Q3", "Set 2". Detect live from any of them, otherwise a real
+  // in-play match is labelled "upcoming" everywhere in the app.
   let status;
-  if (t === "inprogress" || t === "live") status = "live";
-  else if (t === "finished") status = "finished";
-  else status = "upcoming";
+  if (t === "inprogress" || t === "live"
+    || /live|in\s?progress|pause|break|half\s?time|\bht\b|interval|timeout|overtime|delay|1st|2nd|3rd|4th|quarter|\bq[1-4]\b|inning|set\s?\d|period|extra.?time|drinks|stumps|tea|lunch/i.test(desc)
+    || code === 2 || (code > 50 && code < 100)) {
+    status = "live";
+  } else if (t === "finished" || t === "ended"
+    || /finish|ended|full\s?time|\bft\b|\baet\b|result|won by|\bwon\b|completed|final/i.test(desc)
+    || code === 3) {
+    status = "finished";
+  } else {
+    status = "upcoming";
+  }
 
   const ts = event.startTimestamp ? event.startTimestamp * 1000 : null;
   return {
@@ -1598,6 +1612,31 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
     const homeStats = flatStats(boxTeams[0] || null);
     const awayStats = flatStats(boxTeams[1] || null);
     const incidentRows = incidents.map(it => ({ ...it }));
+    // Real lineups from the summary rosters (football/basketball/hockey…).
+    const squads = Array.isArray(j.rosters) ? j.rosters.map(r => {
+      const side = String(r.homeAway || "").toLowerCase().startsWith("a") ? "away" : "home";
+      return {
+        side,
+        teamName: (r.team && (r.team.displayName || r.team.name)) || "",
+        short: (r.team && r.team.abbreviation) || "",
+        formation: r.formation || "",
+        homeAway: r.homeAway || "",
+        winner: !!r.winner,
+        players: Array.isArray(r.roster) ? r.roster.map(p => {
+          const at = p.athlete || {};
+          return {
+            name: at.displayName || at.fullName || at.lastName || "",
+            shortName: at.shortName || "",
+            jersey: p.jersey || "",
+            starter: !!p.starter,
+            position: (p.position && (p.position.abbreviation || p.position.name)) || at.position && at.position.abbreviation || "",
+            id: at.id || "",
+          };
+        }).filter(p => p.name) : [],
+      };
+    }) : [];
+    const winner = cs.filter(c => c.winner).map(c => (c.team && (c.team.displayName || c.team.name)) || "")[0] || "";
+    const gi = j.gameInfo || {};
     return {
       success: true, source: "espn",
       match: {
@@ -1608,12 +1647,17 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
         awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || "", shortName: (away.team && away.team.abbreviation) || "" },
         score: { home: homeScore, away: awayScore, detail },
         statusText: detail, result: detail,
+        venue: (gi.venue && (gi.venue.fullName || gi.venue.shortName)) || (comp.venue && comp.venue.fullName) || "",
+        winner,
       },
       events: comp,
       periods,
       boxscore: j.boxscore || null,
       leaders: j.leaders || null,
       incidents: incidentRows,
+      squads,
+      attendance: gi.attendance || null,
+      officials: Array.isArray(gi.officials) ? gi.officials.map(o => o.fullName || o.displayName || o.name).filter(Boolean).slice(0, 5) : [],
       lineups: null,
       homeStats, awayStats,
     };

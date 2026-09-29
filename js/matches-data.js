@@ -7,6 +7,23 @@
 (function () {
   "use strict";
 
+  // Canonical sport slug shared by all tabs/grids (matches-render SPORT_COLOR
+  // keys). Backend/AllSports use "esport", "kabbaddi", "volley", etc — keep the
+  // E-Sports tab and grids working by normalizing every source's sport name.
+  function canonicalSportSlug(raw) {
+    const s = String(raw || "cricket").toLowerCase().trim();
+    const alias = {
+      "e-sports": "e-sports", esports: "e-sports", esport: "e-sports", esporte: "e-sports", "esport-tv": "e-sports",
+      kabaddi: "kabaddi", kabbaddi: "kabaddi", kabadi: "kabaddi",
+      volleyball: "volleyball", volley: "volleyball", volle: "volleyball", vollyeball: "volleyball",
+      tabletennis: "tabletennis", "table-tennis": "tabletennis", "table tennis": "tabletennis",
+      basketball: "basketball", basket: "basketball", baseball: "baseball", tee_ball: "baseball",
+      football: "football", soccer: "football", hockey: "hockey", icehockey: "hockey",
+      tennis: "tennis", cricket: "cricket"
+    };
+    return alias[s] || s;
+  }
+
   // Helper: team meta (code must match TEAM_REGISTRY in match-center-engine.js)
   // cc = country code for flagcdn, color = brand colour, logo = image url (optional)
   const TEAMS = {
@@ -507,7 +524,7 @@
 
     return {
       id: String(match.id ?? match.matchId ?? ''),
-      sport: String(match.sport || 'cricket').toLowerCase(),
+      sport: canonicalSportSlug(match.sport),
       status,
       tournament: match.series || match.tournament || '',
       format: match.matchType || match.matchFormat || match.format || '',
@@ -605,7 +622,7 @@
             if (!item || !item.id || seen.has(item.id)) continue;
             seen.add(item.id);
             item.id = item.id || raw.id || raw.matchId;
-            item.sport = raw.sport || item.sport;
+            item.sport = canonicalSportSlug(raw.sport || item.sport);
             if (item.status === 'upcoming' && raw.statusText) {
               item.statusLine = raw.statusText;
             }

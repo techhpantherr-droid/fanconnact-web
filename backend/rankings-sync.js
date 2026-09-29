@@ -65,36 +65,56 @@ async function fetchWithTimeout(url, opts = {}) {
   return result.data;
 }
 
-async function scrapeICCRankings(format, gender) {
-  const slug = `${format}-${gender}`;
-  const url = `https://www.icc-cricket.com/rankings/${slug}/player-rankings/batting`;
-  log(`Scraping ICC rankings: ${slug}`);
+const CT_RANKINGS_BASE = 'https://www.crictracker.com/icc-rankings/';
+const CT_TEAM_HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36',
+  Referer: 'https://www.crictracker.com/icc-rankings/'
+};
+const CT_COUNTRY_MAP = {
+  IND: 'India', NZ: 'New Zealand', AUS: 'Australia', ENG: 'England', RSA: 'South Africa', SA: 'South Africa',
+  AFG: 'Afghanistan', PAK: 'Pakistan', SL: 'Sri Lanka', WI: 'West Indies', BAN: 'Bangladesh', IRE: 'Ireland',
+  NED: 'Netherlands', ZIM: 'Zimbabwe', NAM: 'Namibia', SCO: 'Scotland', OMA: 'Oman', USA: 'United States',
+  UGA: 'Uganda', NEP: 'Nepal', UAE: 'UAE', HK: 'Hong Kong', CAN: 'Canada', PNG: 'Papua New Guinea',
+  MAL: 'Malaysia', NGA: 'Nigeria', BHR: 'Bahrain', KUW: 'Kuwait', QAT: 'Qatar', BHU: 'Bhutan', JER: 'Jersey'
+};
+function countryFromCode(code) {
+  return CT_COUNTRY_MAP[String(code || '').toUpperCase()] || code || '';
+}
+
+/**
+ * Real ICC player rankings (men + women, all formats + roles) via CricTracker,
+ * which mirrors the ICC press tables in server-rendered HTML (no JS needed).
+ * URLs: /icc-rankings/{women/}{batting|bowling|all-rounder}-{odi|t20i|test}/
+ */
+async function scrapeICCRankings(format, role, gender) {
+  const slug = `${gender === 'women' ? 'women/' : ''}${role === 'bowl' ? 'bowling' : role === 'ar' ? 'all-rounder' : 'batting'}-${format === 'test' ? 'test' : format === 't20' ? 't20i' : 'odi'}/`;
+  const url = CT_RANKINGS_BASE + slug;
+  log(`Scraping ICC rankings (crictracker): ${gender} ${format} ${role}`);
   try {
-    const html = await fetchWithTimeout(url, { timeout: 15000 });
+    const html = await fetchWithTimeout(url, { timeout: 30000, headers: CT_TEAM_HEADERS });
     if (!html) return null;
     const $ = cheerio.load(html);
     const players = [];
-    $('table tbody tr').each((i, row) => {
-      if (players.length >= 100) return false;
-      const cols = $(row).find('td');
-      if (cols.length < 5) return;
-      const name = $(cols[1]).text().trim();
-      const rating = parseInt($(cols[3]).text().trim()) || 0;
-      if (name && rating) {
-        players.push({
-          rank: players.length + 1,
-          name,
-          country: $(cols[2]).text().trim() || '',
-          rating,
-          matches: parseInt($(cols[4]).text().trim()) || 0,
-          runs: 0, wkts: 0, avg: 0, econ: 0,
-          _source: 'icc'
-        });
-      }
+    $('table tr').each((i, row) => {
+      const tds = $(row).find('td');
+      if (!tds.length) return;
+      const cells = tds.map((_, t) => $(t).text().trim()).get();
+      const name = cells[1] || '';
+      const rating = parseInt(cells[3]) || 0;
+      if (!name) return;
+      players.push({
+        rank: parseInt(cells[0]) || players.length + 1,
+        name,
+        team: cells[2] || '',
+        country: countryFromCode(cells[2]),
+        rating,
+        matches: 0, runs: 0, wkts: 0, avg: 0, econ: 0,
+        _source: 'icc'
+      });
     });
     return players.length > 0 ? players : null;
   } catch (e) {
-    log(`ICC scrape failed for ${slug}: ${e.message}`);
+    log(`ICC scrape failed for ${url}: ${e.message}`);
     return null;
   }
 }
@@ -261,35 +281,25 @@ async function syncPlayerRankings() {
 
   const updates = [];
 
-  updates.push(
-    scrapeICCRankings('odi', 'men').then(data => {
-      if (data) {
-        if (!playerData.cricket) playerData.cricket = {};
-        playerData.cricket.odi_bat_men = data;
-        log(`Updated ICC ODI batting (men): ${data.length} players`);
+  // ICC cricket player rankings — every format × role × gender the UI exposes.
+  // (ICC has no women's Test ranking, so women get ODI + T20I only.)
+  for (const gender of ['men', 'women']) {
+    const formats = gender === 'women' ? ['odi', 't20'] : ['odi', 't20', 'test'];
+    for (const format of formats) {
+      for (const role of ['bat', 'bowl', 'ar']) {
+        const key = `${format}_${role}_${gender}`;
+        updates.push(
+          scrapeICCRankings(format, role, gender).then(data => {
+            if (data && data.length) {
+              if (!playerData.cricket) playerData.cricket = {};
+              playerData.cricket[key] = data;
+              log(`Updated ICC ${format} ${role} (${gender}): ${data.length} players`);
+            }
+          }).catch(() => {})
+        );
       }
-    }).catch(() => {})
-  );
-
-  updates.push(
-    scrapeICCRankings('t20', 'men').then(data => {
-      if (data) {
-        if (!playerData.cricket) playerData.cricket = {};
-        playerData.cricket.t20_bat_men = data;
-        log(`Updated ICC T20 batting (men): ${data.length} players`);
-      }
-    }).catch(() => {})
-  );
-
-  updates.push(
-    scrapeICCRankings('test', 'men').then(data => {
-      if (data) {
-        if (!playerData.cricket) playerData.cricket = {};
-        playerData.cricket.test_bat_men = data;
-        log(`Updated ICC Test batting (men): ${data.length} players`);
-      }
-    }).catch(() => {})
-  );
+    }
+  }
 
   // Cricket via API-Sports (live line / rankings) — budgeted + cached.
   updates.push(
@@ -368,14 +378,8 @@ async function syncTeamRankings() {
     return;
   }
 
-  if (teamData.cricket?.rankings) {
-    try {
-      const odiData = await scrapeICCRankings('odi', 'men');
-      const t20Data = await scrapeICCRankings('t20', 'men');
-      const testData = await scrapeICCRankings('test', 'men');
-    } catch {}
-  }
-
+  // ICC team rankings are curated in team-rankings.json (Men/Women sections).
+  // Player rankings are refreshed by syncPlayerRankings(); nothing to scrape here.
   saveJSON(TEAM_RANKINGS_PATH, teamData);
   log('Team rankings sync complete');
 }
@@ -426,3 +430,10 @@ module.exports = {
   syncTeamRankings,
   CACHE_DURATION
 };
+
+// Manual run: `node rankings-sync.js` performs one full sync and exits.
+if (require.main === module) {
+  fullSync()
+    .then(() => { log('Manual sync finished'); process.exit(0); })
+    .catch(e => { log('Manual sync failed: ' + e.message); process.exit(1); });
+}

@@ -24,6 +24,11 @@
   // /api/all-sports/* proxy. These use "as_" prefixed ids and a different
   // response schema (incidents / lineups / team scores) than cricket.
   const ALLSPORTS_SUPPORTED_LIST = ['basketball', 'baseball', 'volleyball', 'handball', 'esport', 'football', 'hockey', 'tennis', 'kabaddi'];
+  // UI slug → backend sport id (the page uses "e-sports", the backend "esport").
+  const BACKEND_SPORT = {
+    'e-sports': 'esport', esport: 'esport', esports: 'esport',
+    kabbaddi: 'kabaddi', kabaddi: 'kabaddi', volley: 'volleyball', vollyeball: 'volleyball'
+  };
   const IS_ALLSPORTS = ALLSPORTS_SUPPORTED_LIST.includes(SPORT) || /^(as_|espn_|pkl_)/i.test(String(MATCHID || ''));
 
   window.__MC_MATCH_ID__ = MATCHID;
@@ -172,9 +177,9 @@
     },
 
     async getAllSportsDetail(sport, rawId) {
-      const s = encodeURIComponent(String(sport || 'basketball').toLowerCase());
+      const s = BACKEND_SPORT[String(sport || '').toLowerCase()] || String(sport || 'basketball').toLowerCase();
       const id = encodeURIComponent(String(rawId || MATCHID || '').replace(/^as_/, ''));
-      return await this.request(`/all-sports/match/${s}/${id}`);
+      return await this.request(`/all-sports/match/${encodeURIComponent(s)}/${id}`);
     },
 
     async getAllSportsList() {
@@ -368,7 +373,9 @@
     const homeName = HOME_T.name || M.home?.name || 'Home';
     const awayName = AWAY_T.name || M.away?.name || 'Away';
     if (!homeName || !awayName || homeName === 'Home' || awayName === 'Away') return false;
-    const status = M.state || 'upcoming';
+    const status = (M.state === 'live' || M.state === 'finished') ? M.state
+      : (KNOWN_STATE === 'live' || KNOWN_STATE === 'finished') ? KNOWN_STATE
+        : 'upcoming';
     const dateTxt = M.meta?.date || '';
     M.home = HOME_T; M.away = AWAY_T;
     M.sport = sp;
@@ -422,12 +429,16 @@
     const homeScore = rec.score?.home ?? rec.homeScore ?? rec.home?.score ?? '';
     const awayScore = rec.score?.away ?? rec.awayScore ?? rec.away?.score ?? '';
     const statusText = rec.statusText || rec.result || rec.status || '';
+    const rawStatusField = String(rec.status || '').toLowerCase();
+    const mDesc = String(statusText).toLowerCase();
+    const mHasScores = String(homeScore ?? '').trim() !== '' || String(awayScore ?? '').trim() !== '';
     // Some providers label a game that is actually live with "Pause", "Break",
     // "Timeout", "Delay", "Interval" or a live detail like "5th set". Match
     // those as live instead of silently collapsing to "upcoming".
-    const status = /\bFT\b|full\s?time|finish|result|won|full|completed|ended|final|aet/i.test(statusText) ? 'finished'
-      : /live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(statusText) ? 'live'
-      : ('upcoming');
+    const status = (rawStatusField === 'finished' || /\bft\b|full\s?time|finish|result|won|full|completed|ended|final|aet/i.test(mDesc)) ? 'finished'
+      : (rawStatusField === 'live' || /live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(mDesc)) ? 'live'
+        : (KNOWN_STATE === 'live' || KNOWN_STATE === 'finished') ? KNOWN_STATE
+          : mHasScores ? 'live' : 'upcoming';
     const series = rec.series || rec.tournament || rec.matchType || '';
     const dateTxt = rec.date ? (rec.date + (rec.time ? ' · ' + rec.time : '')) : '';
 
@@ -524,16 +535,25 @@
     const awayScore = norm?.score?.away ?? evt?.awayScore?.current ?? '';
     const statusText = norm?.statusText || evt?.status?.description || norm?.result || '';
     const statusType = String(evt?.status?.type || '').toLowerCase();
-    const statusCode = evt?.status?.code;
-    let status = norm?.status
-      || (statusType === 'inprogress' || statusType === 'live' ? 'live'
-        : (statusType === 'finished' || statusType === 'ended' || statusType === 'ended_match' ? 'finished' : ''));
-    if (!status) {
-      const desc = String(statusText).toLowerCase();
-      status = /\bft\b|full\s?time|finish|result|won|full|completed|ended|final|aet/i.test(desc) ? 'finished'
-        : (/live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(desc)
-            || Number(statusCode) === 2 || Number(statusCode) > 50) ? 'live'
-        : Number(statusCode) === 3 ? 'finished' : 'upcoming';
+    const statusCode = Number(evt?.status?.code);
+    const stDesc = String(statusText).toLowerCase();
+    const hasScores = String(homeScore ?? '').trim() !== '' || String(awayScore ?? '').trim() !== '';
+    const textLive = /live|in\s?progress|pause|break|half\s?time|\bht\b|interval|timeout|overtime|delay|1st|2nd|3rd|4th|quarter|\bq[1-4]\b|inning|set\s?\d|period|extra.?time|drinks|stumps|tea|lunch/i.test(stDesc);
+    const textFinished = /\bft\b|full\s?time|finish|ended|result|won by|\bwon\b|completed|final|\baet\b/i.test(stDesc);
+    let status;
+    if (statusType === 'inprogress' || statusType === 'live' || statusCode === 2 || (statusCode > 50 && statusCode < 100) || textLive) {
+      status = 'live';
+    } else if (statusType === 'finished' || statusType === 'ended' || statusType === 'ended_match' || statusCode === 3 || textFinished) {
+      status = 'finished';
+    } else if (norm?.status === 'live' || norm?.status === 'finished') {
+      status = norm.status;
+    } else if (KNOWN_STATE === 'live' || KNOWN_STATE === 'finished') {
+      // The card the user tapped already knew the real state — never downgrade it.
+      status = KNOWN_STATE;
+    } else if (hasScores) {
+      status = 'live';
+    } else {
+      status = 'upcoming';
     }
 
     Object.assign(HOME_T, { name: homeName, img: HOME_T.img });
@@ -544,7 +564,16 @@
     M.meta.title = homeName + ' vs ' + awayName;
     M.meta.sub = norm?.series || evt?.tournament?.name || '';
     M.meta.series = M.meta.sub;
-    M.meta.venue = evt?.venue?.name || '';
+    M.meta.venue = detail?.venue || evt?.venue?.name || norm?.venue || '';
+    M.meta.umpires = Array.isArray(detail?.officials) ? detail.officials.join(', ') : '';
+    M.meta.attendance = detail?.attendance ? Number(detail.attendance).toLocaleString() : '';
+    M.meta.winner = detail?.match?.winner || norm?.winner || '';
+    const winName = String(M.meta.winner || '').toLowerCase();
+    if (winName) {
+      const hn = String(homeName).toLowerCase(), an2 = String(awayName).toLowerCase();
+      if (hn && winName === hn) { M.score.home.won = true; M.score.away.won = false; }
+      else if (an2 && winName === an2) { M.score.away.won = true; M.score.home.won = false; }
+    }
     M.meta.format = sport;
     M.meta.date = norm?.date ? (norm.date + (norm?.time ? ' · ' + norm.time : '')) : '';
     M.score = {
@@ -588,12 +617,37 @@
         };
       })
     };
-    const lineupToPlayers = (arr) => (Array.isArray(arr) ? arr.slice(0, 18).map(p => ({
-      n: p?.player?.name || p?.name || 'Player', r: p?.position || p?.role || '', id: p?.player?.id || p?.id || ''
-    })) : []);
-    const homeXI = lineupToPlayers(lineups?.home?.players || lineups?.homeTeam?.players || lineups?.home);
-    const awayXI = lineupToPlayers(lineups?.away?.players || lineups?.awayTeam?.players || lineups?.away);
-    M.squads = { home: { xi: homeXI, bench: [], staff: [] }, away: { xi: awayXI, bench: [], staff: [] } };
+    const rosterSquads = Array.isArray(detail?.squads) ? detail.squads : [];
+    const pickSide = (side) => rosterSquads.find(s => s.side === side || (s.homeAway || '').toLowerCase().startsWith(side === 'home' ? 'h' : 'a'))
+      || { side, players: [] };
+    const rosterToXI = (sq) => Array.isArray(sq.players)
+      ? sq.players.slice(0, 22).map(p => ({ n: p.name, r: p.position || '', id: p.id || '', jersey: p.jersey || '' })).filter(p => p.n)
+      : [];
+    if (rosterSquads.length) {
+      M.squads = {
+        home: { xi: rosterToXI(pickSide('home')), bench: [], staff: [] },
+        away: { xi: rosterToXI(pickSide('away')), bench: [], staff: [] }
+      };
+    } else {
+      const lineupToPlayers = (arr) => (Array.isArray(arr) ? arr.slice(0, 18).map(p => ({
+        n: p?.player?.name || p?.name || 'Player', r: p?.position || p?.role || '', id: p?.player?.id || p?.id || ''
+      })) : []);
+      const homeXI = lineupToPlayers(lineups?.home?.players || lineups?.homeTeam?.players || lineups?.home);
+      const awayXI = lineupToPlayers(lineups?.away?.players || lineups?.awayTeam?.players || lineups?.away);
+      M.squads = { home: { xi: homeXI, bench: [], staff: [] }, away: { xi: awayXI, bench: [], staff: [] } };
+    }
+    // ESPN leaders → "Key Performers" on the summary tab.
+    const leadersRaw = Array.isArray(detail?.leaders) ? detail.leaders : [];
+    if (leadersRaw.length) {
+      const performers = [];
+      for (const lg of leadersRaw.slice(0, 4)) {
+        const lead = lg && lg.leaders && lg.leaders[0];
+        const at = lead && (lead.athlete || lead.player || null);
+        const nm = (at && (at.displayName || at.fullName || at.lastName || at.name)) || '';
+        if (nm) performers.push({ flag: '🏆', label: lg.name || lg.label || lg.type?.text || 'Performer', name: nm });
+      }
+      if (performers.length) M.summary.performers = performers;
+    }
     // Real summary + team-filtered news + weather, same builders as cricket.
     applyRealSummaryData();
     try {
@@ -2107,7 +2161,12 @@ if (Array.isArray(model.overs) && model.overs.length) {
     if (!data || !Object.keys(data).length) { setUnavailableModel('Real match data is not available'); return; }
     const innings = extractInnings(REAL_DATA.scorecard);
     const header = normalizeHeader(data, innings);
-    const state = header.status;
+    let state = header.status;
+    // The card already knew the real state — never downgrade a live/finished
+    // match to "upcoming" just because the provider dropped its status field.
+    if (state !== 'live' && state !== 'finished' && (KNOWN_STATE === 'live' || KNOWN_STATE === 'finished')) {
+      state = KNOWN_STATE;
+    }
     M.state = state;
     M.score.status = state;
 
@@ -3997,14 +4056,17 @@ if (Array.isArray(model.overs) && model.overs.length) {
       '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Result Detail</h3><div class="space-y-3 text-sm">' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Result</span><span class="font-bold ' + (st.status === 'finished' ? 'text-emerald-600 dark:text-emerald-400' : 'text-crexGold') + '">' + esc(st.resultText) + '</span></div>' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Status</span><span class="font-bold text-gray-800 dark:text-white">' + (st.status === 'live' ? 'In Progress' : st.status === 'upcoming' ? 'Not Started' : st.status === 'finished' ? 'Completed' : 'Unavailable') + '</span></div>' +
-      '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Toss</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.toss) + '</span></div></div></section>' +
+      (M.meta.winner ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Winner</span><span class="font-bold text-emerald-600 dark:text-emerald-400 text-right">' + esc(M.meta.winner) + '</span></div>' : '') +
+      (M.meta.toss ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Toss</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.toss) + '</span></div>' : '') +
+      (M.meta.umpires ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Officials</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.umpires) + '</span></div>' : '') +
+      (M.meta.attendance ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Attendance</span><span class="font-bold text-gray-800 dark:text-white">' + esc(M.meta.attendance) + '</span></div>' : '') + '</div></section>' +
       '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Match Info</h3><div class="space-y-3 text-sm">' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Format</span><span class="font-bold text-gray-800 dark:text-white">' + esc(M.meta.format) + '</span></div>' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Series</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.series) + '</span></div>' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Venue</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.venue) + '</span></div></div></section>' +
       '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">About the Teams</h3><div class="space-y-4 text-sm text-gray-600 dark:text-gray-300">' +
-      '<div class="flex gap-3"><span class="text-2xl shrink-0">' + HOME_T.flag + '</span><div><p class="font-bold text-gray-800 dark:text-white mb-1">' + esc(HOME_T.name) + '</p><p>Team information is shown only when supplied by the live backend.</p></div></div>' +
-      '<div class="flex gap-3"><span class="text-2xl shrink-0">' + AWAY_T.flag + '</span><div><p class="font-bold text-gray-800 dark:text-white mb-1">' + esc(AWAY_T.name) + '</p><p>Team information is shown only when supplied by the live backend.</p></div></div>' +
+      '<div class="flex gap-3"><span class="text-2xl shrink-0">' + HOME_T.flag + '</span><div><p class="font-bold text-gray-800 dark:text-white mb-1">' + esc(HOME_T.name) + '</p><p>' + esc(M.meta.series || M.meta.format || '') + (M.meta.winner && String(M.meta.winner).toLowerCase() === String(HOME_T.name).toLowerCase() ? ' · <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Winner</span>' : M.score.status === 'finished' && M.score.home.won ? ' · <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Won</span>' : '') + '</p></div></div>' +
+      '<div class="flex gap-3"><span class="text-2xl shrink-0">' + AWAY_T.flag + '</span><div><p class="font-bold text-gray-800 dark:text-white mb-1">' + esc(AWAY_T.name) + '</p><p>' + esc(M.meta.series || M.meta.format || '') + (M.meta.winner && String(M.meta.winner).toLowerCase() === String(AWAY_T.name).toLowerCase() ? ' · <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Winner</span>' : M.score.status === 'finished' && M.score.away.won ? ' · <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Won</span>' : '') + '</p></div></div>' +
       '</div></section></aside>';
   }
 

@@ -7590,7 +7590,7 @@
       {
         "rank": 82,
         "name": "Brandon Williams",
-        "team": "DAL",
+        "team": "GS",
         "position": "G",
         "points": 13.015152,
         "rebounds": 2.8939395,
@@ -14119,18 +14119,6 @@
       },
       {
         "rank": 8,
-        "name": "Ty France",
-        "team": "SD",
-        "position": "1B",
-        "hr": 21,
-        "avg": 0.2954545,
-        "rbi": 72,
-        "ops": 0.8649981,
-        "games": 133,
-        "_source": "espn"
-      },
-      {
-        "rank": 9,
         "name": "Michael Harris II",
         "team": "ATL",
         "position": "CF",
@@ -14142,7 +14130,7 @@
         "_source": "espn"
       },
       {
-        "rank": 10,
+        "rank": 9,
         "name": "Yandy Diaz",
         "team": "TB",
         "position": "DH",
@@ -14154,7 +14142,7 @@
         "_source": "espn"
       },
       {
-        "rank": 11,
+        "rank": 10,
         "name": "Jackson Chourio",
         "team": "MIL",
         "position": "LF",
@@ -14166,7 +14154,7 @@
         "_source": "espn"
       },
       {
-        "rank": 12,
+        "rank": 11,
         "name": "Jake McCarthy",
         "team": "COL",
         "position": "LF",
@@ -14178,7 +14166,7 @@
         "_source": "espn"
       },
       {
-        "rank": 13,
+        "rank": 12,
         "name": "Fernando Tatis Jr.",
         "team": "SD",
         "position": "RF",
@@ -14190,7 +14178,7 @@
         "_source": "espn"
       },
       {
-        "rank": 14,
+        "rank": 13,
         "name": "Jac Caglianone",
         "team": "KC",
         "position": "RF",
@@ -14202,7 +14190,7 @@
         "_source": "espn"
       },
       {
-        "rank": 15,
+        "rank": 14,
         "name": "Freddie Freeman",
         "team": "LAD",
         "position": "1B",
@@ -14214,7 +14202,7 @@
         "_source": "espn"
       },
       {
-        "rank": 16,
+        "rank": 15,
         "name": "Chase DeLauter",
         "team": "CLE",
         "position": "RF",
@@ -14226,7 +14214,7 @@
         "_source": "espn"
       },
       {
-        "rank": 17,
+        "rank": 16,
         "name": "Drake Baldwin",
         "team": "ATL",
         "position": "C",
@@ -14238,7 +14226,7 @@
         "_source": "espn"
       },
       {
-        "rank": 18,
+        "rank": 17,
         "name": "Liam Hicks",
         "team": "TB",
         "position": "C",
@@ -14250,7 +14238,7 @@
         "_source": "espn"
       },
       {
-        "rank": 19,
+        "rank": 18,
         "name": "Ceddanne Rafaela",
         "team": "BOS",
         "position": "CF",
@@ -14262,7 +14250,7 @@
         "_source": "espn"
       },
       {
-        "rank": 20,
+        "rank": 19,
         "name": "Elly De La Cruz",
         "team": "CIN",
         "position": "SS",
@@ -14274,7 +14262,7 @@
         "_source": "espn"
       },
       {
-        "rank": 21,
+        "rank": 20,
         "name": "Carson Benge",
         "team": "NYM",
         "position": "RF",
@@ -14286,7 +14274,7 @@
         "_source": "espn"
       },
       {
-        "rank": 22,
+        "rank": 21,
         "name": "Luke Keaschall",
         "team": "MIN",
         "position": "2B",
@@ -14298,7 +14286,7 @@
         "_source": "espn"
       },
       {
-        "rank": 23,
+        "rank": 22,
         "name": "Steven Kwan",
         "team": "CLE",
         "position": "LF",
@@ -14310,7 +14298,7 @@
         "_source": "espn"
       },
       {
-        "rank": 24,
+        "rank": 23,
         "name": "Randy Arozarena",
         "team": "SEA",
         "position": "LF",
@@ -14322,7 +14310,7 @@
         "_source": "espn"
       },
       {
-        "rank": 25,
+        "rank": 24,
         "name": "Bobby Witt Jr.",
         "team": "KC",
         "position": "SS",
@@ -14334,7 +14322,7 @@
         "_source": "espn"
       },
       {
-        "rank": 26,
+        "rank": 25,
         "name": "Xavier Edwards",
         "team": "MIA",
         "position": "2B",
@@ -14346,7 +14334,7 @@
         "_source": "espn"
       },
       {
-        "rank": 27,
+        "rank": 26,
         "name": "Riley Greene",
         "team": "DET",
         "position": "LF",
@@ -14358,7 +14346,7 @@
         "_source": "espn"
       },
       {
-        "rank": 28,
+        "rank": 27,
         "name": "Pete Crow-Armstrong",
         "team": "CHC",
         "position": "CF",
@@ -14370,7 +14358,7 @@
         "_source": "espn"
       },
       {
-        "rank": 29,
+        "rank": 28,
         "name": "Alec Burleson",
         "team": "STL",
         "position": "1B",
@@ -14382,7 +14370,7 @@
         "_source": "espn"
       },
       {
-        "rank": 30,
+        "rank": 29,
         "name": "Kevin McGonigle",
         "team": "DET",
         "position": "SS",
@@ -14394,7 +14382,7 @@
         "_source": "espn"
       },
       {
-        "rank": 31,
+        "rank": 30,
         "name": "Luis Garcia Jr.",
         "team": "NYY",
         "position": "1B",
@@ -14406,7 +14394,7 @@
         "_source": "espn"
       },
       {
-        "rank": 32,
+        "rank": 31,
         "name": "Sam Antonacci",
         "team": "CHW",
         "position": "LF",
@@ -14418,7 +14406,7 @@
         "_source": "espn"
       },
       {
-        "rank": 33,
+        "rank": 32,
         "name": "Jung Hoo Lee",
         "team": "SF",
         "position": "RF",
@@ -14430,7 +14418,7 @@
         "_source": "espn"
       },
       {
-        "rank": 34,
+        "rank": 33,
         "name": "Mauricio Dubon",
         "team": "ATL",
         "position": "LF",
@@ -14442,7 +14430,7 @@
         "_source": "espn"
       },
       {
-        "rank": 35,
+        "rank": 34,
         "name": "Junior Caminero",
         "team": "TB",
         "position": "3B",
@@ -14454,19 +14442,7 @@
         "_source": "espn"
       },
       {
-        "rank": 36,
-        "name": "Shohei Ohtani",
-        "team": "LAD",
-        "position": "DH",
-        "hr": 30,
-        "avg": 0.275862,
-        "rbi": 81,
-        "ops": 0.8906456,
-        "games": 139,
-        "_source": "espn"
-      },
-      {
-        "rank": 37,
+        "rank": 35,
         "name": "Chase Meidroth",
         "team": "CHW",
         "position": "2B",
@@ -14478,7 +14454,19 @@
         "_source": "espn"
       },
       {
-        "rank": 38,
+        "rank": 36,
+        "name": "Shohei Ohtani",
+        "team": "LAD",
+        "position": "DH",
+        "hr": 30,
+        "avg": 0.2753346,
+        "rbi": 81,
+        "ops": 0.8890515,
+        "games": 135,
+        "_source": "espn"
+      },
+      {
+        "rank": 37,
         "name": "Willson Contreras",
         "team": "BOS",
         "position": "1B",
@@ -14490,7 +14478,7 @@
         "_source": "espn"
       },
       {
-        "rank": 39,
+        "rank": 38,
         "name": "Jonathan Aranda",
         "team": "TB",
         "position": "1B",
@@ -14502,7 +14490,7 @@
         "_source": "espn"
       },
       {
-        "rank": 40,
+        "rank": 39,
         "name": "Andy Pages",
         "team": "LAD",
         "position": "CF",
@@ -14514,7 +14502,7 @@
         "_source": "espn"
       },
       {
-        "rank": 41,
+        "rank": 40,
         "name": "William Contreras",
         "team": "MIL",
         "position": "C",
@@ -14526,7 +14514,7 @@
         "_source": "espn"
       },
       {
-        "rank": 42,
+        "rank": 41,
         "name": "Seiya Suzuki",
         "team": "CHC",
         "position": "RF",
@@ -14538,7 +14526,7 @@
         "_source": "espn"
       },
       {
-        "rank": 43,
+        "rank": 42,
         "name": "Jordan Walker",
         "team": "STL",
         "position": "RF",
@@ -14550,7 +14538,7 @@
         "_source": "espn"
       },
       {
-        "rank": 44,
+        "rank": 43,
         "name": "Bryce Harper",
         "team": "PHI",
         "position": "1B",
@@ -14562,7 +14550,7 @@
         "_source": "espn"
       },
       {
-        "rank": 45,
+        "rank": 44,
         "name": "Brice Turang",
         "team": "MIL",
         "position": "2B",
@@ -14574,7 +14562,7 @@
         "_source": "espn"
       },
       {
-        "rank": 46,
+        "rank": 45,
         "name": "Pete Alonso",
         "team": "BAL",
         "position": "1B",
@@ -14586,7 +14574,7 @@
         "_source": "espn"
       },
       {
-        "rank": 47,
+        "rank": 46,
         "name": "Jake Bauers",
         "team": "MIL",
         "position": "1B",
@@ -14598,7 +14586,7 @@
         "_source": "espn"
       },
       {
-        "rank": 48,
+        "rank": 47,
         "name": "James Wood",
         "team": "WSH",
         "position": "RF",
@@ -14610,7 +14598,7 @@
         "_source": "espn"
       },
       {
-        "rank": 49,
+        "rank": 48,
         "name": "Alex Bregman",
         "team": "CHC",
         "position": "3B",
@@ -14622,7 +14610,7 @@
         "_source": "espn"
       },
       {
-        "rank": 50,
+        "rank": 49,
         "name": "Dominic Canzone",
         "team": "SEA",
         "position": "DH",
@@ -14634,7 +14622,7 @@
         "_source": "espn"
       },
       {
-        "rank": 51,
+        "rank": 50,
         "name": "Cody Bellinger",
         "team": "NYY",
         "position": "LF",
@@ -14646,7 +14634,7 @@
         "_source": "espn"
       },
       {
-        "rank": 52,
+        "rank": 51,
         "name": "Jeff McNeil",
         "team": "ATH",
         "position": "2B",
@@ -14658,7 +14646,7 @@
         "_source": "espn"
       },
       {
-        "rank": 53,
+        "rank": 52,
         "name": "Ben Rice",
         "team": "NYY",
         "position": "DH",
@@ -14670,7 +14658,7 @@
         "_source": "espn"
       },
       {
-        "rank": 54,
+        "rank": 53,
         "name": "Sal Stewart",
         "team": "CIN",
         "position": "1B",
@@ -14682,7 +14670,7 @@
         "_source": "espn"
       },
       {
-        "rank": 55,
+        "rank": 54,
         "name": "Nico Hoerner",
         "team": "CHC",
         "position": "2B",
@@ -14694,7 +14682,7 @@
         "_source": "espn"
       },
       {
-        "rank": 56,
+        "rank": 55,
         "name": "Garrett Mitchell",
         "team": "MIL",
         "position": "CF",
@@ -14706,7 +14694,7 @@
         "_source": "espn"
       },
       {
-        "rank": 57,
+        "rank": 56,
         "name": "Isaac Paredes",
         "team": "HOU",
         "position": "3B",
@@ -14718,7 +14706,7 @@
         "_source": "espn"
       },
       {
-        "rank": 58,
+        "rank": 57,
         "name": "Geraldo Perdomo",
         "team": "ARI",
         "position": "SS",
@@ -14730,7 +14718,7 @@
         "_source": "espn"
       },
       {
-        "rank": 59,
+        "rank": 58,
         "name": "Josh Naylor",
         "team": "SEA",
         "position": "1B",
@@ -14742,7 +14730,7 @@
         "_source": "espn"
       },
       {
-        "rank": 60,
+        "rank": 59,
         "name": "CJ Abrams",
         "team": "WSH",
         "position": "SS",
@@ -14754,7 +14742,7 @@
         "_source": "espn"
       },
       {
-        "rank": 61,
+        "rank": 60,
         "name": "Bryan Reynolds",
         "team": "PIT",
         "position": "LF",
@@ -14766,7 +14754,7 @@
         "_source": "espn"
       },
       {
-        "rank": 62,
+        "rank": 61,
         "name": "Brandon Lowe",
         "team": "PIT",
         "position": "2B",
@@ -14778,7 +14766,7 @@
         "_source": "espn"
       },
       {
-        "rank": 63,
+        "rank": 62,
         "name": "Bo Bichette",
         "team": "NYM",
         "position": "3B",
@@ -14790,7 +14778,7 @@
         "_source": "espn"
       },
       {
-        "rank": 64,
+        "rank": 63,
         "name": "Vladimir Guerrero Jr.",
         "team": "TOR",
         "position": "1B",
@@ -14802,7 +14790,7 @@
         "_source": "espn"
       },
       {
-        "rank": 65,
+        "rank": 64,
         "name": "Ezequiel Duran",
         "team": "TEX",
         "position": "SS",
@@ -14814,7 +14802,7 @@
         "_source": "espn"
       },
       {
-        "rank": 66,
+        "rank": 65,
         "name": "Brandon Nimmo",
         "team": "TEX",
         "position": "RF",
@@ -14826,7 +14814,7 @@
         "_source": "espn"
       },
       {
-        "rank": 67,
+        "rank": 66,
         "name": "Brandon Marsh",
         "team": "PHI",
         "position": "LF",
@@ -14838,7 +14826,7 @@
         "_source": "espn"
       },
       {
-        "rank": 68,
+        "rank": 67,
         "name": "Ernie Clement",
         "team": "TOR",
         "position": "2B",
@@ -14850,7 +14838,7 @@
         "_source": "espn"
       },
       {
-        "rank": 69,
+        "rank": 68,
         "name": "Rafael Devers",
         "team": "SF",
         "position": "1B",
@@ -14862,7 +14850,7 @@
         "_source": "espn"
       },
       {
-        "rank": 70,
+        "rank": 69,
         "name": "Mookie Betts",
         "team": "LAD",
         "position": "SS",
@@ -14874,7 +14862,7 @@
         "_source": "espn"
       },
       {
-        "rank": 71,
+        "rank": 70,
         "name": "Bryson Stott",
         "team": "PHI",
         "position": "2B",
@@ -14886,7 +14874,7 @@
         "_source": "espn"
       },
       {
-        "rank": 72,
+        "rank": 71,
         "name": "Josh Bell",
         "team": "MIN",
         "position": "DH",
@@ -14898,7 +14886,7 @@
         "_source": "espn"
       },
       {
-        "rank": 73,
+        "rank": 72,
         "name": "Nolan Arenado",
         "team": "ARI",
         "position": "3B",
@@ -14910,7 +14898,7 @@
         "_source": "espn"
       },
       {
-        "rank": 74,
+        "rank": 73,
         "name": "Jackson Merrill",
         "team": "SD",
         "position": "CF",
@@ -14922,7 +14910,7 @@
         "_source": "espn"
       },
       {
-        "rank": 75,
+        "rank": 74,
         "name": "Brayan Rocchio",
         "team": "CLE",
         "position": "SS",
@@ -14934,7 +14922,7 @@
         "_source": "espn"
       },
       {
-        "rank": 76,
+        "rank": 75,
         "name": "Brooks Lee",
         "team": "MIN",
         "position": "3B",
@@ -14946,7 +14934,7 @@
         "_source": "espn"
       },
       {
-        "rank": 77,
+        "rank": 76,
         "name": "Max Muncy",
         "team": "LAD",
         "position": "3B",
@@ -14958,7 +14946,7 @@
         "_source": "espn"
       },
       {
-        "rank": 78,
+        "rank": 77,
         "name": "Matt Olson",
         "team": "ATL",
         "position": "1B",
@@ -14970,7 +14958,7 @@
         "_source": "espn"
       },
       {
-        "rank": 79,
+        "rank": 78,
         "name": "Jose Altuve",
         "team": "HOU",
         "position": "2B",
@@ -14982,7 +14970,7 @@
         "_source": "espn"
       },
       {
-        "rank": 80,
+        "rank": 79,
         "name": "Miguel Vargas",
         "team": "CHW",
         "position": "3B",
@@ -14994,7 +14982,7 @@
         "_source": "espn"
       },
       {
-        "rank": 81,
+        "rank": 80,
         "name": "Ketel Marte",
         "team": "ARI",
         "position": "2B",
@@ -15006,7 +14994,7 @@
         "_source": "espn"
       },
       {
-        "rank": 82,
+        "rank": 81,
         "name": "George Springer",
         "team": "TOR",
         "position": "DH",
@@ -15018,7 +15006,7 @@
         "_source": "espn"
       },
       {
-        "rank": 83,
+        "rank": 82,
         "name": "Alec Bohm",
         "team": "PHI",
         "position": "3B",
@@ -15030,7 +15018,7 @@
         "_source": "espn"
       },
       {
-        "rank": 84,
+        "rank": 83,
         "name": "Caleb Durbin",
         "team": "BOS",
         "position": "3B",
@@ -15042,7 +15030,7 @@
         "_source": "espn"
       },
       {
-        "rank": 85,
+        "rank": 84,
         "name": "Wilyer Abreu",
         "team": "BOS",
         "position": "RF",
@@ -15054,7 +15042,7 @@
         "_source": "espn"
       },
       {
-        "rank": 86,
+        "rank": 85,
         "name": "Julio Rodriguez",
         "team": "SEA",
         "position": "CF",
@@ -15066,7 +15054,7 @@
         "_source": "espn"
       },
       {
-        "rank": 87,
+        "rank": 86,
         "name": "Cole Young",
         "team": "SEA",
         "position": "2B",
@@ -15078,7 +15066,7 @@
         "_source": "espn"
       },
       {
-        "rank": 88,
+        "rank": 87,
         "name": "Daylen Lile",
         "team": "WSH",
         "position": "LF",
@@ -15090,7 +15078,7 @@
         "_source": "espn"
       },
       {
-        "rank": 89,
+        "rank": 88,
         "name": "Hunter Goodman",
         "team": "COL",
         "position": "C",
@@ -15102,7 +15090,7 @@
         "_source": "espn"
       },
       {
-        "rank": 90,
+        "rank": 89,
         "name": "Travis Bazzana",
         "team": "CLE",
         "position": "2B",
@@ -15114,7 +15102,7 @@
         "_source": "espn"
       },
       {
-        "rank": 91,
+        "rank": 90,
         "name": "Andres Gimenez",
         "team": "TOR",
         "position": "SS",
@@ -15126,7 +15114,7 @@
         "_source": "espn"
       },
       {
-        "rank": 92,
+        "rank": 91,
         "name": "Dillon Dingler",
         "team": "DET",
         "position": "C",
@@ -15138,7 +15126,7 @@
         "_source": "espn"
       },
       {
-        "rank": 93,
+        "rank": 92,
         "name": "JJ Wetherholt",
         "team": "STL",
         "position": "2B",
@@ -15150,7 +15138,7 @@
         "_source": "espn"
       },
       {
-        "rank": 94,
+        "rank": 93,
         "name": "Trea Turner",
         "team": "PHI",
         "position": "SS",
@@ -15162,7 +15150,7 @@
         "_source": "espn"
       },
       {
-        "rank": 95,
+        "rank": 94,
         "name": "Mike Trout",
         "team": "LAA",
         "position": "CF",
@@ -15174,7 +15162,7 @@
         "_source": "espn"
       },
       {
-        "rank": 96,
+        "rank": 95,
         "name": "Michael Busch",
         "team": "CHC",
         "position": "1B",
@@ -15186,7 +15174,7 @@
         "_source": "espn"
       },
       {
-        "rank": 97,
+        "rank": 96,
         "name": "Ivan Herrera",
         "team": "STL",
         "position": "DH",
@@ -15198,7 +15186,7 @@
         "_source": "espn"
       },
       {
-        "rank": 98,
+        "rank": 97,
         "name": "Jo Adell",
         "team": "CLE",
         "position": "RF",
@@ -15210,7 +15198,7 @@
         "_source": "espn"
       },
       {
-        "rank": 99,
+        "rank": 98,
         "name": "Kyle Stowers",
         "team": "MIA",
         "position": "1B",
@@ -15222,7 +15210,7 @@
         "_source": "espn"
       },
       {
-        "rank": 100,
+        "rank": 99,
         "name": "Kody Clemens",
         "team": "MIN",
         "position": "2B",
@@ -15231,6 +15219,18 @@
         "rbi": 81,
         "ops": 0.7577861,
         "games": 145,
+        "_source": "espn"
+      },
+      {
+        "rank": 100,
+        "name": "Zach Neto",
+        "team": "LAA",
+        "position": "SS",
+        "hr": 27,
+        "avg": 0.2390953,
+        "rbi": 77,
+        "ops": 0.7657327,
+        "games": 157,
         "_source": "espn"
       }
     ],
@@ -41496,7 +41496,1989 @@
     ]
   },
   "_meta": {
-    "lastSync": "2026-09-28T07:57:32.327Z",
+    "lastSync": "2026-09-29T17:09:39.440Z",
     "syncInterval": "6h"
+  },
+  "cricket": {
+    "test_bat_men": [
+      {
+        "rank": 1,
+        "name": "Harry Brook",
+        "team": "ENG",
+        "country": "England",
+        "rating": 861,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Steve Smith",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 840,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Joe Root",
+        "team": "ENG",
+        "country": "England",
+        "rating": 816,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Travis Head",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 811,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Temba Bavuma",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 775,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Kane Williamson",
+        "team": "New Zealand",
+        "country": "New Zealand",
+        "rating": 780,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Rachin Ravindra",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 740,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Rishabh Pant",
+        "team": "IND",
+        "country": "India",
+        "rating": 713,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Daryl Mitchell",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 710,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Shubman Gill",
+        "team": "IND",
+        "country": "India",
+        "rating": 709,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_bat_men": [
+      {
+        "rank": 1,
+        "name": "Ishan Kishan",
+        "team": "IND",
+        "country": "India",
+        "rating": 904,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Abhishek Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 893,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Sahibzada Farhan",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 848,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Harry Brook",
+        "team": "ENG",
+        "country": "England",
+        "rating": 793,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Jos Buttler",
+        "team": "ENG",
+        "country": "England",
+        "rating": 789,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Dewald Brevis",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 789,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Phil Salt",
+        "team": "ENG",
+        "country": "England",
+        "rating": 775,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Pathum Nissanka",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 757,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Tilak Varma",
+        "team": "IND",
+        "country": "India",
+        "rating": 726,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Mitchell Marsh",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 706,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_bowl_men": [
+      {
+        "rank": 1,
+        "name": "Rashid Khan",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 714,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Abrar Ahmed",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 675,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Mitchell Santner",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 644,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Maheesh Theekshana",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 635,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Jofra Archer",
+        "team": "ENG",
+        "country": "England",
+        "rating": 633,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Keshav Maharaj",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 626,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Shaheen Afridi",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 604,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Mehidy Hasan Miraz",
+        "team": "BAN",
+        "country": "Bangladesh",
+        "rating": 602,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Kuldeep Yadav",
+        "team": "IND",
+        "country": "India",
+        "rating": 596,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Gudakesh Motie",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 596,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_ar_women": [
+      {
+        "rank": 1,
+        "name": "Hayley Matthews",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 502,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Amelia Kerr",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 465,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Chamari Athapaththu",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 413,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Deepti Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 383,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Orla Prendergast",
+        "team": "IRE",
+        "country": "Ireland",
+        "rating": 376,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Ashleigh Gardner",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 352,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Fatima Sana",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 336,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Sophie Ecclestone",
+        "team": "ENG",
+        "country": "England",
+        "rating": 272,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Sophie Devine",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 260,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Marizanne Kapp",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 260,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_bowl_women": [
+      {
+        "rank": 1,
+        "name": "Alana King",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 753,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Ashleigh Gardner",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 715,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Sophie Ecclestone",
+        "team": "ENG",
+        "country": "England",
+        "rating": 696,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Marizanne Kapp",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 650,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Annabel Sutherland",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 646,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Hayley Matthews",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 634,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Megan Schutt",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 624,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Kim Garth",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 614,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Deepti Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 614,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Nashra Sundhu",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 601,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_bat_women": [
+      {
+        "rank": 1,
+        "name": "Smriti Mandhana",
+        "team": "IND",
+        "country": "India",
+        "rating": 790,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Laura Wolvaardt",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 782,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Beth Mooney",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 744,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Hayley Matthews",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 711,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Alyssa Healy",
+        "team": "Australia",
+        "country": "Australia",
+        "rating": 744,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Phoebe Litchfield",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 709,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Ashleigh Gardner",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 696,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Maddy Green",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 685,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Nat Sciver-Brunt",
+        "team": "ENG",
+        "country": "England",
+        "rating": 672,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Harmanpreet Kaur",
+        "team": "IND",
+        "country": "India",
+        "rating": 652,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_bat_men": [
+      {
+        "rank": 1,
+        "name": "Shubman Gill",
+        "team": "IND",
+        "country": "India",
+        "rating": 801,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Daryl Mitchell",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 794,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Virat Kohli",
+        "team": "IND",
+        "country": "India",
+        "rating": 767,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Rohit Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 758,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Ibrahim Zadran",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 719,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Babar Azam",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 689,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Joe Root",
+        "team": "ENG",
+        "country": "England",
+        "rating": 675,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Shai Hope",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 673,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Harry Tector",
+        "team": "IRE",
+        "country": "Ireland",
+        "rating": 653,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Kusal Mendis",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 648,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_bat_women": [
+      {
+        "rank": 1,
+        "name": "Beth Mooney",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 785,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Georgia Voll",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 779,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Laura Wolvaardt",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 766,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Shafali Verma",
+        "team": "IND",
+        "country": "India",
+        "rating": 759,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Smriti Mandhana",
+        "team": "IND",
+        "country": "India",
+        "rating": 754,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Hayley Matthews",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 754,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Chamari Athapaththu",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 735,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Amelia Kerr",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 696,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Tahlia McGrath",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 679,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Harmanpreet Kaur",
+        "team": "IND",
+        "country": "India",
+        "rating": 656,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_ar_women": [
+      {
+        "rank": 1,
+        "name": "Ashleigh Gardner",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 497,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Hayley Matthews",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 450,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Annabel Sutherland",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 385,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Marizanne Kapp",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 367,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Amelia Kerr",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 358,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Deepti Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 343,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Alana King",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 281,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Chamari Athapaththu",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 280,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Nat Sciver-Brunt",
+        "team": "ENG",
+        "country": "England",
+        "rating": 248,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Charlie Dean",
+        "team": "ENG",
+        "country": "England",
+        "rating": 248,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "odi_ar_men": [
+      {
+        "rank": 1,
+        "name": "Azmatullah Omarzai",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 337,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Sikandar Raza",
+        "team": "ZIM",
+        "country": "Zimbabwe",
+        "rating": 276,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Mehidy Hasan Miraz",
+        "team": "BAN",
+        "country": "Bangladesh",
+        "rating": 260,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Michael Bracewell",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 250,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Mitchell Santner",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 247,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Mohammad Nabi",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 238,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Brandon McMullen",
+        "team": "SCO",
+        "country": "Scotland",
+        "rating": 238,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Rashid Khan",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 232,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Axar Patel",
+        "team": "IND",
+        "country": "India",
+        "rating": 210,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Wanindu Hasaranga",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 201,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "test_bowl_men": [
+      {
+        "rank": 1,
+        "name": "Mitchell Starc",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 872,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Matt Henry",
+        "team": "NZ",
+        "country": "New Zealand",
+        "rating": 861,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Ollie Robinson",
+        "team": "ENG",
+        "country": "England",
+        "rating": 856,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Jasprit Bumrah",
+        "team": "IND",
+        "country": "India",
+        "rating": 853,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Pat Cummins",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 841,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Marco Jansen",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 825,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Kagiso Rabada",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 807,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Scott Boland",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 804,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Josh Hazlewood",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 783,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Noman Ali",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 777,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_ar_men": [
+      {
+        "rank": 1,
+        "name": "Sikandar Raza",
+        "team": "ZIM",
+        "country": "Zimbabwe",
+        "rating": 321,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Saim Ayub",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 275,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Will Jacks",
+        "team": "ENG",
+        "country": "England",
+        "rating": 257,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Dipendra Singh Airee",
+        "team": "NEP",
+        "country": "Nepal",
+        "rating": 256,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Azmatullah Omarzai",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 251,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Roston Chase",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 249,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Hardik Pandya",
+        "team": "IND",
+        "country": "India",
+        "rating": 230,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Gerhard Erasmus",
+        "team": "NAM",
+        "country": "Namibia",
+        "rating": 213,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Jason Holder",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 209,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Mohammad Nabi",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 205,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_bowl_women": [
+      {
+        "rank": 1,
+        "name": "Sree Charani",
+        "team": "IND",
+        "country": "India",
+        "rating": 817,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Deepti Sharma",
+        "team": "IND",
+        "country": "India",
+        "rating": 754,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Sophie Ecclestone",
+        "team": "ENG",
+        "country": "England",
+        "rating": 723,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Charlie Dean",
+        "team": "ENG",
+        "country": "England",
+        "rating": 722,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Lauren Bell",
+        "team": "ENG",
+        "country": "England",
+        "rating": 712,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Linsey Smith",
+        "team": "ENG",
+        "country": "England",
+        "rating": 704,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Nonkululeko Mlaba",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 683,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Nashra Sundhu",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 676,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Annabel Sutherland",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 673,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Georgia Wareham",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 671,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "test_ar_men": [
+      {
+        "rank": 1,
+        "name": "Ravindra Jadeja",
+        "team": "IND",
+        "country": "India",
+        "rating": 422,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Marco Jansen",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 344,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Ben Stokes",
+        "team": "England",
+        "country": "England",
+        "rating": 289,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Mehidy Hasan Miraz",
+        "team": "BAN",
+        "country": "Bangladesh",
+        "rating": 314,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Mitchell Starc",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 276,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Wiaan Mulder",
+        "team": "SA",
+        "country": "South Africa",
+        "rating": 245,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Pat Cummins",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 234,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Washington Sundar",
+        "team": "IND",
+        "country": "India",
+        "rating": 234,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Justin Greaves",
+        "team": "WI",
+        "country": "West Indies",
+        "rating": 225,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Gus Atkinson",
+        "team": "ENG",
+        "country": "England",
+        "rating": 219,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ],
+    "t20_bowl_men": [
+      {
+        "rank": 1,
+        "name": "Abrar Ahmed",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 736,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 2,
+        "name": "Rashid Khan",
+        "team": "AFG",
+        "country": "Afghanistan",
+        "rating": 735,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 3,
+        "name": "Adam Zampa",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 700,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 4,
+        "name": "Adil Rashid",
+        "team": "ENG",
+        "country": "England",
+        "rating": 695,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 5,
+        "name": "Nathan Ellis",
+        "team": "AUS",
+        "country": "Australia",
+        "rating": 675,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 6,
+        "name": "Jamie Overton",
+        "team": "ENG",
+        "country": "England",
+        "rating": 674,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 7,
+        "name": "Varun Chakaravarthy",
+        "team": "IND",
+        "country": "India",
+        "rating": 671,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 8,
+        "name": "Mohammad Nawaz",
+        "team": "PAK",
+        "country": "Pakistan",
+        "rating": 658,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 9,
+        "name": "Wanindu Hasaranga",
+        "team": "SL",
+        "country": "Sri Lanka",
+        "rating": 656,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      },
+      {
+        "rank": 10,
+        "name": "Jasprit Bumrah",
+        "team": "IND",
+        "country": "India",
+        "rating": 651,
+        "matches": 0,
+        "runs": 0,
+        "wkts": 0,
+        "avg": 0,
+        "econ": 0,
+        "_source": "icc"
+      }
+    ]
   }
 }
