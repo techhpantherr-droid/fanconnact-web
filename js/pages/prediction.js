@@ -189,7 +189,7 @@ function updateHeaderForGuest(){
     const name = qs("user-name-display");
     const level = qs("user-level-display");
     if(name) name.textContent = "Guest";
-    if(level) level.textContent = "";
+    if(level) level.textContent = "—";
 }
 
 function calculateLevel(xp){

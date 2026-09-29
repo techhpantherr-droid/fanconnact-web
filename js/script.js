@@ -348,6 +348,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       // Default Guest State
       if (userNameElem) userNameElem.textContent = "Guest";
+      if (userLevelElem) userLevelElem.textContent = "—";
       if (welcomeElem)
         welcomeElem.innerHTML = `Welcome, Guest! <span class="ml-2 text-2xl">ðŸ‘‹</span>`;
       if (userAvatarElem)
