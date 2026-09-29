@@ -425,7 +425,7 @@
     // Some providers label a game that is actually live with "Pause", "Break",
     // "Timeout", "Delay", "Interval" or a live detail like "5th set". Match
     // those as live instead of silently collapsing to "upcoming".
-    const status = /finish|result|won|full|completed|ended|final/i.test(statusText) ? 'finished'
+    const status = /\bFT\b|full\s?time|finish|result|won|full|completed|ended|final|aet/i.test(statusText) ? 'finished'
       : /live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(statusText) ? 'live'
       : ('upcoming');
     const series = rec.series || rec.tournament || rec.matchType || '';
@@ -530,7 +530,7 @@
         : (statusType === 'finished' || statusType === 'ended' || statusType === 'ended_match' ? 'finished' : ''));
     if (!status) {
       const desc = String(statusText).toLowerCase();
-      status = /finish|result|won|full|completed|ended|final/i.test(desc) ? 'finished'
+      status = /\bft\b|full\s?time|finish|result|won|full|completed|ended|final|aet/i.test(desc) ? 'finished'
         : (/live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(desc)
             || Number(statusCode) === 2 || Number(statusCode) > 50) ? 'live'
         : Number(statusCode) === 3 ? 'finished' : 'upcoming';

@@ -1602,7 +1602,7 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
       success: true, source: "espn",
       match: {
         id: "espn_" + rawId, matchId: "espn_" + rawId, sport,
-        status: /final|completed/i.test(detail) ? "finished" : (/1st|2nd|3rd|4th|quarter|half|inning|live|in progress/i.test(detail) ? "live" : "upcoming"),
+        status: /\bFT\b|full\s?time|final|completed|ended|result|won|aet|finish/i.test(detail) ? "finished" : (/1st|2nd|3rd|4th|quarter|half|inning|live|in progress|overtime|set|period/i.test(detail) ? "live" : "upcoming"),
         series: (j.header && j.header.league && j.header.league.name) || "",
         homeTeam: { name: (home.team && (home.team.displayName || home.team.name)) || "", shortName: (home.team && home.team.abbreviation) || "" },
         awayTeam: { name: (away.team && (away.team.displayName || away.team.name)) || "", shortName: (away.team && away.team.abbreviation) || "" },
