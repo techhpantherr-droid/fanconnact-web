@@ -1417,6 +1417,34 @@ function normalizeAllSportsEvent(event, sport) {
 
 const allSportsMatchesCache = new Map();
 
+// Build a period-by-period score breakdown (baseball innings, basketball
+// quarters, volleyball sets, …) from the raw AllSports event payload so the
+// Match Center scorecard tab shows real numbers instead of a blank tab.
+function buildAllSportsPeriods(event) {
+  const ev = event || {};
+  const h = ev.homeScore || {}, a = ev.awayScore || {};
+  const labels = ev.periods && typeof ev.periods === "object" && !Array.isArray(ev.periods) ? ev.periods : null;
+  const rows = [];
+  const hInn = h.innings, aInn = a.innings;
+  if (hInn && aInn && typeof hInn === "object" && typeof aInn === "object") {
+    const keys = new Set([...Object.keys(hInn), ...Object.keys(aInn)]);
+    for (const k of keys) {
+      const hv = hInn[k], av = aInn[k];
+      const hval = hv && typeof hv === "object" ? hv.run : hv;
+      const aval = av && typeof av === "object" ? av.run : av;
+      if (hval != null || aval != null) rows.push({ n: (labels && labels[k]) || k, home: hval, away: aval });
+    }
+    if (rows.length) return rows;
+  }
+  for (let i = 1; i <= 8; i++) {
+    const hk = h["period" + i], ak = a["period" + i];
+    if (hk == null && ak == null) continue;
+    const ord = i === 1 ? "1st" : i === 2 ? "2nd" : i === 3 ? "3rd" : i + "th";
+    rows.push({ n: (labels && labels["period" + i]) || ord, home: hk, away: ak });
+  }
+  return rows;
+}
+
 // ─── PERSISTENT LAST-KNOWN-GOOD (AllSports + ESPN) ───────────────────────────
 // RapidAPI AllSports has a small daily quota and ESPN has no scoreboard for
 // some sports, so a page can legitimately return nothing even though real
@@ -1541,6 +1569,35 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
     const detail = (comp.status && comp.status.type && (comp.status.type.shortDetail || comp.status.type.description)) || "";
     const homeScore = home.score != null ? String(home.score) : "";
     const awayScore = away.score != null ? String(away.score) : "";
+    // Period-by-period: competitor linescores are the ESPN "periods" table.
+    const lsA = Array.isArray(home.linescores) ? home.linescores : [];
+    const lsB = Array.isArray(away.linescores) ? away.linescores : [];
+    const periods = [];
+    const maxLs = Math.max(lsA.length, lsB.length);
+    for (let i = 0; i < maxLs; i++) {
+      const po = lsA[i] || {}, pa = lsB[i] || {};
+      if (po.score == null && pa.score == null) continue;
+      periods.push({ n: String(po.name || pa.name || (i + 1)), home: po.score != null ? po.score : "", away: pa.score != null ? pa.score : "" });
+    }
+    // Key events → commentary/incidents feed for the Commentary tab.
+    const incidents = Array.isArray(j.keyEvents) ? j.keyEvents.map((ke, i) => {
+      const play = ke.play || ke || {};
+      return {
+        id: ke.id || i,
+        time: (play.clock && play.clock.displayValue) || (ke.period && ke.period.number != null ? ("P" + ke.period.number) : ""),
+        text: play.text || play.shortText || ke.type && ke.type.text || "Event",
+        type: (ke.type && ke.type.text) || "Play",
+        homeScore: play.homeScore != null ? play.homeScore : "",
+        awayScore: play.awayScore != null ? play.awayScore : "",
+        timeStamp: Date.now(),
+      };
+    }) : [];
+    // Team stat comparison from the boxscore (top stats only).
+    const flatStats = (teamBox) => (teamBox && Array.isArray(teamBox.statistics) ? teamBox.statistics.slice(0, 12).map(s => ({ name: s.name || s.abbreviation || s.label || "", value: s.displayValue != null ? s.displayValue : (s.value != null ? s.value : "") })) : []);
+    const boxTeams = (j.boxscore && Array.isArray(j.boxscore.teams)) ? j.boxscore.teams : [];
+    const homeStats = flatStats(boxTeams[0] || null);
+    const awayStats = flatStats(boxTeams[1] || null);
+    const incidentRows = incidents.map(it => ({ ...it }));
     return {
       success: true, source: "espn",
       match: {
@@ -1553,11 +1610,12 @@ async function fetchEspnAllSportsDetail(sport, rawId) {
         statusText: detail, result: detail,
       },
       events: comp,
+      periods,
       boxscore: j.boxscore || null,
       leaders: j.leaders || null,
-      incidents: [],
+      incidents: incidentRows,
       lineups: null,
-      homeStats: [], awayStats: [],
+      homeStats, awayStats,
     };
   } catch (e) {
     console.error("[AllSports] ESPN detail failed for", sport, rawId, e.message);
@@ -1810,6 +1868,7 @@ app.get("/api/all-sports/match/:sport/:matchId", async (req, res) => {
       match: normalized,
       events,
       incidents,
+      periods: buildAllSportsPeriods(events),
       lineups: lineupRaw || null,
       homeStats,
       awayStats

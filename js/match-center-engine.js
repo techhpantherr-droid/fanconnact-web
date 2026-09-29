@@ -16,6 +16,10 @@
   const AWAY = (params.get('away') || '').toLowerCase();
   // Match ID is the only authoritative match selector. URL hs/as values are ignored.
   const MATCHID = params.get('id') || params.get('match') || '';
+  // The card knows the real state (live/finished/upcoming) — keep it so the
+  // header never downgrades to "Upcoming" while the detail feed loads/falls back.
+  const KNOWN_STATE_PARAM = String(params.get('st') || '').toLowerCase();
+  const KNOWN_STATE = (KNOWN_STATE_PARAM === 'live' || KNOWN_STATE_PARAM === 'finished' || KNOWN_STATE_PARAM === 'upcoming') ? KNOWN_STATE_PARAM : '';
   // AllSports v2 (RapidAPI allsportsapi2) sports served via the backend
   // /api/all-sports/* proxy. These use "as_" prefixed ids and a different
   // response schema (incidents / lineups / team scores) than cricket.
@@ -418,8 +422,12 @@
     const homeScore = rec.score?.home ?? rec.homeScore ?? rec.home?.score ?? '';
     const awayScore = rec.score?.away ?? rec.awayScore ?? rec.away?.score ?? '';
     const statusText = rec.statusText || rec.result || rec.status || '';
-    const status = /finish|result|won|full|completed/i.test(statusText) ? 'finished'
-      : /live|in progress|1st|2nd|3rd|4th|quarter|half|inning/i.test(statusText) ? 'live' : 'upcoming';
+    // Some providers label a game that is actually live with "Pause", "Break",
+    // "Timeout", "Delay", "Interval" or a live detail like "5th set". Match
+    // those as live instead of silently collapsing to "upcoming".
+    const status = /finish|result|won|full|completed|ended|final/i.test(statusText) ? 'finished'
+      : /live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(statusText) ? 'live'
+      : ('upcoming');
     const series = rec.series || rec.tournament || rec.matchType || '';
     const dateTxt = rec.date ? (rec.date + (rec.time ? ' · ' + rec.time : '')) : '';
 
@@ -469,6 +477,35 @@
     return true;
   }
 
+  function buildAllSportsPeriods(detail, evt) {
+    const fromDetail = detail?.periods;
+    if (Array.isArray(fromDetail) && fromDetail.length) return fromDetail;
+    const ev = evt || {};
+    const h = ev.homeScore || {}, a = ev.awayScore || {};
+    const labels = (ev.periods && typeof ev.periods === 'object' && !Array.isArray(ev.periods)) ? ev.periods : null;
+    const rows = [];
+    const hInn = h.innings, aInn = a.innings;
+    if (hInn && aInn && typeof hInn === 'object' && typeof aInn === 'object') {
+      const keys = {};
+      for (const k of Object.keys(hInn)) keys[k] = 1;
+      for (const k of Object.keys(aInn)) keys[k] = 1;
+      for (const k of Object.keys(keys)) {
+        const hv = hInn[k], av = aInn[k];
+        const hval = hv && typeof hv === 'object' ? hv.run : hv;
+        const aval = av && typeof av === 'object' ? av.run : av;
+        if (hval != null || aval != null) rows.push({ n: (labels && labels[k]) || k, home: hval, away: aval });
+      }
+      if (rows.length) return rows;
+    }
+    for (let i = 1; i <= 8; i++) {
+      const hk = h['period' + i], ak = a['period' + i];
+      if (hk == null && ak == null) continue;
+      const ord = i === 1 ? '1st' : i === 2 ? '2nd' : i === 3 ? '3rd' : i + 'th';
+      rows.push({ n: (labels && labels['period' + i]) || ord, home: hk, away: ak });
+    }
+    return rows;
+  }
+
   async function applyAllSportsDetail(detail, sport) {
     const norm = detail?.match || detail?.data?.match || null;
     const evt = detail?.events || detail?.event || detail?.data?.event || null;
@@ -486,8 +523,18 @@
     const homeScore = norm?.score?.home ?? evt?.homeScore?.current ?? '';
     const awayScore = norm?.score?.away ?? evt?.awayScore?.current ?? '';
     const statusText = norm?.statusText || evt?.status?.description || norm?.result || '';
-    const status = norm?.status || (/finish|result|won|full/i.test(statusText) ? 'finished'
-      : (/1st|2nd|3rd|4th|quarter|half|inning|set|game|live|in progress/i.test(statusText) ? 'live' : 'upcoming'));
+    const statusType = String(evt?.status?.type || '').toLowerCase();
+    const statusCode = evt?.status?.code;
+    let status = norm?.status
+      || (statusType === 'inprogress' || statusType === 'live' ? 'live'
+        : (statusType === 'finished' || statusType === 'ended' || statusType === 'ended_match' ? 'finished' : ''));
+    if (!status) {
+      const desc = String(statusText).toLowerCase();
+      status = /finish|result|won|full|completed|ended|final/i.test(desc) ? 'finished'
+        : (/live|in progress|pause|break|halftime|interval|delay|timeout|overtime|1st|2nd|3rd|4th|quarter|half|inning|set/i.test(desc)
+            || Number(statusCode) === 2 || Number(statusCode) > 50) ? 'live'
+        : Number(statusCode) === 3 ? 'finished' : 'upcoming';
+    }
 
     Object.assign(HOME_T, { name: homeName, img: HOME_T.img });
     Object.assign(AWAY_T, { name: awayName, img: AWAY_T.img });
@@ -517,9 +564,16 @@
       const key = h?.name || h?.type || a?.name || a?.type || ('Stat ' + (i + 1));
       statRows.push({ k: String(key), h: h?.value ?? h?.stat ?? '—', a: a?.value ?? a?.stat ?? '—' });
     }
-    M.scorecard = statRows.length
-      ? { type: sport, stats: statRows, home: { code: 'HOME' }, away: { code: 'AWAY' } }
-      : { type: 'cricket', innings: [] };
+    // Period / quarter / set / inning-by-inning breakdown so the Scorecard tab
+    // shows real numbers (baseball innings, volleyball sets, basketball quarters…).
+    const periods = buildAllSportsPeriods(detail, evt);
+    M.scorecard = {
+      type: sport,
+      home: { code: HOME_CODE, name: HOME_T.name },
+      away: { code: AWAY_CODE, name: AWAY_T.name },
+      innings: periods,
+      stats: statRows
+    };
     M.comm = {
       label: 'Match Events',
       items: incidents.slice(0, 100).map((ev, i) => {
@@ -3383,7 +3437,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
 
   const M = {
     sport: SPORT,
-    state: 'upcoming',
+    state: KNOWN_STATE || 'upcoming',
     home: HOME_T,
     away: AWAY_T,
     meta: {
@@ -3400,7 +3454,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
       realStatusLine: ''
     },
     score: {
-      status: 'upcoming',
+      status: KNOWN_STATE || 'upcoming',
       resultText: 'Loading real match data…',
       subText: '',
       icon: '⏳',
@@ -4027,12 +4081,24 @@ if (Array.isArray(model.overs) && model.overs.length) {
       const rows = sc.innings.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + r.n + '</td><td class="py-2 px-4 text-right">' + r.home + '</td><td class="py-2 px-4 text-right">' + r.away + '</td></tr>').join('');
       html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Innings Breakdown</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Inn</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away.code.toUpperCase()) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + rows + '</tbody></table></div></div></section>';
     } else {
-      const rows = sc.stats.map(s => {
-        const hp = Math.round(s.h / (s.h + s.a) * 100);
-        return '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.h + '</td><td class="py-2 px-4 text-center text-xs text-gray-400 uppercase">' + s.k + '</td><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.a + '</td></tr>' +
-          '<tr><td colspan="3" class="py-1"><div class="w-full h-2 bg-gray-100 dark:bg-white/10 rounded-full flex overflow-hidden"><div class="bg-' + sc.home.code + ' h-full" style="width:' + hp + '%"></div><div class="bg-' + sc.away.code + ' h-full" style="width:' + (100 - hp) + '%"></div></div></td></tr>';
+      // Period/quarter/set/inning breakdown for every other sport, then the
+      // per-team stat comparison when the provider supplied one.
+      const periodLabel = sc.type === 'volleyball' || sc.type === 'handball' || sc.type === 'e-sports' || sc.type === 'esport' ? 'Set'
+        : sc.type === 'basketball' ? 'Quarter'
+        : 'Period';
+      const periodRows = (sc.innings || []).map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + esc(r.n) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.home) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.away) + '</td></tr>').join('');
+      const breakdown = periodRows
+        ? '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Breakdown</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">' + periodLabel + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home && sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away && sc.away.code.toUpperCase()) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + periodRows + '</tbody></table></div></div></section>'
+        : '';
+      const barRows = (sc.stats || []).map(s => {
+        const parse = v => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+        const hh = parse(s.h), aa = parse(s.a);
+        const hp = (hh + aa) > 0 ? Math.round(hh / (hh + aa) * 100) : 50;
+        return '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.h + '</td><td class="py-2 px-4 text-center text-xs text-gray-400 uppercase">' + esc(s.k) + '</td><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.a + '</td></tr>' +
+          '<tr><td colspan="3" class="py-1"><div class="w-full h-2 bg-gray-100 dark:bg-white/10 rounded-full flex overflow-hidden"><div class="bg-gray-500/50 h-full" style="width:' + hp + '%"></div><div class="bg-gray-200 dark:bg-white/20 h-full" style="width:' + (100 - hp) + '%"></div></div></td></tr>';
       }).join('');
-      html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Stats</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium text-right">' + esc(sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4"></th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away.code.toUpperCase()) + '</th></tr></thead><tbody>' + rows + '</tbody></table></div></div></section>';
+      html += breakdown +
+        (barRows ? '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Stats</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium text-right">' + esc(sc.home && sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4"></th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away && sc.away.code.toUpperCase()) + '</th></tr></thead><tbody>' + barRows + '</tbody></table></div></div></section>' : '');
     }
     html += '</div>';
     p.innerHTML = html;

@@ -68,10 +68,16 @@
 
   }
 
-  // Append real scores to the match-center link so card score == center score
+  // Append real scores + the card's known state to the match-center link so
+  // the center shows the correct live/finished/upcoming header even when the
+  // per-match detail feed is slow, down, or the match is old.
   function linkFor(m) {
 
     let u = m.link || "";
+
+    if (m.status)
+
+      u += "&st=" + encodeURIComponent(m.status);
 
     if (m.score?.home)
 
