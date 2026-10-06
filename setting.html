@@ -145,6 +145,16 @@
   :root:not(.dark) .text-connect { color: #d99a00 !important; }
   .dark .text-connect { color: #f5b301 !important; }
   :root:not(.dark) .text-fan { color: #374151 !important; }
+  /* Primary buttons must always show their labels on top of the accent colour. */
+  .bg-primary,
+  body.theme-light .bg-primary,
+  body.theme-dark .bg-primary,
+  body.theme-stadium .bg-primary,
+  body.theme-esports .bg-primary,
+  body.theme-royal .bg-primary,
+  body.theme-custom .bg-primary {
+    color: #ffffff !important;
+  }
 </style>
 
 <!-- Top Navigation Bar -->

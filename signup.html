@@ -437,6 +437,14 @@
         .zoom-range { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; }
         .zoom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
         .zoom-range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
+        /* Primary buttons must always show their labels on top of the accent colour. */
+        .bg-primary,
+        body.theme-light .bg-primary,
+        body.theme-dark .bg-primary,
+        body.theme-stadium .bg-primary,
+        body.theme-esports .bg-primary,
+        body.theme-royal .bg-primary,
+        body.theme-custom .bg-primary { color: #ffffff !important; }
     </style>
     <meta name="description" content="Fanconnact sports platform for fans, scores, communities and updates.">
     <meta property="og:title" content="Fanconnact">
