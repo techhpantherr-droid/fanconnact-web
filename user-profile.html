@@ -71,7 +71,12 @@
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-2 gap-3 mb-4">
+    <div class="grid grid-cols-3 gap-2 sm:gap-3 mb-4">
+      <div class="profile-card rounded-xl p-4 text-center">
+        <div id="pGlobalRank" class="text-2xl font-bold">—</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">Global Rank</div>
+        <div id="pGlobalRankOf" class="text-[10px] text-slate-400 dark:text-slate-500"></div>
+      </div>
       <button onclick="showTab('followers')" class="profile-card rounded-xl p-4 text-center cursor-pointer hover:opacity-80 transition">
         <div id="pFollowers" class="text-2xl font-bold">0</div>
         <div class="text-xs text-slate-500 dark:text-slate-400">Followers</div>
@@ -112,6 +117,6 @@
   </main>
 
   <script src="js/level-system.js"></script>
-  <script type="module" src="js/user-profile.js?v=916011"></script>
+  <script type="module" src="js/user-profile.js?v=916012"></script>
 </body>
 </html>

@@ -115,9 +115,61 @@ async function loadProfile() {
 
 
     renderFollowButton(followers);
+
+    loadGlobalRank(VIEW_UID);
   } catch (e) {
     console.error("[user-profile] load failed:", e);
     el("loadingState").textContent = "Could not load profile.";
+  }
+}
+
+// Real global rank: every registered user sorted by XP (then coins, level, name)
+// — identical ordering to the leaderboard — the viewed user's position is their
+// rank against ALL users, not a stored/stale number.
+async function loadGlobalRank(uid) {
+  const rankEl = el("pGlobalRank");
+  if (!rankEl) return;
+  rankEl.textContent = "—";
+  const ofEl = el("pGlobalRankOf");
+  if (ofEl) ofEl.textContent = "";
+  try {
+    const snap = await getDocs(collection(db, "users"));
+    const users = [];
+    snap.forEach(function (doc) {
+      const d = doc.data();
+      const xp = parseInt(d.xp, 10) || 0;
+      let coins = parseInt(d.coins, 10);
+      if (isNaN(coins)) coins = 100; // default FanCoins for every registered user
+      if (coins < 0) coins = 0;
+      let level = parseInt(d.level, 10) || 1;
+      try {
+        if (window.LevelSystem && window.LevelSystem.levelFromXP) level = window.LevelSystem.levelFromXP(xp);
+      } catch (e) {}
+      users.push({
+        uid: doc.id,
+        name: d.username || d.fullName || d.email || "Fan",
+        xp: xp, coins: coins, level: level,
+      });
+    });
+    users.sort(function (a, b) {
+      if (a.xp !== b.xp) return b.xp - a.xp;
+      if (a.coins !== b.coins) return b.coins - a.coins;
+      if (a.level !== b.level) return b.level - a.level;
+      return String(a.name).localeCompare(String(b.name));
+    });
+    let rank = 0;
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].uid === uid) { rank = i + 1; break; }
+    }
+    if (rank > 0) {
+      rankEl.textContent = "#" + rank.toLocaleString();
+      if (ofEl) ofEl.textContent = "of " + users.length.toLocaleString() + " users";
+    } else {
+      rankEl.textContent = "—";
+    }
+  } catch (e) {
+    console.error("[user-profile] global rank load failed:", e);
+    rankEl.textContent = "—";
   }
 }
 
