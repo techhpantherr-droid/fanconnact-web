@@ -185,30 +185,30 @@
         background-blend-mode: multiply;
       }
 
-      :root:not(.dark) .hero-gradient {
-        border-color: #e2e8f0;
-        background-image: linear-gradient(
-          rgba(255, 255, 255, 0.55),
-          rgba(241, 245, 249, 0.7)
-        );
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: overlay;
+      .hero-gradient {
+        border-color: rgba(255, 255, 255, 0.18);
       }
 
+      /* The hero slide sits on a dark stadium photo with a dark scrim
+         (rendered by js/matches-render.js?v=916010). Text must stay white in BOTH
+         themes, so light mode must not force dark text onto it. */
       :root:not(.dark) .hero-gradient,
       :root:not(.dark) .hero-gradient * {
-        color: #0f172a !important;
+        color: #ffffff !important;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
       }
 
       :root:not(.dark) .hero-gradient .text-brand-green,
-      :root:not(.dark) .hero-gradient .text-emerald-600 {
-        color: #059669 !important;
+      :root:not(.dark) .hero-gradient .text-emerald-600,
+      :root:not(.dark) .hero-gradient .text-emerald-400 {
+        color: #34d399 !important;
       }
 
+      /* The "View Match Center" button already carries an inline
+         color:#ffffff!important — do not override it to black. */
       :root:not(.dark) .hero-gradient button,
       :root:not(.dark) .hero-gradient button * {
-        color: #000 !important;
+        color: #ffffff !important;
       }
 
       .fan-war-bg {
@@ -354,15 +354,7 @@
         >
           <span class="material-symbols-outlined text-xl">person_pin</span>
           <span class="text-sm nav-text">Player Zone</span>
-        </a>
-<a
-            class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-900 dark:text-white hover:text-slate-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5"
-            href="https://play.google.com/store/apps" target="_blank" rel="noopener"
-          >
-            <span class="material-symbols-outlined text-xl text-brand-green">psychology</span>
-            <span class="text-sm nav-text font-semibold text-brand-green">Predictions</span>
-          </a>
-        <a
+        </a>        <a
           class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-gray-100"
           href="leaderboard.html"
         >
@@ -449,29 +441,9 @@
               ><span class="text-connect">Connact</span></span
             >
           </div>
-
-          <!-- Desktop Search -->
-          <div class="relative max-w-md w-full hidden md:block mx-4">
-            <span
-              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-500"
-              >search</span
-            >
-            <input
-              type="text"
-              placeholder="Search matches, players..."
-              class="w-full bg-gray-100 dark:bg-[#1A1D23] border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-brand-green/50 text-slate-800 dark:text-white transition-all"
-            />
-          </div>
-        </div>
+        </div>
 
         <div class="flex items-center gap-1 sm:gap-2 md:gap-3 shrink-0">
-          <!-- Mobile Search Trigger -->
-          <button
-            class="md:hidden p-1.5 sm:p-2 text-slate-500 dark:text-gray-400"
-          >
-            <span class="material-symbols-outlined">search</span>
-          </button>
-
           <!-- Theme Toggle Button -->
           <button
             id="theme-toggle"
@@ -505,16 +477,7 @@
             >
           </div>
 
-          <div class="relative shrink-0 notification-trigger cursor-pointer">
-            <span
-              class="material-symbols-outlined text-slate-500 dark:text-gray-400 text-xl sm:text-2xl"
-              >notifications</span
-            >
-            <span
-              class="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-red-500 rounded-full text-[8px] sm:text-[10px] flex items-center justify-center font-bold text-white shadow-sm"
-              >3</span
-            >
-          </div>
+
 
           <div
             id="profile-trigger"
@@ -842,6 +805,6 @@
     <script type="module" src="js/sidebar.js"></script>
     <script type="module" src="js/pages/prediction.js"></script>
     <script src="js/notif-ws.js"></script>
-    <script type="module" src="js/script.js?v=895f821"></script>
+    <script type="module" src="js/script.js?v=916010"></script>
 </body>
 </html>

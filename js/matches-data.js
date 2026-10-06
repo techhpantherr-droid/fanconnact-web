@@ -587,6 +587,75 @@
     };
   }
 
+  // ------------------------------------------------------------------
+  // 25-day local persistence.
+  // The backend is always the source of truth; this only remembers the last
+  // real payload so an outage (or a cold cache) still renders genuine data
+  // instead of an empty page. Nothing is invented here - it is either live
+  // API data or the last real copy of it, kept for 25 days.
+  // ------------------------------------------------------------------
+  const FC_STORE_TTL = 25 * 24 * 60 * 60 * 1000;
+  const FC_STORE_KEY = "fanconnact:match-fallback:v1";
+
+  function fcStoreSet(key, value, ttl) {
+    try {
+      localStorage.setItem(key, JSON.stringify({ ts: Date.now(), ttl: ttl || FC_STORE_TTL, data: value }));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function fcStoreGet(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      const obj = JSON.parse(raw);
+      if (!obj || obj.data === undefined || obj.data === null) return null;
+      if (Date.now() - (obj.ts || 0) > (obj.ttl || FC_STORE_TTL)) {
+        try { localStorage.removeItem(key); } catch (e) {}
+        return null;
+      }
+      return obj.data;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveBackendSnapshot() {
+    if (!MATCHES.length) return;
+    const payload = { matches: MATCHES, teams: TEAMS };
+    if (!fcStoreSet(FC_STORE_KEY, payload)) {
+      // Storage quota: keep the scores even if the logo registry does not fit.
+      fcStoreSet(FC_STORE_KEY, { matches: MATCHES });
+    }
+  }
+
+  function restoreBackendSnapshot() {
+    const saved = fcStoreGet(FC_STORE_KEY);
+    if (!saved || !Array.isArray(saved.matches) || !saved.matches.length) return false;
+    if (saved.teams) {
+      try { Object.assign(TEAMS, saved.teams); } catch (e) {}
+    }
+    MATCHES.length = 0;
+    saved.matches.forEach(function (m) { MATCHES.push(m); });
+    backendHasLoadedOnce = true;
+    window.FANCONNECT_BACKEND_MATCHES_READY = true;
+    window.FANCONNECT_MATCHES = {
+      TEAMS,
+      MATCHES,
+      capturedOn: new Date(saved.ts || Date.now()).toISOString(),
+      source: "last saved real data (backend unavailable)"
+    };
+    window.dispatchEvent(new CustomEvent("fanconnact:matches-data-updated"));
+    console.warn("[matches] backend unavailable - serving last saved real data:",
+      MATCHES.length, "matches");
+    return true;
+  }
+
+  // Shared helper so calendar / match centre reuse the same 25-day retention.
+  window.FC_CACHE = { TTL: FC_STORE_TTL, get: fcStoreGet, set: fcStoreSet };
+
   async function loadBackendMatches() {
     if (backendRefreshPromise) return backendRefreshPromise;
 
@@ -671,9 +740,10 @@
           };
 
           console.log('✅ FanConnact backend matches:', MATCHES.length, MATCHES);
+          saveBackendSnapshot();
           window.dispatchEvent(new CustomEvent('fanconnact:matches-data-updated'));
         } else if (!backendHasLoadedOnce) {
-          window.FANCONNECT_BACKEND_MATCHES_READY = false;
+          if (!restoreBackendSnapshot()) { window.FANCONNECT_BACKEND_MATCHES_READY = false; }
           console.warn('⚠️ FanConnact backend unavailable; no fake/stale live score injected.');
         }
       } catch (err) {
@@ -681,6 +751,7 @@
         if (!backendHasLoadedOnce) {
           window.FANCONNECT_BACKEND_MATCHES_READY = false;
         }
+        if (!backendHasLoadedOnce) restoreBackendSnapshot();
       } finally {
         backendRefreshPromise = null;
       }
@@ -724,6 +795,7 @@
           source: 'FanConnact backend'
         };
 
+        saveBackendSnapshot();
         window.dispatchEvent(new CustomEvent('fanconnact:matches-data-updated'));
       } catch (err) {
         console.warn('[matches] Live-only refresh failed:', err);

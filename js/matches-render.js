@@ -24,13 +24,15 @@
     cricket: "Cricket", football: "Football", basketball: "Basketball",
     tennis: "Tennis", baseball: "Baseball", hockey: "Hockey",
     kabaddi: "Kabaddi", "e-sports": "E-Sports", tabletennis: "Table Tennis",
-    volleyball: "Volleyball"
+    volleyball: "Volleyball",
+    kabbaddi: "Kabaddi"
   };
   const SPORT_COLOR = {
     cricket: "blue", football: "green", basketball: "indigo",
     tennis: "lime", baseball: "amber", hockey: "cyan",
     kabaddi: "orange", "e-sports": "fuchsia", tabletennis: "teal",
-    volleyball: "rose"
+    volleyball: "rose",
+    kabbaddi: "emerald"
   };
   // Per-sport hero backgrounds (each slide reflects its own sport) — local assets
   const SPORT_BG = {
@@ -43,29 +45,79 @@
     kabaddi: "assets/kabbadi bg.avif",
     "e-sports": "assets/esports bg.jpg",
     tabletennis: "assets/table tennis bg.jpg",
-    volleyball: "assets/volleyball bg.jpg"
+    volleyball: "assets/volleyball bg.jpg",
+    kabbaddi: "assets/kabbadi bg.avif"
+  };
+
+  // Lowercase name/key -> TEAMS entry index, rebuilt whenever TEAMS grows.
+  // Cards are often fed a full team NAME (not the registry key), so a direct
+  // key lookup alone silently degrades to a placeholder avatar.
+  let _teamByName = null;
+  let _teamByNameSize = -1;
+  function teamByName() {
+    const size = Object.keys(TEAMS).length;
+    if (_teamByName && size === _teamByNameSize) return _teamByName;
+    const idx = {};
+    for (const k in TEAMS) {
+      const t = TEAMS[k];
+      if (!t) continue;
+      const key = String(k).toLowerCase().trim();
+      if (key && !idx[key]) idx[key] = t;
+      const nm = String(t.name || "").toLowerCase().trim();
+      if (nm && !idx[nm]) idx[nm] = t;
+      const flat = nm.replace(/[^a-z0-9]/g, "");
+      if (flat && !idx[flat]) idx[flat] = t;
+    }
+    _teamByName = idx;
+    _teamByNameSize = size;
+    return idx;
+  }
+
+  // Exact-match only: never guess a country flag for a club side.
+  const FALLBACK_CC = {
+    india:'in', australia:'au', england:'eng', 'new zealand':'nz', nz:'nz',
+    'south africa':'za', pakistan:'pk', 'sri lanka':'lk', bangladesh:'bd',
+    afghanistan:'af', 'west indies':'wi', ireland:'ie', zimbabwe:'zw',
+    'united states':'us', usa:'us', france:'fr', germany:'de', spain:'es',
+    italy:'it', portugal:'pt', netherlands:'nl', brazil:'br', argentina:'ar',
+    japan:'jp', china:'cn', 'south korea':'kr', canada:'ca', mexico:'mx',
+    turkey:'tr', indonesia:'id', malaysia:'my', thailand:'th', philippines:'ph',
+    singapore:'sg', nepal:'np', uae:'ae', 'united arab emirates':'ae', qatar:'qa',
+    oman:'om', kuwait:'kw', 'saudi arabia':'sa', egypt:'eg', nigeria:'ng',
+    kenya:'ke', russia:'ru', sweden:'se', norway:'no', denmark:'dk',
+    finland:'fi', poland:'pl', belgium:'be', switzerland:'ch', austria:'at',
+    greece:'gr', croatia:'hr', spain:'es', portugal:'pt'
   };
 
   function team(code, fallbackName = "") {
+    const raw = String(code || "").toLowerCase().trim();
+    const flatRaw = raw.replace(/[^a-z0-9]/g, "");
+    if (raw && TEAMS[raw]) return TEAMS[raw];
+    if (flatRaw && TEAMS[flatRaw]) return TEAMS[flatRaw];
 
-    const t = TEAMS[(code || "").toLowerCase()];
+    const idx = teamByName();
+    const probes = [
+      String(fallbackName || "").toLowerCase().trim(),
+      raw,
+      flatRaw
+    ].filter(Boolean);
 
-    if (t) return t;
+    for (let i = 0; i < probes.length; i++) {
+      const p = probes[i];
+      if (idx[p]) return idx[p];
+      const pf = p.replace(/[^a-z0-9]/g, "");
+      if (pf && idx[pf]) return idx[pf];
+    }
 
+    const label = fallbackName || code || "";
+    const ccKey = String(label || raw).toLowerCase().trim();
     return {
-
-      name: fallbackName || code,
-
-      cc: null,
-
+      name: label,
+      cc: FALLBACK_CC[ccKey] || null,
       color: "#6B7280",
-
-      flag: "🏏",
-
+      flag: "\u{1F3CF}",
       logo: null
-
     };
-
   }
 
   // Append real scores + the card's known state to the match-center link so
@@ -107,6 +159,17 @@
     return /(^|\s)(theme-stadium|theme-esports|theme-royal|theme-custom|theme-dark)(\s|$)/.test(b);
   }
 
+  // Vertical score cell: used by the wide index.html carousel cards, where a
+  // 3-column row cannot fit multi-digit scores (logo eats the cell width).
+  function scoreCell(t, score, detail, logoCls, scoreCls, S) {
+    return '<div class="flex-1 min-w-0 text-center">' +
+      '<img alt="' + esc(t.name) + '" class="' + logoCls + ' object-contain mx-auto" src="' + logo(t) + '">' +
+      '<p class="mt-2 text-[11px] font-bold truncate" style="color:' + S.variant + '">' + esc(t.name) + '</p>' +
+      '<h2 class="' + scoreCls + ' font-black leading-tight whitespace-nowrap" style="color:' + S.on + '">' + esc(score) + '</h2>' +
+      (detail ? '<p class="text-[10px] font-medium truncate" style="color:' + S.variant + '">' + detail + '</p>' : '') +
+      '</div>';
+  }
+
   function cardHTML(m, horizontal, compact) {
     const h = team(m.home), a = team(m.away);
     const col = SPORT_COLOR[m.sport] || "blue";
@@ -119,6 +182,9 @@
     // don't stretch to full container width and break the scroll on mobile.
     // In a vertical list (game pages / live matches) cards must be full width.
     const widthCls = horizontal ? "w-[260px] sm:w-[280px] md:w-[300px] shrink-0 snap-start" : "w-full";
+    // Wide, non-scrolling card (index.html carousel): a 3-column row cannot
+    // fit multi-digit scores, so teams are stacked instead.
+    const stacked = !horizontal;
     // Compact cards (horizontal scrollers) are smaller so several fit on screen.
     const pad = compact ? "p-4" : "p-6";
     const headMb = compact ? "mb-4" : "mb-6";
@@ -139,8 +205,15 @@
         : "";
 
       const line = m.statusLine ? esc(m.statusLine) : "";
-      midBlock =
-        '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
+      midBlock = stacked
+        ? '<div class="flex items-start justify-center gap-2 sm:gap-4 mb-8">' +
+            scoreCell(h, hs, detail, logoSize, scoreSize, S) +
+            '<div class="flex flex-col items-center justify-center px-1 shrink-0"><span class="font-bold text-sm sm:text-lg md:text-xl" style="color:' + S.variant + '">VS</span>' +
+            (line ? '<p class="text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide text-center" style="color:' + S.accent + '">' + line + '</p>' : '') +
+            '</div>' +
+            scoreCell(a, as, '', logoSize, scoreSize, S) +
+          '</div>'
+        : '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
         '<div class="flex items-center justify-start space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '">' +
         '<div class="min-w-0 text-left"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(hs) + '</h2>' +
@@ -153,6 +226,7 @@
         '<div class="min-w-0 text-right"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(as) + '</h2></div>' +
         '</div>' +
         '</div>';
+
       footer =
         '<div class="flex flex-wrap items-center justify-between gap-3 pt-6 border-t" style="border-color:' + S.border + '">' +
         '<div class="flex items-center min-w-0"><span class="text-[11px] font-medium truncate" style="color:' + S.variant + '">Real-time · ' + esc(m.rules) + '</span></div>' +
@@ -164,8 +238,22 @@
     } else if (m.status === "upcoming") {
       statusBadge = '<span class="bg-yellow-500/15 text-yellow-600 dark:text-yellow-400 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Upcoming</span>';
       const when = (m.date ? esc(m.date) : "") + (m.time ? " · " + esc(m.time) : "");
-      midBlock =
-        '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
+            midBlock = stacked
+        ? '<div class="flex items-start justify-center gap-2 sm:gap-4 mb-8">' +
+            '<div class="flex-1 min-w-0 text-center">' +
+              '<img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain mx-auto" src="' + logo(h) + '">' +
+              '<p class="mt-2 text-[11px] font-bold truncate" style="color:' + S.on + '">' + esc(h.name) + '</p>' +
+            '</div>' +
+            '<div class="flex flex-col items-center justify-center px-1 shrink-0">' +
+              '<p class="text-xs sm:text-sm font-bold whitespace-nowrap" style="color:' + S.on + '">' + when + '</p>' +
+              '<p class="text-[10px] sm:text-xs truncate" style="color:' + S.variant + '">' + esc(m.rules) + '</p>' +
+            '</div>' +
+            '<div class="flex-1 min-w-0 text-center">' +
+              '<img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain mx-auto" src="' + logo(a) + '">' +
+              '<p class="mt-2 text-[11px] font-bold truncate" style="color:' + S.on + '">' + esc(a.name) + '</p>' +
+            '</div>' +
+          '</div>'
+        : '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
         '<div class="flex items-center justify-start space-x-1 sm:space-x-2 min-w-0"><img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '"><span class="font-bold text-[11px] sm:text-sm truncate" style="color:' + S.on + '">' + esc(h.name) + '</span></div>' +
         '<div class="text-center min-w-0 px-1"><p class="text-xs sm:text-sm font-bold truncate" style="color:' + S.on + '">' + when + '</p><p class="text-[10px] sm:text-xs truncate" style="color:' + S.variant + '">' + esc(m.rules) + '</p></div>' +
         '<div class="flex items-center justify-end space-x-1 sm:space-x-2 min-w-0"><span class="font-bold text-[11px] sm:text-sm truncate" style="color:' + S.on + '">' + esc(a.name) + '</span><img alt="' + esc(a.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(a) + '"></div>' +
@@ -199,8 +287,15 @@ const detail = m.score?.detail
     : "";
 
       const res = m.result ? esc(m.result) : "";
-      midBlock =
-        '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
+      midBlock = stacked
+        ? '<div class="flex items-start justify-center gap-2 sm:gap-4 mb-8">' +
+            scoreCell(h, hs, detail, logoSize, scoreSize, S) +
+            '<div class="flex flex-col items-center justify-center px-1 shrink-0"><span class="font-bold text-sm sm:text-lg md:text-xl" style="color:' + S.variant + '">VS</span>' +
+            (res ? '<p class="text-[10px] sm:text-[11px] font-semibold mt-1 uppercase tracking-wide text-center" style="color:' + S.accent + '">' + res + '</p>' : '') +
+            '</div>' +
+            scoreCell(a, as, '', logoSize, scoreSize, S) +
+          '</div>'
+        : '<div class="grid grid-cols-3 items-center gap-2 mb-8">' +
         '<div class="flex items-center justify-start space-x-2 sm:space-x-3 min-w-0">' +
         '<img alt="' + esc(h.name) + '" class="' + logoSize + ' object-contain shrink-0" src="' + logo(h) + '">' +
         '<div class="min-w-0 text-left"><h2 class="' + scoreSize + ' font-bold truncate leading-tight" style="color:' + S.on + '">' + esc(hs) + '</h2>' + (detail ? '<p class="text-[10px] sm:text-xs font-medium truncate" style="color:' + S.variant + '">' + detail + '</p>' : '') + '</div>' +
@@ -294,29 +389,30 @@ as =
       '<div class="relative z-10 flex flex-col h-full">' +
       '<div class="flex justify-between items-start mb-8 md:mb-10">' +
       '<div class="flex items-center space-x-3">' + badge +
-      '<span class="text-xs font-medium text-white/90">' + sub + '</span>' +
+      '<span class="text-xs font-medium text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.45)">' + sub + '</span>' +
       '</div>' +
       '<div class="flex items-center space-x-2 backdrop-blur-md px-3 py-1.5 rounded-full border dark:bg-black/40 dark:border-white/10 light:bg-white/40 light:border-slate-200">' +
       '<span class="material-symbols-outlined text-brand-green text-sm">visibility</span>' +
-      '<span class="text-xs font-bold text-white">' + (isLive ? 'Live now' : esc(m.status)) + '</span>' +
+      '<span class="text-xs font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.45)">' + (isLive ? 'Live now' : esc(m.status)) + '</span>' +
       '</div>' +
       '</div>' +
       '<div class="flex items-center justify-between px-2 md:px-8 relative">' +
-      '<div class="text-center">' +
+      '<div class="flex-1 min-w-0 text-center">' +
       '<img alt="' + esc(h.name) + '" class="w-16 h-16 md:w-24 md:h-24 mx-auto drop-shadow-2xl" src="' + logo(h) + '">' +
-      '<div class="mt-4"><p class="text-[10px] md:text-sm font-bold text-white/90">' + esc(h.name) + '</p>' +
-      '<h3 class="text-2xl md:text-4xl font-black font-headline text-white">' + esc(hs) + '</h3>' +
-      (detail ? '<p class="text-[10px] md:text-xs font-medium text-white/70">' + detail + '</p>' : '') + '</div>' +
+      '<div class="mt-4"><p class="text-[10px] md:text-sm font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.55)">' + esc(h.name) + '</p>' +
+      '<h3 class="text-2xl md:text-4xl font-black font-headline text-white" style="text-shadow:0 3px 12px rgba(0,0,0,0.6)">' + esc(hs) + '</h3>' +
+      (detail ? '<p class="text-[10px] md:text-xs font-medium text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.55)">' + detail + '</p>' : '') + '</div>' +
       '</div>' +
-      '<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-xl md:text-2xl font-headline text-white/70">VS</div>' +
-      '<div class="text-center">' +
+      '<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black text-xl md:text-2xl font-headline text-white" style="text-shadow:0 3px 12px rgba(0,0,0,0.65)">VS</div>' +
+      '<div class="flex-1 min-w-0 text-center">' +
       '<img alt="' + esc(a.name) + '" class="w-16 h-16 md:w-24 md:h-24 mx-auto drop-shadow-2xl" src="' + logo(a) + '">' +
-      '<div class="mt-4"><p class="text-[10px] md:text-sm font-bold text-white/90">' + esc(a.name) + '</p>' +
-      '<h3 class="text-2xl md:text-4xl font-black font-headline text-white">' + esc(as) + '</h3></div>' +
+      '<div class="mt-4"><p class="text-[10px] md:text-sm font-bold text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.55)">' + esc(a.name) + '</p>' +
+      '<h3 class="text-2xl md:text-4xl font-black font-headline text-white" style="text-shadow:0 3px 12px rgba(0,0,0,0.6)">' + esc(as) + '</h3>' +
+      (detail ? '<p class="text-[10px] md:text-xs font-medium text-white" style="text-shadow:0 2px 8px rgba(0,0,0,0.55)">' + detail + '</p>' : '') + '</div>' +
       '</div>' +
       '</div>' +
       '<div class="mt-8 md:mt-10 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">' +
-      '<div class="space-y-3 text-center sm:text-left"><p class="font-bold text-sm text-emerald-400">' + statusText + '</p></div>' +
+      '<div class="space-y-3 text-center sm:text-left"><p class="font-bold text-sm text-emerald-400" style="text-shadow:0 2px 8px rgba(0,0,0,0.55)">' + statusText + '</p></div>' +
       '<a href="' + linkFor(m) + '" class="w-full sm:w-auto font-bold px-6 py-3 rounded-xl flex items-center justify-center space-x-3 hover:scale-105 hover:opacity-90 transition-transform" style="background:rgba(255,255,255,0.12)!important;border:1px solid rgba(255,255,255,0.45)!important;color:#ffffff!important;box-shadow:none!important;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);">' +
       '<span class="font-headline text-sm uppercase tracking-wider">View Match Center</span>' +
       '<span class="material-symbols-outlined text-lg">arrow_forward</span>' +

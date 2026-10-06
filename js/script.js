@@ -273,6 +273,11 @@ document.addEventListener("DOMContentLoaded", () => {
         onSnapshot(doc(db, "users", user.uid), (userDoc) => {
           if (!userDoc.exists()) {
             console.warn("[script] Firestore user document not found:", user.uid);
+            // No profile doc yet: still paint the real auth identity so the
+            // header never keeps a hardcoded placeholder shipped in the HTML.
+            if (userNameElem) userNameElem.textContent = `@${displayIdentity}`;
+            if (userLevelElem) userLevelElem.textContent = "—";
+            if (welcomeElem) welcomeElem.textContent = `Welcome back, ${displayIdentity}!`;
             return;
           }
 

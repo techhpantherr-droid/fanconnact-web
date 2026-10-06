@@ -136,7 +136,7 @@
       :root:not(.dark) .hover\:bg-gray-800:hover { background: #f1f5f9 !important; }
       :root:not(.dark) .hover\:text-white:hover { color: #0f172a !important; }
       :root:not(.dark) .dark\:hover\:bg-white\/5:hover { background: #f1f5f9 !important; }
-      /* light: variant is non-functional with darkMode:"class" — use CSS overrides instead */
+      /* light: variant is non-functional with darkMode:"class" â€” use CSS overrides instead */
       :root:not(.dark) .light\:bg-gray-100,
       :root:not(.dark) [class*="light:bg-gray-100"] { background: #f1f5f9 !important; }
       :root:not(.dark) .light\:text-slate-800,
@@ -200,13 +200,7 @@
             class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link"
             href="livematches.html"
             >Matches</a
-          >
-          <a
-            class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link"
-            href="https://play.google.com/store/apps" target="_blank" rel="noopener"
-            >Predictions</a
-          >
-          <a
+          >          <a
             class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link"
             href="leaderboard.html"
             >Leaderboard</a
@@ -219,19 +213,7 @@
         </nav>
       </div>
       <!-- Header Actions -->
-      <div class="flex items-center gap-5 md:gap-8">
-        <div class="relative hidden lg:block">
-          <input
-            class="bg-gray-100 dark:bg-[#1a1a1a] text-slate-900 dark:text-white border-none rounded-xl py-2.5 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-emerald-accent"
-            placeholder="Search teams, matches, players..."
-            type="text"
-          />
-          <span
-            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xl"
-            >search</span
-          >
-        </div>
-        <!-- Theme Toggle -->
+      <div class="flex items-center gap-5 md:gap-8">        <!-- Theme Toggle -->
         <button
           id="theme-toggle"
           class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95"
@@ -247,16 +229,7 @@
             >dark_mode</span
           >
         </button>
-        <div class="relative notification-trigger cursor-pointer">
-          <span
-            class="material-symbols-outlined text-slate-500 dark:text-gray-300 cursor-pointer"
-            >notifications</span
-          >
-          <span
-            class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold text-white shadow-sm"
-            >3</span
-          >
-        </div>
+
         <div
           id="profile-trigger"
           class="flex items-center space-x-3 cursor-pointer border-l border-gray-200 dark:border-gray-800 pl-4 md:pl-6"
@@ -271,15 +244,11 @@
             <p
               id="user-name-display"
               class="text-sm font-bold text-slate-900 dark:text-white"
-            >
-              NiteshY
-            </p>
+            ></p>
             <p
               id="user-level-display"
               class="text-[10px] text-emerald-accent font-bold uppercase tracking-wider"
-            >
-              Level 28
-            </p>
+            ></p>
           </div>
         </div>
       </div>
@@ -288,9 +257,7 @@
     <!-- Mobile Sub-Nav -->
     <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
-      <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>
-      <a href="https://play.google.com/store/apps" target="_blank" rel="noopener" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Predictions</a>
-      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
+      <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
       <a href="news&update.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
     </nav>
 
@@ -608,7 +575,7 @@
             <!-- END: StatsSection -->
             <!-- Matches Grid/List -->
             <div class="space-y-6" data-purpose="matches-list" data-filter="tennis">
-              <!-- Real match cards injected from js/matches-data.js?v=916001 -->
+              <!-- Real match cards injected from js/matches-data.js?v=916010 -->
             </div>
               </div>
               </div>
@@ -656,7 +623,7 @@
                   <div class="flex items-center space-x-3">
                     <img class="w-8 h-8 rounded object-contain dark:bg-gray-800 light:bg-gray-100 p-1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5F4IAkw1Tcq3s82q-6HXUUCMtiuOErKPjyhaUcdL-37MM8XeziLK_571FCMPnzLlHNvGzsWYgaXyVqH4L9Q5lxN_naZ3vna4ipayFNEW1kfZ0uL5mn9XUSTWC5_EfV_RiBYched_rJOEcjRPpiAm_HTCu44QjjNt7WNRiuCq1L8EyYcGkt-UxwWBAUNWxKedZJ4jqpvxGILKeuu2QtBpWiUnmzufAFGe3ThGPCmL09CdD_vq_A5oBbFaOVv5vsKVsdUgu18eRoTAD" />
                     <div>
-                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Wimbledon • Men's Final</p>
+                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Wimbledon â€¢ Men's Final</p>
                       <p class="text-xs font-bold dark:text-white light:text-slate-800">DJO vs ALC</p>
                     </div>
                   </div>
@@ -666,7 +633,7 @@
                   <div class="flex items-center space-x-3">
                     <img class="w-8 h-8 rounded object-contain dark:bg-gray-800 light:bg-gray-100 p-1" src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/512px-Manchester_City_FC_badge.svg.png" />
                     <div>
-                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">ATP Hamburg • Quarter Final</p>
+                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">ATP Hamburg â€¢ Quarter Final</p>
                       <p class="text-xs font-bold dark:text-white light:text-slate-800">SIN vs MED</p>
                     </div>
                   </div>
@@ -676,7 +643,7 @@
                   <div class="flex items-center space-x-3">
                     <img class="w-8 h-8 rounded object-contain dark:bg-gray-800 light:bg-gray-100 p-1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Los_Angeles_Lakers_logo.svg/512px-Los_Angeles_Lakers_logo.svg.png" />
                     <div>
-                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Roland Garros • Semi Final</p>
+                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Roland Garros â€¢ Semi Final</p>
                       <p class="text-xs font-bold dark:text-white light:text-slate-800">NAD vs DJO</p>
                     </div>
                   </div>
@@ -686,7 +653,7 @@
                   <div class="flex items-center space-x-3">
                     <img class="w-8 h-8 rounded object-contain dark:bg-gray-800 light:bg-gray-100 p-1" src="https://upload.wikimedia.org/wikipedia/en/thumb/2/2d/Washington_Capitals.svg/512px-Washington_Capitals.svg.png" />
                     <div>
-                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Australian Open • Round 4</p>
+                      <p class="text-[10px] text-gray-500 font-bold leading-none mb-1">Australian Open â€¢ Round 4</p>
                       <p class="text-xs font-bold dark:text-white light:text-slate-800">ALC vs SIN</p>
                     </div>
                   </div>
@@ -713,7 +680,7 @@
         </div>
     </main>
     </div>
-    <script type="module" src="js/script.js?v=895f821"></script>
+    <script type="module" src="js/script.js?v=916010"></script>
     <script src="js/theme.js"></script>
     <script src="js/sport-filters.js?v=912067e"></script>
     <script src="js/sport-stats.js?v=912067e"></script>
@@ -740,8 +707,8 @@
     });
     </script>
   <script src="js/notif-ws.js"></script>
-  <script src="js/matches-data.js?v=916001"></script>
-  <script src="js/matches-render.js?v=916002"></script>
+  <script src="js/matches-data.js?v=916010"></script>
+  <script src="js/matches-render.js?v=916010"></script>
   <script src="js/top-players-fallback.js"></script>
   <script src="js/top-players-widget.js"></script>
   <script src="js/global-search.js"></script>

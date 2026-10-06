@@ -83,30 +83,20 @@
         </div>
         <nav class="hidden xl:flex items-center space-x-6 mx-6 shrink-0">
           <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="dashboard.html">Home</a>
-          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="livematches.html">Matches</a>
-          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="https://play.google.com/store/apps" target="_blank" rel="noopener">Predictions</a>
-          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="leaderboard.html">Leaderboard</a>
+          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="livematches.html">Matches</a>          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="leaderboard.html">Leaderboard</a>
           <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="news&update.html">News</a>
         </nav>
       </div>
-      <div class="flex items-center gap-5 md:gap-8">
-        <div class="relative hidden lg:block">
-          <input class="bg-gray-100 dark:bg-[#1a1a1a] text-slate-900 dark:text-white border-none rounded-xl py-2.5 pl-10 pr-4 text-sm w-64 focus:ring-1 focus:ring-emerald-accent" placeholder="Search teams, matches, players..." type="text" />
-          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xl">search</span>
-        </div>
-        <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95">
+      <div class="flex items-center gap-5 md:gap-8">        <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95">
           <span id="theme-toggle-light-icon" class="material-symbols-outlined hidden text-yellow-400">light_mode</span>
           <span id="theme-toggle-dark-icon" class="material-symbols-outlined text-slate-500 dark:text-slate-400">dark_mode</span>
         </button>
-        <div class="relative notification-trigger cursor-pointer">
-          <span class="material-symbols-outlined text-slate-500 dark:text-gray-300 cursor-pointer">notifications</span>
-          <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-[10px] flex items-center justify-center font-bold text-white shadow-sm">3</span>
-        </div>
+
         <div id="profile-trigger" class="flex items-center space-x-3 cursor-pointer border-l border-gray-200 dark:border-gray-800 pl-4 md:pl-6">
           <img id="user-profile-img" alt="User Profile" class="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-emerald-accent" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOdWz0yXTAfug92jAlZ-XZtnL5urTJNu8npwz7RIfeTacw2m4yeAoKNMAkf3MLOCIk0iI35_ID8tSabIp6I7MF2N_gez6RO01_i0q1DX3bj656URDlnI8A34wDvyRB5WoPOVTN1qvuyGRfskySDI-pCWAnw3raxBsKX2G6sEhrFHiweAO4TxLdxuB-4_oHoAPBbm9bwmrKrqSGKFEtAeXpM76OE_C1cQQSNmRYmIRT01ZVb4lT2k1tR1xDw6ujXtxiain2IWfiKxim" />
           <div class="hidden sm:block">
-            <p id="user-name-display" class="text-sm font-bold text-slate-900 dark:text-white">NiteshY</p>
-            <p id="user-level-display" class="text-[10px] text-emerald-accent font-bold uppercase tracking-wider">Level 28</p>
+            <p id="user-name-display" class="text-sm font-bold text-slate-900 dark:text-white"></p>
+            <p id="user-level-display" class="text-[10px] text-emerald-accent font-bold uppercase tracking-wider"></p>
           </div>
         </div>
       </div>
@@ -115,9 +105,7 @@
     <!-- Mobile Sub-Nav -->
     <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
-      <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>
-      <a href="https://play.google.com/store/apps" target="_blank" rel="noopener" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Predictions</a>
-      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
+      <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
       <a href="news&update.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
     </nav>
 
@@ -202,7 +190,7 @@
       </main>
     </div>
 
-    <script type="module" src="js/script.js?v=895f821"></script>
+    <script type="module" src="js/script.js?v=916010"></script>
     <script src="js/theme.js"></script>
 
     <script>
@@ -234,6 +222,11 @@
 
       function pad2(value) {
         return String(value).padStart(2, '0');
+      }
+
+      function todayKey() {
+        const d = new Date();
+        return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
       }
 
       function dateKeyFromValue(value) {
@@ -271,15 +264,17 @@
         return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
       }
 
-      function normalizeBackendMatch(m) {
+      function normalizeBackendMatch(m, forcedSport) {
         const date = dateKeyFromValue(m.startTime || m.startDate || m.date);
         if (!date) return null;
+
+        const sp = forcedSport || String(m.sport || m.category || 'cricket').toLowerCase();
 
         return {
           id: String(m.id || m.matchId || ''),
           date,
-          sport: 'cricket',
-          team1: m.homeTeam?.name || m.team1 || 'TBD',
+          sport: sp,
+          team1: m.homeTeam?.name || m.team1 || 'TBD' || m.team1 || 'TBD',
           team2: m.awayTeam?.name || m.team2 || 'TBD',
           tournament: m.series || m.tournament || '',
           time: formatMatchTime(m.startTime || m.startDate || m.time),
@@ -299,7 +294,7 @@
           return {
             id: String(m.id || ''),
             date: m.date,
-            sport: 'cricket',
+            sport: String(m.sport || 'cricket').toLowerCase(),
             team1: h.name,
             team2: a.name,
             tournament: m.tournament || m.format || '',
@@ -324,7 +319,7 @@
         const unique = new Map();
 
         source.MATCHES.forEach(function (m) {
-          if (!m || m.sport !== 'cricket') return;
+          if (!m) return;
 
           const date = dateKeyFromValue(m.date || m.startTime || m.startDate);
           if (!date) return;
@@ -335,7 +330,7 @@
           const normalized = {
             id: String(m.id || m.matchId || ''),
             date,
-            sport: 'cricket',
+            sport: String(m.sport || 'cricket').toLowerCase(),
             team1: m.homeName || homeMeta.name || m.home || 'TBD',
             team2: m.awayName || awayMeta.name || m.away || 'TBD',
             tournament: m.tournament || m.series || '',
@@ -346,7 +341,7 @@
             link: m.link || (m.id ? 'match-center.html?id=' + encodeURIComponent(m.id) : '')
           };
 
-          const key = normalized.id || `${normalized.date}-${normalized.team1}-${normalized.team2}`;
+          const key = normalized.sport + '|' + (normalized.id || `${normalized.date}-${normalized.team1}-${normalized.team2}`);
           unique.set(key, normalized);
         });
 
@@ -355,7 +350,7 @@
         ALL_MATCHES = Array.from(unique.values());
         scheduleLoaded = true;
         lastScheduleFetch = Date.now();
-        console.log('[calendar] Synced', ALL_MATCHES.length, 'real cricket matches from shared backend data');
+        console.log('[calendar] Synced', ALL_MATCHES.length, 'real matches from shared backend data');
         return true;
       }
 
@@ -380,6 +375,82 @@
         renderMatches();
       }
 
+      // ------------------------------------------------------------------
+      // Per-date real schedule fetch.
+      // The shared dataset only covers a window of fixtures, so any date the
+      // user clicks that is not in it is requested from the AllSports API and
+      // cached locally for 25 days (works offline / during outages).
+      // ------------------------------------------------------------------
+      const DATE_CACHE_TTL = 25 * 24 * 60 * 60 * 1000;
+      const DATE_PREFIX = 'fanconnact:calendar:';
+      const loadedDates = new Set();
+      const pendingDates = new Set();
+
+      function cacheGet(key) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return null;
+          const obj = JSON.parse(raw);
+          if (!obj || !obj.ts || (Date.now() - obj.ts) > DATE_CACHE_TTL) {
+            localStorage.removeItem(key);
+            return null;
+          }
+          return obj.data || null;
+        } catch (e) { return null; }
+      }
+
+      function cacheSet(key, data) {
+        try { localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data: data })); } catch (e) {}
+      }
+
+      function mergeMatches(list) {
+        if (!Array.isArray(list) || !list.length) return false;
+        const seen = new Map();
+        ALL_MATCHES.forEach(m => seen.set(m.sport + '|' + (m.id || m.date + '-' + m.team1 + '-' + m.team2), m));
+        let changed = false;
+        list.forEach(m => {
+          const k = m.sport + '|' + (m.id || m.date + '-' + m.team1 + '-' + m.team2);
+          const prev = seen.get(k);
+          if (!prev) { seen.set(k, m); changed = true; return; }
+          if (m.status === 'live' && prev.status !== 'live') { seen.set(k, m); changed = true; }
+        });
+        if (!changed) return false;
+        ALL_MATCHES = Array.from(seen.values());
+        scheduleLoaded = true;
+        return true;
+      }
+
+      function ensureDateLoaded(dateStr) {
+        if (!dateStr || pendingDates.has(dateStr)) return;
+        const k = dateStr + '|' + selectedSport;
+        if (loadedDates.has(k)) return;
+
+        const cacheKey = DATE_PREFIX + selectedSport + ':' + dateStr;
+        const cached = cacheGet(cacheKey);
+        if (cached) {
+          loadedDates.add(k);
+          mergeMatches(cached);
+          return;
+        }
+
+        pendingDates.add(dateStr);
+        const url = API_BASE + '/all-sports/matches/' + encodeURIComponent(selectedSport) +
+          '?date=' + encodeURIComponent(dateStr);
+
+        fetch(url, { headers: { Accept: 'application/json' } })
+          .then(r => (r.ok ? r.json() : null))
+          .then(payload => {
+            const list = (Array.isArray(payload) ? payload : (payload && payload.matches) || [])
+              .map(x => normalizeBackendMatch(x, selectedSport))
+              .filter(Boolean);
+            cacheSet(cacheKey, list);
+            loadedDates.add(dateStr + '|' + selectedSport);
+            if (mergeMatches(list)) { renderCalendar(); renderMatches(); }
+          })
+          .catch(err => console.warn('[calendar] date fetch failed', dateStr, err))
+          .finally(() => pendingDates.delete(dateStr));
+      }
+
       // matches-data.js fires this after its real backend data arrives.
       window.addEventListener('fanconnact:matches-data-updated', function () {
         if (syncFromSharedMatchData()) {
@@ -397,9 +468,23 @@
       }
 
       function getSportFromURL() {
-        // Calendar is cricket-only for now. Other sports can be added later
-        // when their respective provider/API is integrated.
-        return 'cricket';
+        // Driven by ?game= so each sport page opens its own real schedule.
+        const alias = {
+          cricket:'cricket', football:'football', basketball:'basketball',
+          tennis:'tennis', hockey:'hockey', baseball:'baseball',
+          kabbaddi:'kabbaddi', kabaddi:'kabbaddi',
+          'e-sports':'e-sports', esports:'e-sports', 'esports':'e-sports',
+          volleyball:'volleyball', vollyeball:'volleyball', vollyball:'volleyball',
+          'table-tennis':'table-tennis', tabletennis:'table-tennis', 'tabletennis':'table-tennis'
+        };
+        try {
+          const raw = (new URLSearchParams(location.search).get('game') || '').toLowerCase().trim();
+          if (!raw) return 'all';
+          if (alias[raw]) return alias[raw];
+          const hit = Object.keys(alias).find(k => k === raw || k.indexOf(raw) === 0 || raw.indexOf(k) === 0);
+          if (hit) return alias[hit];
+        } catch (e) {}
+        return 'all';
       }
 
       function getDaysInMonth(m, y) { return new Date(y, m + 1, 0).getDate(); }
@@ -426,7 +511,7 @@
           const todayStr = today.getFullYear() + '-' + pad2(today.getMonth() + 1) + '-' + pad2(today.getDate());
           const isToday = dateStr === todayStr;
           const isSelected = dateStr === selectedDate;
-          const hasEvent = ALL_MATCHES.some(m => m.date === dateStr);
+          const hasEvent = ALL_MATCHES.some(m => m.date === dateStr && (selectedSport === 'all' || m.sport === selectedSport));
 
           const classes = ['calendar-day', 'h-8', 'md:h-10', 'flex', 'items-center', 'justify-center', 'rounded-lg', 'cursor-pointer', 'text-xs', 'md:text-sm', 'font-semibold', 'text-gray-800', 'dark:text-gray-100'];
           if (isToday) classes.push('today');
@@ -441,6 +526,7 @@
 
           d.addEventListener('click', () => {
             selectedDate = dateStr;
+            ensureDateLoaded(dateStr);
             renderCalendar();
             renderMatches();
           });
@@ -455,18 +541,20 @@
         const matchCount = document.getElementById('match-count');
 
         let matches = ALL_MATCHES.slice();
+        if (selectedSport && selectedSport !== 'all') matches = matches.filter(m => m.sport === selectedSport);
         if (selectedDate) matches = matches.filter(m => m.date === selectedDate);
 
         if (selectedDate) {
           const d = new Date(selectedDate + 'T00:00:00');
           dateInfo.textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
         } else {
-          dateInfo.textContent = 'Upcoming Cricket Matches';
+          dateInfo.textContent = 'Upcoming ' + sportLabel(selectedSport) + ' Matches';
         }
 
         matchCount.textContent = matches.length + ' match' + (matches.length !== 1 ? 'es' : '');
 
         if (matches.length === 0) {
+          if (selectedDate) ensureDateLoaded(selectedDate);
           if (scheduleLoading) return;
           container.innerHTML = '<div class="bg-white dark:bg-brand-card border border-gray-200 dark:border-border-subtle rounded-xl p-8 text-center"><span class="material-symbols-outlined text-4xl text-gray-400">event_busy</span><p class="text-gray-500 dark:text-gray-400 mt-2">No matches scheduled' + (selectedDate ? ' on this date' : ' in the current schedule') + '.</p></div>';
           return;
@@ -501,6 +589,15 @@
         }).join('');
       }
 
+      function sportLabel(sport) {
+        const map = {
+          all: 'Sports', cricket: 'Cricket', football: 'Football', basketball: 'Basketball',
+          tennis: 'Tennis', hockey: 'Hockey', baseball: 'Baseball', kabbaddi: 'Kabbaddi',
+          'e-sports': 'E-Sports', volleyball: 'Volleyball', 'table-tennis': 'Table Tennis'
+        };
+        return map[sport] || 'Sports';
+      }
+
       function escapeHtml(value) {
         return String(value ?? '').replace(/[&<>'"]/g, ch => ({
           '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
@@ -512,25 +609,21 @@
         document.querySelectorAll('.sport-tab').forEach(b => {
           b.classList.toggle('active-sport-tab', b.dataset.sport === selectedSport);
         });
-        // Calendar is cricket-only for now. Other sports will be enabled later
-        // when their real providers are integrated.
-        document.querySelectorAll('.sport-tab').forEach(b => {
-          if (b.dataset.sport !== 'cricket') b.style.display = 'none';
-        });
         renderCalendar();
         renderMatches();
         loadRealCricketSchedule();
+        if (selectedSport !== 'all') ensureDateLoaded(todayKey());
       }
 
       document.querySelectorAll('.sport-tab').forEach(btn => {
         btn.addEventListener('click', () => {
-          if (btn.dataset.sport !== 'cricket') return;
           document.querySelectorAll('.sport-tab').forEach(b => b.classList.remove('active-sport-tab'));
           btn.classList.add('active-sport-tab');
           selectedSport = btn.dataset.sport;
           selectedDate = null;
           renderCalendar();
           renderMatches();
+          if (selectedSport !== 'all') ensureDateLoaded(todayKey());
         });
       });
 
@@ -552,6 +645,6 @@
 
       document.addEventListener('DOMContentLoaded', init);
     </script>
-  <script src="js/matches-data.js?v=916001"></script>
+  <script src="js/matches-data.js?v=916010"></script>
   <script src="js/notif-ws.js"></script></body>
 </html>

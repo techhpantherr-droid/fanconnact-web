@@ -109,25 +109,10 @@ async function loadProfile() {
     if (detWrap) {
       detWrap.innerHTML = details.map(function (pair) {
         return '<div class="stat-pill rounded-lg px-3 py-2"><span class="text-slate-400 text-xs">' + pair[0] + '</span>' +
-          '<div class="text-white text-sm font-medium truncate">' + pair[1] + '</div></div>';
+          '<div class="text-gray-800 dark:text-white text-sm font-medium truncate">' + pair[1] + '</div></div>';
       }).join("");
     }
 
-    // Rank: fetch all users and sort by xp client-side (no orderBy, so users
-    // without xp are still counted).
-    try {
-      const allSnap = await getDocs(collection(db, "users"));
-      const all = [];
-      allSnap.forEach((s) => {
-        const u = s.data();
-        all.push({ uid: s.id, xp: parseInt(u.xp, 10) || 0 });
-      });
-      all.sort((a, b) => b.xp - a.xp);
-      const idx = all.findIndex((u) => u.uid === VIEW_UID);
-      el("pRank").textContent = idx >= 0 ? "#" + (idx + 1) : "â€”";
-    } catch (e) {
-      el("pRank").textContent = "â€”";
-    }
 
     renderFollowButton(followers);
   } catch (e) {
@@ -136,21 +121,10 @@ async function loadProfile() {
   }
 }
 
+// Follow button removed from the Fan Profile page by request.
 function renderFollowButton(followers) {
-  const wrap = el("followBtnWrap");
-  wrap.innerHTML = "";
-  if (!CURRENT_UID || CURRENT_UID === VIEW_UID) return; // can't follow self / guests
-
-  const isFollowing = followers.includes(CURRENT_UID);
-  const btn = document.createElement("button");
-  btn.className = isFollowing
-    ? "w-full py-2.5 rounded-lg border border-gray-400 text-slate-300 font-semibold hover:bg-white/5 transition"
-    : "w-full py-2.5 rounded-lg bg-emerald-500 text-black font-bold hover:bg-emerald-400 transition";
-  btn.textContent = isFollowing ? "Following âœ“" : "Follow";
-  btn.addEventListener("click", () => toggleFollow(isFollowing));
-  wrap.appendChild(btn);
+  return;
 }
-
 async function toggleFollow(isFollowing) {
   if (!CURRENT_UID) return;
   const viewerRef = doc(db, "users", CURRENT_UID);
@@ -212,7 +186,7 @@ async function showTab(which) {
       row.className = "follower-row flex items-center gap-3 py-3 cursor-pointer hover:bg-white/5 px-2 rounded-lg";
       row.innerHTML =
         '<img src="' + avatarFor(d) + '" class="w-10 h-10 rounded-full object-cover">' +
-        '<div class="flex-1 min-w-0"><div class="text-white text-sm font-medium truncate">' + displayName(d) + '</div>' +
+        '<div class="flex-1 min-w-0"><div class="text-gray-800 dark:text-white text-sm font-medium truncate">' + displayName(d) + '</div>' +
         '<div class="text-slate-400 text-xs truncate">' + (d.username ? "@" + d.username : "") + '</div></div>' +
         '<span class="material-symbols-outlined text-slate-500">chevron_right</span>';
       row.addEventListener("click", () => {

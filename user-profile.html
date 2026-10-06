@@ -61,60 +61,57 @@
         <img id="pAvatar" src="assets/images/default-avatar.png?w=150" class="w-20 h-20 rounded-full border-2 border-emerald-accent object-cover" />
         <div class="flex-1 min-w-0">
           <h2 id="pName" class="text-lg font-bold truncate">—</h2>
-          <p id="pUsername" class="text-sm text-slate-400 truncate">@fan</p>
+          <p id="pUsername" class="text-sm text-slate-500 dark:text-slate-400 truncate">@fan</p>
           <div class="mt-1 flex items-center gap-2">
-            <span id="pLevel" class="bg-[#23153e] text-purple-300 px-2 py-0.5 rounded text-xs">Level 1</span>
-            <span id="pXP" class="text-xs text-slate-400">0 XP</span>
+            <span id="pLevel" class="bg-purple-100 text-purple-700 dark:bg-[#23153e] dark:text-purple-300 px-2 py-0.5 rounded text-xs">Level 1</span>
+            <span id="pXP" class="text-xs text-slate-500 dark:text-slate-400">0 XP</span>
           </div>
         </div>
       </div>
-      <div id="followBtnWrap" class="mt-4"></div>
     </div>
 
     <!-- Stats -->
-    <div class="grid grid-cols-3 gap-3 mb-4">
+    <div class="grid grid-cols-2 gap-3 mb-4">
       <button onclick="showTab('followers')" class="profile-card rounded-xl p-4 text-center cursor-pointer hover:opacity-80 transition">
         <div id="pFollowers" class="text-2xl font-bold">0</div>
-        <div class="text-xs text-slate-400">Followers</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">Followers</div>
       </button>
       <button onclick="showTab('following')" class="profile-card rounded-xl p-4 text-center cursor-pointer hover:opacity-80 transition">
         <div id="pFollowing" class="text-2xl font-bold">0</div>
-        <div class="text-xs text-slate-400">Following</div>
+        <div class="text-xs text-slate-500 dark:text-slate-400">Following</div>
       </button>
-      <div class="profile-card rounded-xl p-4 text-center">
-        <div id="pRank" class="text-2xl font-bold">—</div>
-        <div class="text-xs text-slate-400">Rank</div>
-      </div>
     </div>
 
     <!-- Coins / Level progress -->
     <div class="profile-card rounded-2xl p-4 mb-4">
       <div class="flex items-center justify-between mb-2">
-        <span class="text-sm text-slate-400">FanCoins</span>
-        <span id="pCoins" class="text-sm font-bold text-yellow-400">0 🪙</span>
+        <span class="text-sm text-slate-500 dark:text-slate-400">FanCoins</span>
+        <span id="pCoins" class="text-sm font-bold text-amber-600 dark:text-yellow-400">0 🪙</span>
       </div>
       <div class="flex items-center justify-between mb-1">
-        <span class="text-xs text-slate-400">Level Progress</span>
-        <span id="pNextLevel" class="text-xs text-slate-400">—</span>
+        <span class="text-xs text-slate-500 dark:text-slate-400">Level Progress</span>
+        <span id="pNextLevel" class="text-xs text-slate-500 dark:text-slate-400">—</span>
       </div>
-      <div class="w-full bg-black/30 rounded-full h-2 overflow-hidden">
+      <div class="w-full bg-slate-200 dark:bg-black/30 rounded-full h-2 overflow-hidden">
         <div id="pLevelBar" class="bg-emerald-500 h-2 rounded-full" style="width:0%"></div>
       </div>
     </div>
+    <!-- Identity details -->
+    <div id="pDetails" class="grid grid-cols-2 gap-2 mb-4"></div>
 
     <!-- Followers / Following list -->
     <div id="followListCard" class="profile-card rounded-2xl p-4 hidden">
       <div class="flex items-center justify-between mb-3">
         <h3 id="followListTitle" class="font-semibold">Followers</h3>
-        <button onclick="hideTab()" class="text-slate-400 text-sm">Close</button>
+        <button onclick="hideTab()" class="text-slate-500 dark:text-slate-400 text-sm">Close</button>
       </div>
       <div id="followList" class="space-y-1"></div>
     </div>
 
-    <div id="loadingState" class="text-center text-slate-400 py-10">Loading profile…</div>
+    <div id="loadingState" class="text-center text-slate-500 dark:text-slate-400 py-10">Loading profile…</div>
   </main>
 
   <script src="js/level-system.js"></script>
-  <script type="module" src="js/user-profile.js"></script>
+  <script type="module" src="js/user-profile.js?v=916010"></script>
 </body>
 </html>
