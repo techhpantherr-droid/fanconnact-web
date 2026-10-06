@@ -161,7 +161,7 @@
         }
 
         /* The hero slide sits on a dark stadium photo with a dark scrim
-           (rendered by js/matches-render.js?v=916010). Text must stay white in BOTH
+           (rendered by js/matches-render.js?v=916011). Text must stay white in BOTH
            themes, so light mode must not force dark text onto it. */
         :root:not(.dark) .hero-gradient,
         :root:not(.dark) .hero-gradient * {
@@ -176,13 +176,13 @@
         }
 
          /* The "View Match Center" button already carries an inline
-            color:#ffffff!important â€” do not override it to black. */
+            color:#ffffff!important — do not override it to black. */
          :root:not(.dark) .hero-gradient button,
          :root:not(.dark) .hero-gradient button * {
             color: #ffffff !important;
         }
         
-        /* ---- match card theme (injected by js/matches-render.js?v=916010) ---- */
+        /* ---- match card theme (injected by js/matches-render.js?v=916011) ---- */
         :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
         :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
         :root:not(.dark) .text-on-surface { color: #0f172a !important; }
@@ -378,7 +378,7 @@
                         <div class="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center text-[10px] text-black font-bold">
                             F
                         </div>
-                        <span id="wallet-coin-balance" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white hidden sm:inline">â€”</span>
+                        <span id="wallet-coin-balance" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white hidden sm:inline">—</span>
                     </div>
 
 
@@ -636,10 +636,10 @@
                       id="wallet-coin-balance"
                       class="text-3xl md:text-4xl font-black font-headline tracking-tight dark:text-white light:text-slate-900"
                     >
-                      â€”
+                      —
                     </h2>
                     <span class="text-gray-400 dark:text-gray-600 text-xl"
-                      >âœ¦</span
+                      >✦</span
                     >
                   </div>
                   <p
@@ -660,7 +660,7 @@
                     <span
                       id="dashboard-current-streak"
                       class="text-xl md:text-2xl font-black font-headline relative z-10 dark:text-white light:text-slate-900"
-                      >â€”</span
+                      >—</span
                     >
                   </div>
                   <p
@@ -699,7 +699,7 @@
                 >
               </div>
               <div class="space-y-4" id="trending-predictions-list">
-                <div class="text-center text-gray-500 text-sm py-4">Loading predictionsâ€¦</div>
+                <div class="text-center text-gray-500 text-sm py-4">Loading predictions…</div>
               </div>
             </div>
             <!-- Top Fans Leaderboard -->
@@ -723,7 +723,7 @@
               </div>
               <div class="space-y-5 mb-8" id="top-fans-list">
                 <!-- Real Top Fans injected from Firestore by inline script -->
-                <div class="text-center text-gray-500 text-sm py-4">Loading top fansâ€¦</div>
+                <div class="text-center text-gray-500 text-sm py-4">Loading top fans…</div>
               </div>
           <button onclick="window.location.href='leaderboard.html'"
   class="w-full border py-3 rounded-2xl text-[11px] font-bold uppercase tracking-widest dark:bg-[#1A1D23] dark:border-brand-border dark:text-gray-400 dark:hover:text-white bg-gray-50 border-gray-200 text-slate-600 hover:bg-gray-100 transition-all font-headline"
@@ -736,18 +736,18 @@
       </div>
     </main>
     <script src="js/level-system.js"></script>
-    <script type="module" src="js/script.js?v=916010"></script>
+    <script type="module" src="js/script.js?v=916011"></script>
     <script src="js/theme.js"></script>
 <script src="js/notif-ws.js"></script>
 <script src="js/matches-data.js?v=916010"></script>
-<script src="js/matches-render.js?v=916010"></script>
+<script src="js/matches-render.js?v=916011"></script>
 <script>
   // Populate "Top Fans" with REAL registered Firestore users (no fake names).
   (async function () {
     var container = document.getElementById("top-fans-list");
     if (!container) return;
     try {
-      // Wait for Firebase handles exposed by js/script.js?v=916010 -> js/firebase-config.js
+      // Wait for Firebase handles exposed by js/script.js?v=916011 -> js/firebase-config.js
       var tries = 0;
       while (!(window.__FB__ && window.__FB__.db) && tries < 150) {
         await new Promise(function (r) { setTimeout(r, 100); });
@@ -755,7 +755,7 @@
       }
       if (!window.__FB__ || !window.__FB__.db) throw new Error("firebase-unavailable");
       var fs = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
-      // Do NOT use orderBy("xp") â€” Firestore silently drops users without an xp
+      // Do NOT use orderBy("xp") — Firestore silently drops users without an xp
       // field. Fetch all, then sort client-side (same as leaderboard).
       var snap = await fs.getDocs(fs.collection(window.__FB__.db, "users"));
       var users = [];
@@ -767,7 +767,7 @@
           : (parseInt(d.level, 10) || 1);
         var name = d.username || d.fullName || d.email || "Fan";
         var img = d.photoURL || (d.email ? ("https://i.pravatar.cc/150?u=" + encodeURIComponent(d.email)) : "assets/images/default-avatar.png?w=150");
-        // doc.id IS the uid â€” needed for profile links
+        // doc.id IS the uid — needed for profile links
         users.push({ name: name, level: level, xp: xp, img: img, uid: doc.id });
       });
       users.sort(function (a, b) { return b.xp - a.xp; });
@@ -789,7 +789,7 @@
             '<img class="w-10 h-10 rounded-full ' + borderCls + '" src="' + u.img + '" alt="Fan">' +
             '<div>' +
               '<p class="text-sm font-bold dark:text-white text-slate-900">' + u.name + '</p>' +
-              '<p class="text-[10px] text-gray-500">Level ' + u.level + ' â€¢ Fan</p>' +
+              '<p class="text-[10px] text-gray-500">Level ' + u.level + ' • Fan</p>' +
             '</div>' +
           '</div>' +
           '<div class="text-right">' +
@@ -797,7 +797,7 @@
             '<p class="text-[9px] text-gray-500 uppercase">Earned</p>' +
           '</div>';
         row.addEventListener("click", function () {
-          // Open the user's profile. We need the uid â€” re-fetch to get it.
+          // Open the user's profile. We need the uid — re-fetch to get it.
           sessionStorage.setItem("viewUid", u.uid || "");
           window.location.href = "user-profile.html";
         });

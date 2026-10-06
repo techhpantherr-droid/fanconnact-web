@@ -7,6 +7,40 @@
 (function () {
   "use strict";
 
+  if (!window.FC_CACHE || !window.FC_CACHE.api) {
+    (function () {
+      var __fcTTL = 25 * 24 * 60 * 60 * 1000;
+      var __fcPFX = "fanconnact:cached:";
+      function __fcGet(key) {
+        try {
+          var o = JSON.parse(localStorage.getItem(__fcPFX + key) || "null");
+          if (o && o.payload && Date.now() - o.savedAt <= __fcTTL) return o.payload;
+        } catch (e) {}
+        return null;
+      }
+      function __fcSet(key, payload) {
+        try { localStorage.setItem(__fcPFX + key, JSON.stringify({ savedAt: Date.now(), payload: payload })); } catch (e) {}
+      }
+      function __fcKey(url) { return "v1::" + url.replace(/^https?:\/\//, ""); }
+      window.FC_CACHE = window.FC_CACHE || {};
+      window.FC_CACHE.api = {
+        get: __fcGet,
+        set: __fcSet,
+        fetch: function (url, opts) {
+          opts = opts || {};
+          var k = __fcKey(url), cached = __fcGet(k);
+          return fetch(url, { signal: AbortSignal.timeout(opts.timeout || 8000), cache: "no-store" })
+            .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+            .then(function (j) { if (j !== undefined && j !== null) __fcSet(k, j); return { data: j, fromCache: false }; })
+            .catch(function () {
+              if (cached !== null) return { data: cached, fromCache: true };
+              throw new Error("FC_CACHE fetch failed: " + url);
+            });
+        }
+      };
+    })();
+  }
+
   const API_BASE = window.FC_API ? window.FC_API.http() : (location.origin.includes('localhost') ? 'http://localhost:5000' : location.origin);
 
   // Map page filename -> sport id used by the API.
@@ -184,10 +218,8 @@
     const statLabel = STAT_LABEL[sport] || "Pts";
 
     try {
-      const res = await fetch(API_BASE + "/api/rankings/" + sport + "/" + cat, { signal: AbortSignal.timeout(5000) });
-      if (!res.ok) throw new Error("rankings fetch failed");
-      const data = await res.json();
-      const players = data.players || [];
+      const r = await window.FC_CACHE.api.fetch(API_BASE + "/api/rankings/" + sport + "/" + cat, { timeout: 5000 });
+      const players = (r.data && r.data.players) || [];
       renderWidget(sport, players, statKey, statLabel, activeCat || cat);
     } catch (e) {
       // Fallback to static data.

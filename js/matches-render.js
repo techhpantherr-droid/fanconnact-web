@@ -38,7 +38,7 @@
   const SPORT_BG = {
     cricket: "assets/cricket bg.jpg",
     football: "assets/fotball bg.jpeg",
-    basketball: "assets/background.jpg",
+    basketball: "assets/basketball bg.jpg",
     tennis: "assets/tennis bg.jpg",
     baseball: "assets/baseball bg.jpg",
     hockey: "assets/hockey bg.jpg",

@@ -3,6 +3,40 @@
 // proxy (/api/matches/:sport) which enforces the 100/day quota + cache.
 const API_PROXY_BASE = window.FC_API ? window.FC_API.api() : (location.origin.includes('localhost') ? 'http://localhost:5000/api' : location.origin);
 
+if (!window.FC_CACHE || !window.FC_CACHE.api) {
+  (function () {
+    var __fcTTL = 25 * 24 * 60 * 60 * 1000;
+    var __fcPFX = "fanconnact:cached:";
+    function __fcGet(key) {
+      try {
+        var o = JSON.parse(localStorage.getItem(__fcPFX + key) || "null");
+        if (o && o.payload && Date.now() - o.savedAt <= __fcTTL) return o.payload;
+      } catch (e) {}
+      return null;
+    }
+    function __fcSet(key, payload) {
+      try { localStorage.setItem(__fcPFX + key, JSON.stringify({ savedAt: Date.now(), payload: payload })); } catch (e) {}
+    }
+    function __fcKey(url) { return "v1::" + url.replace(/^https?:\/\//, ""); }
+    window.FC_CACHE = window.FC_CACHE || {};
+    window.FC_CACHE.api = {
+      get: __fcGet,
+      set: __fcSet,
+      fetch: function (url, opts) {
+        opts = opts || {};
+        var k = __fcKey(url), cached = __fcGet(k);
+        return fetch(url, { signal: AbortSignal.timeout(opts.timeout || 8000), cache: "no-store" })
+          .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+          .then(function (j) { if (j !== undefined && j !== null) __fcSet(k, j); return { data: j, fromCache: false }; })
+          .catch(function () {
+            if (cached !== null) return { data: cached, fromCache: true };
+            throw new Error("FC_CACHE fetch failed: " + url);
+          });
+      }
+    };
+  })();
+}
+
 const SPORT_APIS = {
   football: { base: 'https://v3.football.api-sports.io', endpoint: '/fixtures', dateParam: 'date', leagueParam: 'league' },
   basketball: { base: 'https://v1.basketball.api-sports.io', endpoint: '/games', dateParam: 'date', leagueParam: 'league' },
@@ -49,31 +83,27 @@ async function fetchApiSports(sport, date) {
   // - football/hockey/tennis (+others)              -> /api/matches?sport=:sport (ESPN)
   const out = [];
   try {
-    const r1 = await fetch(`${API_PROXY_BASE}/all-sports/matches/${encodeURIComponent(sport)}`, { signal: AbortSignal.timeout(6000) });
-    if (r1.ok) {
-      const j1 = await r1.json();
-      for (const m of (j1.matches || [])) {
-        out.push({
-          fixture: { id: m.id, status: { short: m.status === 'live' ? 'LIVE' : (m.status === 'finished' ? 'FT' : 'UP') } },
-          league: { name: m.series || sport },
-          teams: { home: { name: (m.homeTeam && m.homeTeam.name) || '' }, away: { name: (m.awayTeam && m.awayTeam.name) || '' } },
-          goals: { home: m.score ? m.score.home : '', away: m.score ? m.score.away : '' },
-        });
-      }
+    const r1 = await window.FC_CACHE.api.fetch(`${API_PROXY_BASE}/all-sports/matches/${encodeURIComponent(sport)}`, { timeout: 6000 });
+    const j1 = r1.data || {};
+    for (const m of (j1.matches || [])) {
+      out.push({
+        fixture: { id: m.id, status: { short: m.status === 'live' ? 'LIVE' : (m.status === 'finished' ? 'FT' : 'UP') } },
+        league: { name: m.series || sport },
+        teams: { home: { name: (m.homeTeam && m.homeTeam.name) || '' }, away: { name: (m.awayTeam && m.awayTeam.name) || '' } },
+        goals: { home: m.score ? m.score.home : '', away: m.score ? m.score.away : '' },
+      });
     }
   } catch (e) { /* fall through to ESPN */ }
   try {
-    const r2 = await fetch(`${API_PROXY_BASE}/matches?sport=${encodeURIComponent(sport)}`, { signal: AbortSignal.timeout(6000) });
-    if (r2.ok) {
-      const j2 = await r2.json();
-      for (const m of (j2.matches || [])) {
-        out.push({
-          fixture: { id: m.id || (m.homeName + '-vs-' + m.awayName), status: { short: m.status === 'LIVE' ? 'LIVE' : (m.status === 'COMPLETED' ? 'FT' : 'UP') } },
-          league: { name: m.league || sport },
-          teams: { home: { name: m.homeName || '' }, away: { name: m.awayName || '' } },
-          goals: { home: m.homeScore != null ? m.homeScore : '', away: m.awayScore != null ? m.awayScore : '' },
-        });
-      }
+    const r2 = await window.FC_CACHE.api.fetch(`${API_PROXY_BASE}/matches?sport=${encodeURIComponent(sport)}`, { timeout: 6000 });
+    const j2 = r2.data || {};
+    for (const m of (j2.matches || [])) {
+      out.push({
+        fixture: { id: m.id || (m.homeName + '-vs-' + m.awayName), status: { short: m.status === 'LIVE' ? 'LIVE' : (m.status === 'COMPLETED' ? 'FT' : 'UP') } },
+        league: { name: m.league || sport },
+        teams: { home: { name: m.homeName || '' }, away: { name: m.awayName || '' } },
+        goals: { home: m.homeScore != null ? m.homeScore : '', away: m.awayScore != null ? m.awayScore : '' },
+      });
     }
   } catch (e) { /* no data -> empty state, never fake */ }
   return out;

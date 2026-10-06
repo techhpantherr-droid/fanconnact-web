@@ -725,7 +725,7 @@
                         <p
                           class="text-[10px] text-gray-500 font-bold leading-none mb-1"
                         >
-                          IPL 2024 Ã¢â‚¬Â¢ Match 56
+                          IPL 2024 • Match 56
                         </p>
                         <p
                           class="text-xs font-bold dark:text-white light:text-slate-800"
@@ -753,7 +753,7 @@
                         <p
                           class="text-[10px] text-gray-500 font-bold leading-none mb-1"
                         >
-                          Champions League Ã¢â‚¬Â¢ Quarter Final
+                          Champions League • Quarter Final
                         </p>
                         <p
                           class="text-xs font-bold dark:text-white light:text-slate-800"
@@ -781,7 +781,7 @@
                         <p
                           class="text-[10px] text-gray-500 font-bold leading-none mb-1"
                         >
-                          NBA Ã¢â‚¬Â¢ Regular Season
+                          NBA • Regular Season
                         </p>
                         <p
                           class="text-xs font-bold dark:text-white light:text-slate-800"
@@ -806,7 +806,7 @@
                         <p
                           class="text-[10px] text-gray-500 font-bold leading-none mb-1"
                         >
-                          NHL Ã¢â‚¬Â¢ Regular Season
+                          NHL • Regular Season
                         </p>
                         <p
                           class="text-xs font-bold dark:text-white light:text-slate-800"
@@ -849,7 +849,7 @@
 
   <script src="js/notif-ws.js"></script>
   <script src="js/matches-data.js?v=916010"></script>
-  <script src="js/matches-render.js?v=916010"></script>
+  <script src="js/matches-render.js?v=916011"></script>
   <script src="js/sport-filters.js?v=912067e"></script>
   <script>
     // Live match cards navigate to the real backend match-center URL.
@@ -960,7 +960,7 @@
           const a = getTeam(m.away, m.awayName);
           const isLive = m.status === 'live';
           const href = m.link || '';
-          const competition = (m.tournament || m.series || m.format || 'Match') + (m.stage ? ' â€¢ ' + m.stage : '');
+          const competition = (m.tournament || m.series || m.format || 'Match') + (m.stage ? ' • ' + m.stage : '');
           const status = isLive
             ? '<span class="text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded font-bold uppercase flex items-center"><span class="w-1 h-1 bg-red-500 rounded-full mr-1"></span>LIVE</span>'
             : '<span class="text-[10px] text-gray-500 font-bold">' + esc(m.time || 'Upcoming') + '</span>';
@@ -993,6 +993,6 @@
     })();
     </script>
 
-    <script type="module" src="js/script.js?v=916010"></script>
+    <script type="module" src="js/script.js?v=916011"></script>
 </body>
 </html>

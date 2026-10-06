@@ -81,7 +81,7 @@ async function loadProfile() {
     // Coins + level progress
     const coins = Math.max(0, parseInt(d.coins, 10) || 0); // never negative
     const coinEl = el("pCoins");
-    if (coinEl) coinEl.textContent = coins.toLocaleString() + " ðŸª™";
+    if (coinEl) coinEl.textContent = coins.toLocaleString() + " 🪙";
     if (window.LevelSystem) {
       const pct = window.LevelSystem.xpProgress ? Math.round(window.LevelSystem.xpProgress(xp) * 100) : 0;
       const bar = el("pLevelBar");
@@ -89,7 +89,7 @@ async function loadProfile() {
       const next = el("pNextLevel");
       if (next) {
         const toGo = window.LevelSystem.xpToNextLevel ? window.LevelSystem.xpToNextLevel(xp) : 0;
-        next.textContent = "Next Level " + (level + 1) + " Â· " + toGo.toLocaleString() + " XP to go";
+        next.textContent = "Next Level " + (level + 1) + " · " + toGo.toLocaleString() + " XP to go";
       }
     }
 
@@ -166,7 +166,7 @@ async function showTab(which) {
   const card = el("followListCard");
   card.classList.remove("hidden");
   el("followListTitle").textContent = which === "followers" ? "Followers" : "Following";
-  el("followList").innerHTML = '<div class="text-slate-400 text-sm py-4 text-center">Loadingâ€¦</div>';
+  el("followList").innerHTML = '<div class="text-slate-400 text-sm py-4 text-center">Loading…</div>';
 
   const field = which; // "followers" or "following"
   try {

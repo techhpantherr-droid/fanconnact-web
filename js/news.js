@@ -1,6 +1,40 @@
 const CURRENTS_BASE = "https://api.currentsapi.services/v1";
 const CURRENTS_KEY = "u4F078J4C8jKmhd8hkqVkVeyOzYQrs6maPdxVoK1YmuSVqQf";
 
+if (!window.FC_CACHE || !window.FC_CACHE.api) {
+  (function () {
+    var __fcTTL = 25 * 24 * 60 * 60 * 1000;
+    var __fcPFX = "fanconnact:cached:";
+    function __fcGet(key) {
+      try {
+        var o = JSON.parse(localStorage.getItem(__fcPFX + key) || "null");
+        if (o && o.payload && Date.now() - o.savedAt <= __fcTTL) return o.payload;
+      } catch (e) {}
+      return null;
+    }
+    function __fcSet(key, payload) {
+      try { localStorage.setItem(__fcPFX + key, JSON.stringify({ savedAt: Date.now(), payload: payload })); } catch (e) {}
+    }
+    function __fcKey(url) { return "v1::" + url.replace(/^https?:\/\//, ""); }
+    window.FC_CACHE = window.FC_CACHE || {};
+    window.FC_CACHE.api = {
+      get: __fcGet,
+      set: __fcSet,
+      fetch: function (url, opts) {
+        opts = opts || {};
+        var k = __fcKey(url), cached = __fcGet(k);
+        return fetch(url, { signal: AbortSignal.timeout(opts.timeout || 8000), cache: "no-store" })
+          .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+          .then(function (j) { if (j !== undefined && j !== null) __fcSet(k, j); return { data: j, fromCache: false }; })
+          .catch(function () {
+            if (cached !== null) return { data: cached, fromCache: true };
+            throw new Error("FC_CACHE fetch failed: " + url);
+          });
+      }
+    };
+  })();
+}
+
 function currentsItemToArticle(item) {
   const img = item.image || item.urlToImage || item.media || item.thumbnail || "";
   return {
@@ -28,19 +62,28 @@ async function fetchFromCurrents({ category = "", language = "en", keywords = ""
     if (keywords) params.set("keywords", keywords);
   }
 
-  while (hasMore && page <= 2) {
-    params.set("page_number", page);
-    const res = await fetch(`${CURRENTS_BASE}${endpoint}?${params}`);
-    if (!res.ok) throw new Error(`Currents HTTP ${res.status}`);
-    const data = await res.json();
-    if (data.status !== "ok") throw new Error("Invalid Currents response");
-    if (!data.news || !data.news.length) break;
-    allArticles = allArticles.concat(data.news);
-    hasMore = !!data.next;
-    page++;
+  const cacheKey = "news:" + (endpoint === "/search" ? "s" : "l") + ":" + language + ":" + (keywords || "");
+  try {
+    while (hasMore && page <= 2) {
+      params.set("page_number", page);
+      const res = await fetch(`${CURRENTS_BASE}${endpoint}?${params}`);
+      if (!res.ok) throw new Error(`Currents HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.status !== "ok") throw new Error("Invalid Currents response");
+      if (!data.news || !data.news.length) break;
+      allArticles = allArticles.concat(data.news);
+      hasMore = !!data.next;
+      page++;
+    }
+  } catch (e) {
+    const cached = window.FC_CACHE.api.get(cacheKey);
+    if (cached && cached.length) return cached;
+    throw e;
   }
 
-  return allArticles.map(currentsItemToArticle);
+  const articles = allArticles.map(currentsItemToArticle);
+  if (articles.length) window.FC_CACHE.api.set(cacheKey, articles);
+  return articles;
 }
 
 const SPORTS_ORDER = [

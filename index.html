@@ -100,7 +100,7 @@
       :root:not(.dark) .hover\:bg-gray-800:hover { background: #f1f5f9 !important; }
       :root:not(.dark) ::-webkit-scrollbar-thumb { background: #2196f3; }
       .dark ::-webkit-scrollbar-thumb { background: #10b981; }
-      /* ---- match card theme (injected by js/matches-render.js?v=916010) ---- */
+      /* ---- match card theme (injected by js/matches-render.js?v=916011) ---- */
       :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
       :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
       :root:not(.dark) .text-on-surface { color: #0f172a !important; }
@@ -356,10 +356,10 @@
       <!-- END: CTAFooter -->
     </main>
     <script src="js/level-system.js"></script>
-    <script type="module" src="js/script.js?v=916010"></script>
+    <script type="module" src="js/script.js?v=916011"></script>
     <script type="module">
-      import { loadNewStyleNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js';
-      import { renderHighlights } from './js/highlights.js';
+      import { loadNewStyleNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js?v=916011';
+      import { renderHighlights } from './js/highlights.js?v=916011';
 
       let currentSport = 'all';
       let currentLang = 'en';
@@ -465,7 +465,7 @@
     </style>
   <script src="js/notif-ws.js"></script>
   <script src="js/matches-data.js?v=916010"></script>
-  <script src="js/matches-render.js?v=916010"></script>
+  <script src="js/matches-render.js?v=916011"></script>
   <script>
     (function () {
       const track = document.querySelector('[data-purpose="match-card-grid"]');

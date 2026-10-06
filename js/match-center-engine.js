@@ -9,6 +9,40 @@
   'use strict';
   window.__MC_ENGINE__ = true;
 
+  if (!window.FC_CACHE || !window.FC_CACHE.api) {
+    (function () {
+      var __fcTTL = 25 * 24 * 60 * 60 * 1000;
+      var __fcPFX = "fanconnact:cached:";
+      function __fcGet(key) {
+        try {
+          var o = JSON.parse(localStorage.getItem(__fcPFX + key) || "null");
+          if (o && o.payload && Date.now() - o.savedAt <= __fcTTL) return o.payload;
+        } catch (e) {}
+        return null;
+      }
+      function __fcSet(key, payload) {
+        try { localStorage.setItem(__fcPFX + key, JSON.stringify({ savedAt: Date.now(), payload: payload })); } catch (e) {}
+      }
+      function __fcKey(url) { return "v1::" + url.replace(/^https?:\/\//, ""); }
+      window.FC_CACHE = window.FC_CACHE || {};
+      window.FC_CACHE.api = {
+        get: __fcGet,
+        set: __fcSet,
+        fetch: function (url, opts) {
+          opts = opts || {};
+          var k = __fcKey(url), cached = __fcGet(k);
+          return fetch(url, { signal: AbortSignal.timeout(opts.timeout || 8000), cache: "no-store" })
+            .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+            .then(function (j) { if (j !== undefined && j !== null) __fcSet(k, j); return { data: j, fromCache: false }; })
+            .catch(function () {
+              if (cached !== null) return { data: cached, fromCache: true };
+              throw new Error("FC_CACHE fetch failed: " + url);
+            });
+        }
+      };
+    })();
+  }
+
   // ------------------------------------------------------------------ params
   const params = new URLSearchParams(location.search);
   const SPORT = (params.get('sport') || 'cricket').toLowerCase();
@@ -70,6 +104,7 @@
         throw new Error('Match ID is required');
       }
 
+      const cacheKey = 'mce:v1:' + url;
       let lastError = null;
       for (const base of API_BASES) {
         const fullUrl = base + url;
@@ -90,11 +125,17 @@
             throw new Error(`Non-JSON response from ${fullUrl}`);
           }
           console.log('FETCH JSON =>', json);
+          try { window.FC_CACHE.api.set(cacheKey, json); } catch (_e) {}
           return json;
         } catch (err) {
           lastError = err;
           console.warn('API TRY FAILED:', fullUrl, err);
         }
+      }
+      const cached = window.FC_CACHE.api.get(cacheKey);
+      if (cached !== null) {
+        console.warn('MATCH API CACHE HIT ->', cacheKey);
+        return cached;
       }
       throw lastError || new Error('Match API unavailable');
     },

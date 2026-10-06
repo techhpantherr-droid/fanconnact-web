@@ -929,7 +929,7 @@ onAuthStateChanged(auth, (user) => {
 const SPORT_IMAGE_MAP = {
     cricket: "assets/cricket%20bg.jpg",
     football: "assets/fotball%20bg.jpeg",
-    basketball: "assets/background.jpg",
+    basketball: "assets/basketball%20bg.jpg",
     tennis: "assets/tennis%20bg.jpg",
     baseball: "assets/baseball%20bg.jpg",
     hockey: "assets/hockey%20bg.jpg",

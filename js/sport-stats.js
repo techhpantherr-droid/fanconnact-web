@@ -1,6 +1,40 @@
 (function() {
   'use strict';
 
+  if (!window.FC_CACHE || !window.FC_CACHE.api) {
+    (function () {
+      var __fcTTL = 25 * 24 * 60 * 60 * 1000;
+      var __fcPFX = "fanconnact:cached:";
+      function __fcGet(key) {
+        try {
+          var o = JSON.parse(localStorage.getItem(__fcPFX + key) || "null");
+          if (o && o.payload && Date.now() - o.savedAt <= __fcTTL) return o.payload;
+        } catch (e) {}
+        return null;
+      }
+      function __fcSet(key, payload) {
+        try { localStorage.setItem(__fcPFX + key, JSON.stringify({ savedAt: Date.now(), payload: payload })); } catch (e) {}
+      }
+      function __fcKey(url) { return "v1::" + url.replace(/^https?:\/\//, ""); }
+      window.FC_CACHE = window.FC_CACHE || {};
+      window.FC_CACHE.api = {
+        get: __fcGet,
+        set: __fcSet,
+        fetch: function (url, opts) {
+          opts = opts || {};
+          var k = __fcKey(url), cached = __fcGet(k);
+          return fetch(url, { signal: AbortSignal.timeout(opts.timeout || 8000), cache: "no-store" })
+            .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+            .then(function (j) { if (j !== undefined && j !== null) __fcSet(k, j); return { data: j, fromCache: false }; })
+            .catch(function () {
+              if (cached !== null) return { data: cached, fromCache: true };
+              throw new Error("FC_CACHE fetch failed: " + url);
+            });
+        }
+      };
+    })();
+  }
+
   const API_BASE = window.FC_API ? window.FC_API.http() : (location.origin.includes('localhost') ? 'http://localhost:5000' : location.origin);
 
   const SPORT_CONFIG = {
@@ -142,28 +176,40 @@
 
     container.innerHTML = '<div style="display:flex;justify-content:center;padding:20px"><div style="width:24px;height:24px;border:3px solid #10b981;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite"></div></div>';
 
+    const cacheKey = 'sport-stats:' + sport + ':v1';
+    let players = [];
+    var teamData = null;
+    var resData = null;
+
     try {
       const healthCheck = await fetch(API_BASE + '/api/sync/status', { signal: AbortSignal.timeout(2000) });
       if (!healthCheck.ok) throw new Error('Backend down');
     } catch {
-      container.innerHTML = '';
-      return;
+      const cached = window.FC_CACHE.api.get(cacheKey);
+      if (cached && cached.players && cached.players.length) {
+        players = cached.players;
+        teamData = cached.teamData || null;
+        resData = cached;
+      }
     }
 
-    try {
-      const res = await fetch(API_BASE + '/api/rankings/' + cfg.rankingEndpoint, { signal: AbortSignal.timeout(5000) });
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-      const players = data.players || [];
-
-      var teamData = null;
+    if (!players.length) {
+      try {
+        const r = await window.FC_CACHE.api.fetch(API_BASE + '/api/rankings/' + cfg.rankingEndpoint, { timeout: 5000 });
+        if (r.data && r.data.players) { players = r.data.players; resData = r.data; }
+      } catch {}
       try {
         if (cfg.teamEndpoint) {
-          const tRes = await fetch(API_BASE + '/api/leaderboard/' + cfg.teamEndpoint, { signal: AbortSignal.timeout(4000) });
-          if (tRes.ok) teamData = (await tRes.json()).rankings || null;
+          const tr = await window.FC_CACHE.api.fetch(API_BASE + '/api/leaderboard/' + cfg.teamEndpoint, { timeout: 4000 });
+          if (tr.data && tr.data.rankings) teamData = tr.data.rankings;
         }
       } catch {}
+      if (players.length) window.FC_CACHE.api.set(cacheKey, { players: players, teamData: teamData, source: resData && resData.source, _lastSync: resData && resData._lastSync });
+    }
 
+    if (!players.length) { container.innerHTML = ''; return; }
+
+    try {
       var html = '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:16px">';
 
       cfg.statCards.forEach(function(card) {
@@ -206,11 +252,11 @@
 
       html += '</div>';
 
-      var dataSource = data.source || 'database';
+      var dataSource = (resData && resData.source) || 'database';
       var sourceLabels = { icc: 'ICC', espn: 'ESPN', fifa: 'FIFA', sportscore: 'SportScore', database: 'Updated', generated: 'Estimated' };
       html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 16px 12px;border-top:1px solid var(--border-color,#e2e8f0)">' +
         '<span style="font-size:10px;color:#94a3b8">Source: ' + (sourceLabels[dataSource] || dataSource) + '</span>' +
-        (data._lastSync ? '<span style="font-size:10px;color:#94a3b8">Updated: ' + new Date(data._lastSync).toLocaleString() + '</span>' : '') +
+        (resData && resData._lastSync ? '<span style="font-size:10px;color:#94a3b8">Updated: ' + new Date(resData._lastSync).toLocaleString() + '</span>' : '') +
       '</div>';
 
       container.innerHTML = html;
