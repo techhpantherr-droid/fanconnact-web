@@ -2199,6 +2199,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (link.tagName === "BUTTON") return; // Don't intercept button clicks
 
+      // In-page controls must never be intercepted: match-center tabs and the
+      // Prediction (Play Store) link live inside the #match-tabs <nav>, and
+      // bare "#" anchors are tab anchors, not page navigation.
+      const isInPageControl =
+        link.closest("#match-tabs") ||
+        href === "#" ||
+        (href && href.startsWith("#"));
+      if (isInPageControl) return;
+
       // Define which tabs are accessible without login
       const allowedTabs = ["Home", "News", "News & Updates"];
       const isHomeOrNews =
@@ -2263,8 +2272,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 6. Profile Page Redirect
+  // 6. Profile Page Redirect (match-center binds it inline at parse time;
+  // only attach here when that inline binding did not already run.)
   profileTrigger?.addEventListener("click", () => {
+    if (profileTrigger.dataset.fcProfileBound) return;
+    profileTrigger.dataset.fcProfileBound = "1";
     window.location.href = "profile.html";
   });
 

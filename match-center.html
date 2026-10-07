@@ -193,6 +193,37 @@
 </div>
 </a></div>
 </header>
+<script>
+  // Resilient header controls: bind theme-toggle + profile-trigger immediately
+  // at parse time so they work even if a later script errors or loads late.
+  // Matched by the same data-fc-* guard inside js/theme.js + js/script.js so a
+  // control is never double-bound (which would double-toggle the theme).
+  (function () {
+    var tb = document.getElementById('theme-toggle');
+    if (tb && !tb.dataset.fcThemeBound) {
+      tb.dataset.fcThemeBound = '1';
+      tb.addEventListener('click', function () {
+        var root = document.documentElement;
+        var firstRender = root.classList.contains('dark') ? 'dark' : 'light';
+        var next = firstRender === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('color-theme', next);
+        root.classList.toggle('dark', next === 'dark');
+        root.classList.toggle('light', next === 'light');
+        var li = document.getElementById('theme-toggle-light-icon');
+        var di = document.getElementById('theme-toggle-dark-icon');
+        if (li) li.classList.toggle('hidden', next === 'dark');
+        if (di) di.classList.toggle('hidden', next !== 'dark');
+      });
+    }
+    var pt = document.getElementById('profile-trigger');
+    if (pt && !pt.dataset.fcProfileBound) {
+      pt.dataset.fcProfileBound = '1';
+      pt.addEventListener('click', function (e) {
+        window.location.href = 'profile.html';
+      });
+    }
+  })();
+</script>
 <!-- Mobile Sub-Nav -->
 <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
 <a class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0" href="dashboard.html">Home</a>
@@ -290,11 +321,11 @@
 <!-- END: MainContent -->
 <!-- BEGIN: Footer -->
 <!-- END: Footer -->
-<script src="js/theme.js"></script>
+<script src="js/theme.js?v=916013"></script>
 <script src="js/notif-ws.js"></script>
 <script src="js/match-chat.js"></script>
-<script src="js/script.js?v=916011" type="module"></script>
+<script src="js/script.js?v=916013" type="module"></script>
 <script src="js/cricket-api.js"></script>
-<script src="js/match-center-engine.js?v=916011"></script>
+<script src="js/match-center-engine.js?v=916013"></script>
 
 </body></html>

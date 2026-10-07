@@ -494,6 +494,7 @@
     M.meta.venue = rec.venue || rec.venue?.name || '';
     M.meta.format = sp;
     M.meta.date = dateTxt;
+    M.meta.fetchedAt = list?.fetchedAt || null;
     M.score = {
       status,
       resultText: status === 'finished' ? (rec.result || statusText || 'Full Time')
@@ -608,6 +609,7 @@
     M.meta.venue = detail?.venue || evt?.venue?.name || norm?.venue || '';
     M.meta.umpires = Array.isArray(detail?.officials) ? detail.officials.join(', ') : '';
     M.meta.attendance = detail?.attendance ? Number(detail.attendance).toLocaleString() : '';
+    M.meta.fetchedAt = detail?.fetchedAt || null;
     M.meta.winner = detail?.match?.winner || norm?.winner || '';
     const winName = String(M.meta.winner || '').toLowerCase();
     if (winName) {
@@ -4100,7 +4102,8 @@ if (Array.isArray(model.overs) && model.overs.length) {
       (M.meta.winner ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Winner</span><span class="font-bold text-emerald-600 dark:text-emerald-400 text-right">' + esc(M.meta.winner) + '</span></div>' : '') +
       (M.meta.toss ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Toss</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.toss) + '</span></div>' : '') +
       (M.meta.umpires ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Officials</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.umpires) + '</span></div>' : '') +
-      (M.meta.attendance ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Attendance</span><span class="font-bold text-gray-800 dark:text-white">' + esc(M.meta.attendance) + '</span></div>' : '') + '</div></section>' +
+      (M.meta.attendance ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Attendance</span><span class="font-bold text-gray-800 dark:text-white">' + esc(M.meta.attendance) + '</span></div>' : '') +
+      (M.meta.fetchedAt ? '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Last fetched</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(new Date(M.meta.fetchedAt).toLocaleString()) + '</span></div>' : '') + '</div></section>' +
       '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><h3 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-4">Match Info</h3><div class="space-y-3 text-sm">' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Format</span><span class="font-bold text-gray-800 dark:text-white">' + esc(M.meta.format) + '</span></div>' +
       '<div class="flex justify-between"><span class="text-gray-500 dark:text-gray-400">Series</span><span class="font-bold text-gray-800 dark:text-white text-right">' + esc(M.meta.series) + '</span></div>' +

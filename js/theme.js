@@ -13,9 +13,12 @@ function render(){
 }
 render();
 
-btn?.addEventListener('click',()=>{
- const next=document.documentElement.classList.contains('dark')?'light':'dark';
- localStorage.setItem('color-theme',next);
- render();
-});
+if(btn && !btn.dataset.fcThemeBound){
+ btn.dataset.fcThemeBound='1';
+ btn.addEventListener('click',()=>{
+  const next=document.documentElement.classList.contains('dark')?'light':'dark';
+  localStorage.setItem('color-theme',next);
+  render();
+ });
+}
 });
