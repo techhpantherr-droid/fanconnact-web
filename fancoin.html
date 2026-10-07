@@ -366,7 +366,7 @@
               return { db: window.__FB__.db, auth: window.__FB__.auth };
             }
             // Self-sufficient fallback: import the Firebase handles directly
-            // (avoids the race with js/script.js?v=916011 setting window.__FB__).
+            // (avoids the race with js/script.js?v=916014 setting window.__FB__).
             try {
               const fb = await import("./js/firebase-config.js");
               if (fb.db && fb.auth) {
@@ -494,7 +494,7 @@
         </div>
       </div>
     </main>
-    <script type="module" src="js/script.js?v=916011"></script>
+    <script type="module" src="js/script.js?v=916014"></script>
     <script src="js/theme.js"></script>
   <script src="js/notif-ws.js"></script></body>
 </html>

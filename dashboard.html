@@ -716,7 +716,7 @@
       </div>
     </main>
     <script src="js/level-system.js"></script>
-    <script type="module" src="js/script.js?v=916011"></script>
+    <script type="module" src="js/script.js?v=916014"></script>
     <script src="js/theme.js"></script>
 <script src="js/notif-ws.js"></script>
 <script src="js/matches-data.js?v=916010"></script>
@@ -727,7 +727,7 @@
     var container = document.getElementById("top-fans-list");
     if (!container) return;
     try {
-      // Wait for Firebase handles exposed by js/script.js?v=916011 -> js/firebase-config.js
+      // Wait for Firebase handles exposed by js/script.js?v=916014 -> js/firebase-config.js
       var tries = 0;
       while (!(window.__FB__ && window.__FB__.db) && tries < 150) {
         await new Promise(function (r) { setTimeout(r, 100); });

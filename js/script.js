@@ -64,10 +64,33 @@ import { calculateLevel } from "./services/userService.js";
             .replace(/\bnotification-trigger\b/g, "")
             .trim() +
           " shrink-0 settings-top-icon";
+        btn.dataset.fcSettingsInjected = "1";
         btn.innerHTML =
           '<span class="material-symbols-outlined text-slate-500 dark:text-gray-400 text-xl sm:text-2xl">settings</span>';
         if (el.parentNode) el.parentNode.replaceChild(btn, el);
       });
+
+      // Headers without a notification bell (e.g. match-center) never got a
+      // Settings icon from the swap above. Inject one so EVERY page shows it.
+      if (header.querySelector(".settings-top-icon")) return;
+      const inject = document.createElement("a");
+      inject.href = "setting.html";
+      inject.setAttribute("title", "Settings");
+      inject.setAttribute("aria-label", "Settings");
+      inject.dataset.fcSettingsInjected = "1";
+      inject.className =
+        "flex items-center justify-center p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95 shrink-0 settings-top-icon";
+      inject.innerHTML =
+        '<span class="material-symbols-outlined text-slate-500 dark:text-gray-400 text-xl sm:text-2xl">settings</span>';
+      const pivot =
+        header.querySelector("#theme-toggle") ||
+        header.querySelector("#profile-trigger") ||
+        header.querySelector("[data-fc-settings-injected]");
+      const container =
+        (pivot && pivot.parentNode) ||
+        header.querySelector(".ml-auto, .flex.items-center") ||
+        header;
+      container.insertBefore(inject, pivot || container.firstChild);
     } catch (e) {}
   }
 
