@@ -709,6 +709,18 @@
       .map(ev => ({ t: String(ev.time ?? ev.minute ?? ''), h: Number(ev.homeScore), a: Number(ev.awayScore) }))
       .filter(p => Number.isFinite(p.h) && Number.isFinite(p.a))
       .slice(0, 60);
+    // ESPN/summary feeds rarely carry per-incident scorelines — build a
+    // cumulative score progression from the period/quarter/set breakdown so
+    // the Graph tab still draws a real chart.
+    if (!M.graph.timeline.length && Array.isArray(periods) && periods.length) {
+      let ch = 0, ca = 0;
+      M.graph.timeline = periods
+        .filter(r => String(r.home ?? '') !== '' && String(r.away ?? '') !== '')
+        .map(r => {
+          ch += Number(r.home) || 0; ca += Number(r.away) || 0;
+          return { t: String(r.n ?? ''), h: ch, a: ca };
+        });
+    }
     try { await loadRealWeather(); } catch (_) {}
     BACKEND_READY = true;
     return true;
@@ -4124,6 +4136,19 @@ if (Array.isArray(model.overs) && model.overs.length) {
       '<p class="text-xs text-slate-500 dark:text-gray-400 mt-1">' + esc(sc.detail || '') + '</p></div></div>';
   }
 
+  function renderAllSportsStats(sc) {
+    const barRows = (sc.stats || []).map(s => {
+      const parse = v => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
+      const hh = parse(s.h), aa = parse(s.a);
+      const hp = (hh + aa) > 0 ? Math.round(hh / (hh + aa) * 100) : 50;
+      return '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.h + '</td><td class="py-2 px-4 text-center text-xs text-gray-400 uppercase">' + esc(s.k) + '</td><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.a + '</td></tr>' +
+        '<tr><td colspan="3" class="py-1"><div class="w-full h-2 bg-gray-100 dark:bg-white/10 rounded-full flex overflow-hidden"><div class="bg-gray-500/50 h-full" style="width:' + hp + '%"></div><div class="bg-gray-200 dark:bg-white/20 h-full" style="width:' + (100 - hp) + '%"></div></div></td></tr>';
+    }).join('');
+    return (sc.stats && sc.stats.length)
+      ? '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Stats</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium text-right">' + esc(sc.home && sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4"></th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away && sc.away.code.toUpperCase()) + '</th></tr></thead><tbody>' + barRows + '</tbody></table></div></div></section>'
+      : '';
+  }
+
   function renderScorecard() {
     const p = $('panel-scorecard'); if (!p) return;
     const sc = M.scorecard;
@@ -4142,11 +4167,16 @@ if (Array.isArray(model.overs) && model.overs.length) {
       if (!SC.isCricket && M.score && (M.score.home.score !== '' || M.score.away.score !== '')) {
         html += '<section class="rounded-2xl overflow-hidden shadow-lg bg-white dark:bg-[#12172D] border border-gray-200 dark:border-gray-800"><div class="bg-[#0b1626] px-5 py-4"><h3 class="font-bold text-white text-sm uppercase tracking-wide">Match Score · ' + esc(SC.label) + '</h3></div><div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-gray-200 dark:divide-gray-800">' +
           teamSummaryCard(HOME_T, M.score.home) + teamSummaryCard(AWAY_T, M.score.away) + '</div>' +
-          (M.score.home.detail || M.score.away.detail ? '<div class="px-5 py-4 border-t border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-600 dark:text-gray-300">' + esc([M.score.home.detail, M.score.away.detail].filter(Boolean).join(' · ')) + '</p></div>' : '') + '</section></div>';
+          (M.score.home.detail || M.score.away.detail ? '<div class="px-5 py-4 border-t border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-600 dark:text-gray-300">' + esc([M.score.home.detail, M.score.away.detail].filter(Boolean).join(' · ')) + '</p></div>' : '') + '</section>' +
+          renderAllSportsStats(sc) + '</div>';
         p.innerHTML = html;
         return;
       }
-      html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-400">Real scorecard data is not available from the live feed.</p></section></div>';
+      html += renderAllSportsStats(sc);
+      if (!renderAllSportsStats(sc)) {
+        html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-800"><p class="text-sm text-gray-400">Real scorecard data is not available from the live feed.</p></section>';
+      }
+      html += '</div>';
       p.innerHTML = html;
       return;
     }
@@ -4181,8 +4211,16 @@ if (Array.isArray(model.overs) && model.overs.length) {
           '</section>';
       });
     } else if (sc.type === 'tennis') {
-      const rows = sc.rows.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + r.set + '</td><td class="py-2 px-4 text-right">' + r.home + '</td><td class="py-2 px-4 text-right">' + r.away + '</td><td class="py-2 px-4 text-right text-gray-400">' + (r.tb != null ? ('TB ' + r.tb) : '—') + '</td></tr>').join('');
-      html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">' + esc(sc.home.name) + ' vs ' + esc(sc.away.name) + ' — Set Scores</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Set</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">Tiebreak</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + rows + '</tbody></table></div></div></section>';
+      // All-sports tennis feeds sets as sc.innings ({n:'Set 1',home,away});
+      // legacy cricket-tenant rows shape is sc.rows. Support both so the
+      // Scorecard always renders real set scores.
+      const rows = Array.isArray(sc.rows) && sc.rows.length
+        ? sc.rows.map(r => ({ set: r.set || r.n, home: r.home, away: r.away, tb: r.tb }))
+        : (Array.isArray(sc.innings) ? sc.innings.map(r => ({ set: r.n || ('Set ' + (i => i + 1)(0)), home: r.home, away: r.away, tb: null })) : []);
+      const setRows = rows.length
+        ? rows.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + esc(r.set) + '</td><td class="py-2 px-4 text-right">' + esc(r.home) + '</td><td class="py-2 px-4 text-right">' + esc(r.away) + '</td><td class="py-2 px-4 text-right text-gray-400">' + (r.tb != null ? ('TB ' + r.tb) : '—') + '</td></tr>').join('')
+        : '<tr><td colspan="4" class="py-4 text-center text-sm text-gray-400">Set scores are not available from the live feed.</td></tr>';
+      html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">' + esc(sc.home.name) + ' vs ' + esc(sc.away.name) + ' — Set Scores</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Set</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">Tiebreak</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + setRows + '</tbody></table></div></div></section>' + renderAllSportsStats(sc);
     } else if (sc.type === 'baseball') {
       const rows = sc.innings.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + r.n + '</td><td class="py-2 px-4 text-right">' + r.home + '</td><td class="py-2 px-4 text-right">' + r.away + '</td></tr>').join('');
       html += '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Innings Breakdown</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Inn</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away.code.toUpperCase()) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + rows + '</tbody></table></div></div></section>';
@@ -4192,19 +4230,16 @@ if (Array.isArray(model.overs) && model.overs.length) {
       const periodLabel = sc.type === 'volleyball' || sc.type === 'handball' || sc.type === 'e-sports' || sc.type === 'esport' ? 'Set'
         : sc.type === 'basketball' ? 'Quarter'
         : 'Period';
-      const periodRows = (sc.innings || []).map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + esc(r.n) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.home) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.away) + '</td></tr>').join('');
+      const labelFor = (r, i) => {
+        const raw = String(r.n || '');
+        if (/^\d+$/.test(raw)) return (periodLabel === 'Quarter' ? 'Q' : periodLabel === 'Set' ? 'S' : 'P') + raw;
+        return raw;
+      };
+      const periodRows = (sc.innings || []).map((r, i) => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 font-semibold">' + esc(labelFor(r, i)) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.home) + '</td><td class="py-2 px-4 text-right font-bold text-gray-800 dark:text-white">' + esc(r.away) + '</td></tr>').join('');
       const breakdown = periodRows
         ? '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Breakdown</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">' + periodLabel + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.home && sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away && sc.away.code.toUpperCase()) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' + periodRows + '</tbody></table></div></div></section>'
         : '';
-      const barRows = (sc.stats || []).map(s => {
-        const parse = v => { const n = parseFloat(v); return Number.isFinite(n) ? n : 0; };
-        const hh = parse(s.h), aa = parse(s.a);
-        const hp = (hh + aa) > 0 ? Math.round(hh / (hh + aa) * 100) : 50;
-        return '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.h + '</td><td class="py-2 px-4 text-center text-xs text-gray-400 uppercase">' + esc(s.k) + '</td><td class="py-2 px-4 text-right font-semibold text-gray-800 dark:text-white">' + s.a + '</td></tr>' +
-          '<tr><td colspan="3" class="py-1"><div class="w-full h-2 bg-gray-100 dark:bg-white/10 rounded-full flex overflow-hidden"><div class="bg-gray-500/50 h-full" style="width:' + hp + '%"></div><div class="bg-gray-200 dark:bg-white/20 h-full" style="width:' + (100 - hp) + '%"></div></div></td></tr>';
-      }).join('');
-      html += breakdown +
-        (barRows ? '<section class="bg-white dark:bg-[#12172D] rounded-lg shadow-sm overflow-hidden border border-gray-200 dark:border-gray-800"><div class="p-5"><h4 class="font-bold text-gray-800 dark:text-white text-sm uppercase tracking-wide mb-3">Match Stats</h4><div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium text-right">' + esc(sc.home && sc.home.code.toUpperCase()) + '</th><th class="py-2 px-4"></th><th class="py-2 px-4 font-medium text-right">' + esc(sc.away && sc.away.code.toUpperCase()) + '</th></tr></thead><tbody>' + barRows + '</tbody></table></div></div></section>' : '');
+      html += breakdown + renderAllSportsStats(sc);
     }
     html += '</div>';
     p.innerHTML = html;
@@ -4793,12 +4828,52 @@ if (Array.isArray(model.overs) && model.overs.length) {
       // Non-cricket: real score progression from the live incident feed.
       const tl = Array.isArray(M.graph?.timeline) ? M.graph.timeline : [];
       if (tl.length) {
-        svg.style.display = 'none';
-        let tbl = $('graph-timeline');
-        if (!tbl) { tbl = document.createElement('div'); tbl.id = 'graph-timeline'; svg.parentNode.appendChild(tbl); }
-        tbl.innerHTML = '<div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Time</th><th class="py-2 px-4 font-medium text-right">' + esc(HOME_T.name) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(AWAY_T.name) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' +
-          tl.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-crexGold font-semibold">' + esc(r.t || '—') + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.h)) + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.a)) + '</td></tr>').join('') +
-          '</tbody></table></div>';
+        const pts = tl.map((r, i) => ({ x: i, h: Number(r.h), a: Number(r.a) })).filter(p => Number.isFinite(p.h) && Number.isFinite(p.a));
+        if (pts.length >= 2) {
+          const W = 800, H = 380, mL = 42, mR = 14, mT = 18, mB = 42;
+          const iw = W - mL - mR, ih = H - mT - mB;
+          const maxV = Math.max(10, ...pts.map(p => Math.max(p.h, p.a))) + 3;
+          const X = i => pts.length > 1 ? mL + (i / (pts.length - 1)) * iw : mL + iw / 2;
+          const Y = v => mT + ih - (v / maxV) * ih;
+          const tick = (v) => mL + (v / (maxV - 3)) * iw;
+          const grid = [];
+          for (let g = 0; g <= 4; g++) {
+            const gv = Math.round((maxV / 4) * g);
+            const gy = Y(gv);
+            grid.push('<line x1="' + mL + '" y1="' + gy + '" x2="' + (W - mR) + '" y2="' + gy + '" stroke="currentColor" stroke-opacity=".12" stroke-width="1"/>' +
+              '<text x="' + (mL - 8) + '" y="' + (gy + 3) + '" text-anchor="end" font-size="10" fill="currentColor" opacity=".55">' + gv + '</text>');
+          }
+          const poly = (key, color) => {
+            const d = pts.map((p, i) => (i ? 'L' : 'M') + X(p.x).toFixed(1) + ' ' + Y(p[key]).toFixed(1)).join(' ');
+            const dots = pts.map((p, i) => '<circle cx="' + X(p.x).toFixed(1) + '" cy="' + Y(p[key]).toFixed(1) + '" r="3" fill="' + color + '"/>').join('');
+            return '<path d="' + d + '" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>' + dots;
+          };
+          const xTicks = [...new Set([0, Math.floor((pts.length - 1) / 2), pts.length - 1])].map(i =>
+            '<text x="' + X(i).toFixed(1) + '" y="' + (H - mB + 18) + '" text-anchor="middle" font-size="10" fill="currentColor" opacity=".55">' + esc(tl[i] && tl[i].t !== '' ? tl[i].t : ('#' + (i + 1))) + '</text>').join('');
+          const legendHtml = '<span class="inline-flex items-center gap-1"><span class="inline-block w-3 h-0.5 rounded" style="background:#10b981"></span> ' + esc(HOME_T.name) + ' (' + esc(tl[tl.length - 1].h) + ')</span>' +
+            '<span class="inline-flex items-center gap-1"><span class="inline-block w-3 h-0.5 rounded" style="background:#f7941d"></span> ' + esc(AWAY_T.name) + ' (' + esc(tl[tl.length - 1].a) + ')</span>';
+          svg.style.display = '';
+          svg.innerHTML = grid.join('') +
+            '<line x1="' + mL + '" y1="0" x2="' + mL + '" y2="' + (H - mB) + '" stroke="currentColor" stroke-opacity=".15"/>' +
+            poly('h', '#10b981') + poly('a', '#f7941d') + xTicks +
+            '<text x="' + (W / 2) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="currentColor" opacity=".5">Score progression (' + esc(M.meta.title || 'match') + ')</text>';
+          if (legend) legend.innerHTML = legendHtml;
+          let tbl = $('graph-timeline');
+          if (tbl) tbl.remove();
+          const box = document.createElement('div');
+          box.className = 'mt-4';
+          box.innerHTML = '<div class="overflow-x-auto"><table class="w-full text-sm text-left"><thead><tr class="text-gray-400 text-xs uppercase border-b border-gray-200 dark:border-gray-700"><th class="py-2 px-4 font-medium">Time</th><th class="py-2 px-4 font-medium text-right">' + esc(HOME_T.name) + '</th><th class="py-2 px-4 font-medium text-right">' + esc(AWAY_T.name) + '</th></tr></thead><tbody class="text-gray-700 dark:text-gray-200">' +
+            tl.map(r => '<tr class="border-b border-gray-100 dark:border-gray-800"><td class="py-2 px-4 text-crexGold font-semibold">' + esc(r.t || '—') + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.h)) + '</td><td class="py-2 px-4 text-right font-bold">' + esc(String(r.a)) + '</td></tr>').join('') +
+            '</tbody></table></div>';
+          svg.parentNode.appendChild(box);
+        } else {
+          // Single data point (e.g. an early live game): show the raw snapshot.
+          const r = tl[tl.length - 1] || {};
+          svg.style.display = 'none';
+          let tbl = $('graph-timeline');
+          if (!tbl) { tbl = document.createElement('div'); tbl.id = 'graph-timeline'; svg.parentNode.appendChild(tbl); }
+          tbl.innerHTML = '<div class="text-lg font-bold text-gray-800 dark:text-white">' + esc(HOME_T.name) + ' ' + esc(String(r.h)) + ' — ' + esc(String(r.a)) + ' ' + esc(AWAY_T.name) + '</div><p class="text-xs text-gray-400 mt-1">' + esc(r.t || 'Latest score from the live feed.') + '</p>';
+        }
         if (loading) loading.textContent = 'Real score progression from the live feed.';
         return;
       }
