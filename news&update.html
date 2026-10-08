@@ -150,6 +150,12 @@
 <meta property="og:description" content="Fanconnact sports news and updates - latest headlines across cricket, football, basketball and more." />
 <meta property="og:url" content="https://fanconnact.com/news&amp;update.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
 </head>
   <body
     class="h-screen w-full flex flex-row overflow-hidden transition-colors duration-300 bg-white dark:bg-black"
@@ -305,8 +311,8 @@
     </main>
 
     <script type="module">
-      import { loadNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js?v=916011';
-      import { renderHighlights } from './js/highlights.js?v=916011';
+      import { loadNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js?v=916012';
+      import { renderHighlights } from './js/highlights.js?v=916012';
 
       let currentSport = 'all';
       let currentLang = 'en';

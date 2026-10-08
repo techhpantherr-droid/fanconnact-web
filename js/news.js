@@ -202,7 +202,7 @@ function renderNewsHero(article) {
         <h1 class="text-lg md:text-2xl lg:text-3xl font-black font-headline text-white leading-tight mb-2 line-clamp-2">${title}</h1>
         <p class="text-gray-300 text-xs md:text-sm line-clamp-1 mb-2">${desc}</p>
         <div class="flex items-center gap-3">
-          <span class="bg-brand-green text-black font-bold px-3 py-1.5 rounded-lg text-xs transition-all hover:scale-105 active:scale-95 inline-block">Read Full Story</span>
+          <span class="bg-brand-green text-[#ffffff] font-bold px-3 py-1.5 rounded-lg text-xs transition-all hover:scale-105 active:scale-95 inline-block">Read Full Story</span>
           <span class="text-gray-400 text-[10px]">${source}</span>
         </div>
       </div>
@@ -292,7 +292,7 @@ function renderVideoSection(videoData, activeSport) {
               const label =
                 s === "all" ? "All" : s.charAt(0).toUpperCase() + s.slice(1);
               const isActive = s === activeSport;
-              return `<button class="video-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${isActive ? "bg-brand-green text-black" : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"}" data-sport="${s}">${label}</button>`;
+              return `<button class="video-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${isActive ? "bg-brand-green text-[#ffffff]" : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"}" data-sport="${s}">${label}</button>`;
             })
             .join("")}
         </div>
@@ -317,7 +317,7 @@ function updateVideoSection(videoData, sport) {
   }
   document.querySelectorAll(".video-tab").forEach((tab) => {
     const isActive = tab.dataset.sport === sport;
-    tab.className = `video-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${isActive ? "bg-brand-green text-black" : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"}`;
+    tab.className = `video-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${isActive ? "bg-brand-green text-[#ffffff]" : "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700"}`;
   });
 }
 
@@ -353,7 +353,7 @@ function renderFilterChips(activeSport, lang = "en") {
   const l = labels[lang] || labels.en;
   return SPORTS_ORDER.map(
     (s) => `
-    <button class="filter-chip px-4 py-2 text-sm font-bold rounded-full whitespace-nowrap transition-all ${s === activeSport ? "bg-brand-green text-black shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent hover:border-gray-300 dark:hover:border-gray-600"}" data-sport="${s}">
+    <button class="filter-chip px-4 py-2 text-sm font-bold rounded-full whitespace-nowrap transition-all ${s === activeSport ? "bg-brand-green text-[#ffffff] shadow-md" : "bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 border border-transparent hover:border-gray-300 dark:hover:border-gray-600"}" data-sport="${s}">
       ${l[s] || s}
     </button>`,
   ).join("");
@@ -362,7 +362,7 @@ function renderFilterChips(activeSport, lang = "en") {
 function renderLanguageSelector(currentLang) {
   return LANGUAGES.map(
     (l) => `
-    <button class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg whitespace-nowrap transition-all ${l.code === currentLang ? "bg-brand-green text-black" : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}" data-lang="${l.code}">
+    <button class="lang-btn px-3 py-1.5 text-xs font-bold rounded-lg whitespace-nowrap transition-all ${l.code === currentLang ? "bg-brand-green text-[#ffffff]" : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800"}" data-lang="${l.code}">
       ${l.native}
     </button>`,
   ).join("");

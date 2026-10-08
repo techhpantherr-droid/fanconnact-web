@@ -162,6 +162,12 @@
 <meta property="og:description" content="Fanconnact e-sports matches - live scores and fixtures for top esports tournaments." />
 <meta property="og:url" content="https://fanconnact.com/e-sports.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
 </head>
   <body
     class="h-screen w-full flex flex-col overflow-hidden transition-colors duration-300 bg-white dark:bg-black text-slate-900 dark:text-slate-100"
@@ -437,7 +443,7 @@
           </p>
           <button
             onclick="window.location.href='https://play.google.com/store/apps'"
-            class="w-full bg-emerald-accent text-black font-bold py-2 rounded-lg text-xs hover:bg-emerald-400 transition-colors"
+            class="w-full bg-emerald-accent text-[#ffffff] font-bold py-2 rounded-lg text-xs hover:brightness-110 transition-colors"
           >
             Go Premium
           </button>
@@ -585,7 +591,7 @@
                 </div>
                 <div class="space-y-2">
                   <p class="text-[10px] text-gray-500 uppercase font-bold">Wed</p>
-                  <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-accent text-black font-bold text-sm">15</div>
+                  <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-accent text-[#ffffff] font-bold text-sm">15</div>
                 </div>
                 <div class="space-y-2">
                   <p class="text-[10px] text-gray-500 uppercase font-bold">Thu</p>

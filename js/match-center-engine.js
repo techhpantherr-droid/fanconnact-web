@@ -3727,8 +3727,8 @@ if (Array.isArray(model.overs) && model.overs.length) {
   function badgeClass(type) {
     if (type === 'wicket' || type === 'six' || type === 'out') return 'bg-red-500 text-white';
     if (type === 'four') return 'bg-crexGold text-white';
-    if (type === 'milestone') return 'bg-emerald-500 text-white';
-    if (type === 'goal' || type === 'hit') return 'bg-emerald-500 text-white';
+    if (type === 'milestone') return 'bg-emerald-500 text-[#ffffff]';
+    if (type === 'goal' || type === 'hit') return 'bg-emerald-500 text-[#ffffff]';
     if (type === 'three') return 'bg-purple-500 text-white';
     if (type === 'var' || type === 'challenge') return 'bg-amber-500 text-white';
     if (type === 'card') return 'bg-red-600 text-white';

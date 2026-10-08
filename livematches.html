@@ -186,6 +186,12 @@
 <meta property="og:description" content="Fanconnact live matches - real-time scores for cricket, football, kabaddi, e-sports, volleyball, tennis and more." />
 <meta property="og:url" content="https://fanconnact.com/livematches.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
 </head>
   <body
     class="h-screen w-full flex flex-col overflow-hidden transition-colors duration-300 bg-white dark:bg-black text-slate-900 dark:text-slate-100"
@@ -462,7 +468,7 @@
           </p>
           <button
             onclick="window.location.href='https://play.google.com/store/apps'"
-            class="w-full bg-emerald-accent text-black font-bold py-2 rounded-lg text-xs hover:bg-emerald-400 transition-colors"
+            class="w-full bg-emerald-accent text-[#ffffff] font-bold py-2 rounded-lg text-xs hover:brightness-110 transition-colors"
           >
             Go Premium
           </button>
@@ -665,7 +671,7 @@
                       Wed
                     </p>
                     <div
-                      class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-accent text-black font-bold text-sm"
+                      class="h-10 w-10 flex items-center justify-center rounded-lg bg-emerald-accent text-[#ffffff] font-bold text-sm"
                     >
                       15
                     </div>
@@ -898,7 +904,7 @@
     const grid = box.querySelector('.grid.grid-cols-7.gap-2.text-center');
     if (grid) grid.innerHTML = dayDates.map(d=>{
       const f=fmt(d), has=matches.some(m=>getDate(m)===d), active=d===selected;
-      return '<div class="space-y-2"><p class="text-[10px] text-gray-500 uppercase font-bold">'+f.dow+'</p><button type="button" data-calendar-date="'+d+'" class="h-10 w-10 flex items-center justify-center rounded-lg text-sm '+(active?'bg-emerald-accent text-black font-bold ':'hover:bg-gray-800 ')+(has?'ring-1 ring-emerald-accent/40':'')+'">'+f.day+'</button></div>';
+      return '<div class="space-y-2"><p class="text-[10px] text-gray-500 uppercase font-bold">'+f.dow+'</p><button type="button" data-calendar-date="'+d+'" class="h-10 w-10 flex items-center justify-center rounded-lg text-sm '+(active?'bg-emerald-accent text-[#ffffff] font-bold ':'hover:bg-gray-800 ')+(has?'ring-1 ring-emerald-accent/40':'')+'">'+f.day+'</button></div>';
     }).join('');
 
     let list = box.querySelector('[data-dynamic-calendar-list]');
@@ -912,7 +918,7 @@
           '<div class="flex items-center space-x-3 min-w-0"><img class="w-8 h-8 rounded object-contain dark:bg-gray-800 light:bg-gray-100 p-1" src="'+esc(logo(h))+'" alt="'+esc(h.name)+'"><div class="min-w-0"><p class="text-[10px] text-gray-500 font-bold leading-none mb-1 truncate">'+esc(m.tournament||m.series||m.format||'Match')+'</p><p class="text-xs font-bold dark:text-white light:text-slate-800 truncate">'+esc(h.name)+' vs '+esc(a.name)+'</p></div></div>'+ (live?'<span class="text-[10px] bg-red-500/10 text-red-500 px-1.5 py-0.5 rounded font-bold uppercase flex items-center"><span class="w-1 h-1 bg-red-500 rounded-full mr-1"></span>LIVE</span>':'<span class="text-[10px] text-gray-500 font-bold">'+esc(time||'Upcoming')+'</span>') + '</div>';
       }).join('') : '<div class="text-xs text-gray-500 py-2">No matches scheduled</div>';
       list.querySelectorAll('[data-match-link]').forEach(el=>el.addEventListener('click',()=>{const u=el.getAttribute('data-match-link');if(u)location.href=u;}));
-      grid?.querySelectorAll('[data-calendar-date]').forEach(b=>b.onclick=()=>{draw(b.dataset.calendarDate);grid.querySelectorAll('[data-calendar-date]').forEach(x=>x.classList.remove('bg-emerald-accent','text-black','font-bold'));b.classList.add('bg-emerald-accent','text-black','font-bold');});
+      grid?.querySelectorAll('[data-calendar-date]').forEach(b=>b.onclick=()=>{draw(b.dataset.calendarDate);grid.querySelectorAll('[data-calendar-date]').forEach(x=>x.classList.remove('bg-emerald-accent','text-white','font-bold'));b.classList.add('bg-emerald-accent','text-white','font-bold');});
     };
     draw(selected);
     return true;

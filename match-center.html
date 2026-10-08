@@ -181,6 +181,12 @@
 <meta property="og:description" content="Fanconnact match center - live scores, lineups, commentary and chat for every sport fixture." />
 <meta property="og:url" content="https://fanconnact.com/match-center.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
 </head>
 <body class="bg-brand-dark text-white font-sans antialiased min-h-screen transition-colors duration-300">
 <!-- BEGIN: MainHeader -->
@@ -328,6 +334,6 @@
 <script src="js/match-chat.js"></script>
 <script src="js/script.js?v=916015" type="module"></script>
 <script src="js/cricket-api.js"></script>
-<script src="js/match-center-engine.js?v=916015"></script>
+<script src="js/match-center-engine.js?v=916016"></script>
 
 </body></html>

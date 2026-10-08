@@ -341,6 +341,12 @@
 <meta property="og:description" content="Fanconnact table tennis matches - live scores and fixtures for table tennis tournaments." />
 <meta property="og:url" content="https://fanconnact.com/tabletennis.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
 </head>
   <body class="h-screen w-full flex flex-col overflow-hidden transition-colors duration-300 bg-white dark:bg-black text-slate-900 dark:text-slate-100">
     <!-- BEGIN: MainHeader -->
@@ -612,7 +618,7 @@
           </p>
           <button
             onclick="window.location.href='https://play.google.com/store/apps'"
-            class="w-full bg-emerald-accent text-black font-bold py-2 rounded-lg text-xs hover:bg-emerald-400 transition-colors"
+            class="w-full bg-emerald-accent text-[#ffffff] font-bold py-2 rounded-lg text-xs hover:brightness-110 transition-colors"
           >
             Go Premium
           </button>

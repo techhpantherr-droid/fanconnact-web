@@ -222,7 +222,7 @@ function renderSportTabs(sports, activeSport) {
     volleyball: 'Volleyball', 'table-tennis': 'T Tennis', all: 'All Sports',
   };
   return sports.map(s => `
-    <button class="highlight-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${s === activeSport ? 'bg-brand-green text-black shadow-sm' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}" data-sport="${s}">
+    <button class="highlight-tab px-3 py-1.5 text-xs font-bold rounded-full whitespace-nowrap transition-all ${s === activeSport ? 'bg-brand-green text-[#ffffff] shadow-sm' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}" data-sport="${s}">
       ${labels[s] || s}
     </button>`).join('');
 }
