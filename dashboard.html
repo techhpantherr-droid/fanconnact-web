@@ -40,7 +40,7 @@
                         "on-secondary-container": "#fffbff",
                         "on-primary-fixed-variant": "#005236",
                         "surface-container-highest": "#d3e4fe",
-                        "primary-container": "#10b981",
+                        "primary-container": "#3F69A8",
                         "on-surface-variant": "#3c4a42",
                         "on-primary": "#ffffff",
                         "on-tertiary-container": "#2e394c",
@@ -83,11 +83,11 @@
                         "surface-tint": "#006c49",
                         "inverse-surface": "#213145",
                         "on-error": "#ffffff",
-                        "emerald-accent": "#10b981",
+                        "emerald-accent": "#3F69A8",
                         "card-bg": "#16191E",
                         "border-subtle": "#2A2E35",
                         brand: {
-                            green: "#10b981",
+                            green: "#3F69A8",
                             dark: "#0B0E11",
                             card: "#16191E",
                             border: "#2A2E35",
@@ -146,7 +146,7 @@
         }
         
         .glow-green {
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 15px rgba(63, 105, 168, 0.3);
         }
         
         .hero-gradient {
@@ -161,7 +161,7 @@
         }
 
         /* The hero slide sits on a dark stadium photo with a dark scrim
-           (rendered by js/matches-render.js?v=916011). Text must stay white in BOTH
+           (rendered by js/matches-render.js?v=916013). Text must stay white in BOTH
            themes, so light mode must not force dark text onto it. */
         :root:not(.dark) .hero-gradient,
         :root:not(.dark) .hero-gradient * {
@@ -172,7 +172,7 @@
          :root:not(.dark) .hero-gradient .text-brand-green,
          :root:not(.dark) .hero-gradient .text-emerald-600,
          :root:not(.dark) .hero-gradient .text-emerald-400 {
-            color: #34d399 !important;
+            color: #5A87C8 !important;
         }
 
          /* The "View Match Center" button already carries an inline
@@ -182,13 +182,13 @@
             color: #ffffff !important;
         }
         
-        /* ---- match card theme (injected by js/matches-render.js?v=916011) ---- */
+        /* ---- match card theme (injected by js/matches-render.js?v=916013) ---- */
         :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
         :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
         :root:not(.dark) .text-on-surface { color: #0f172a !important; }
         :root:not(.dark) .text-on-surface-variant { color: #475569 !important; }
-        :root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }
-        :root:not(.dark) .bg-emerald-accent\/15 { background: #dbeafe !important; }
+        :root:not(.dark) .text-emerald-accent { color: #153F69 !important; }
+        :root:not(.dark) .bg-emerald-accent\/15 { background: #E6EDF6 !important; }
         :root:not(.dark) .bg-emerald-accent\/5 { background: #eff6ff !important; }
         :root:not(.dark) .border-emerald-accent\/40 { border-color: #93c5fd !important; }
         :root:not(.dark) .bg-surface-container-low { background: #eff4ff !important; }
@@ -200,9 +200,9 @@
         .dark .score-away { color: #ffffff !important; }
         .dark .text-on-surface { color: #ffffff !important; }
         .dark .text-on-surface-variant { color: #aab6c4 !important; }
-        .dark .text-emerald-accent { color: #34d399 !important; }
-        .dark .bg-emerald-accent\/15 { background: rgba(16, 185, 129, 0.15) !important; }
-        .dark .border-emerald-accent\/40 { border-color: rgba(16, 185, 129, 0.4) !important; }
+        .dark .text-emerald-accent { color: #5A87C8 !important; }
+        .dark .bg-emerald-accent\/15 { background: rgba(63, 105, 168, 0.15) !important; }
+        .dark .border-emerald-accent\/40 { border-color: rgba(63, 105, 168, 0.4) !important; }
         .dark .bg-surface-container-low { background: #1a2a3e !important; }
         .dark .bg-surface-container-high { background: #243347 !important; }
         .dark .hover\:bg-surface-container-high:hover { background: #2b3d55 !important; }
@@ -226,20 +226,20 @@
         }
         
         .dark .nav-link-active {
-            background-color: rgba(16, 185, 129, 0.2) !important;
-            color: #10b981 !important;
-            border-right: 4px solid #10b981 !important;
+            background-color: rgba(63, 105, 168, 0.2) !important;
+            color: #3F69A8 !important;
+            border-right: 4px solid #3F69A8 !important;
         }
         
         .dark .nav-link-active span,
         .dark .nav-link-active .nav-text {
-            color: #10b981 !important;
+            color: #3F69A8 !important;
         }
         
          :root:not(.dark) .nav-link-active {
             background-color: #eff6ff !important;
-            color: #1d4ed8 !important;
-            border-right: 4px solid #3b82f6 !important;
+            color: #153F69 !important;
+            border-right: 4px solid #2A547E !important;
         }
         /* Profile Frames */
         
@@ -249,8 +249,8 @@
         }
         
         .frame-emerald {
-            border: 3px solid #10b981 !important;
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            border: 3px solid #3F69A8 !important;
+            box-shadow: 0 0 10px rgba(63, 105, 168, 0.5);
         }
         
         .frame-diamond {
@@ -405,10 +405,10 @@
                                 Stay connected with the game. Predict. Chat. Win!
                             </p>
                         </div>
-                        <!-- BEGIN: Hero Carousel (data-driven from js/matches-data.js?v=916010) -->
+                        <!-- BEGIN: Hero Carousel (data-driven from js/matches-data.js?v=916012) -->
                         <div class="relative">
                             <div id="hero-carousel" class="flex overflow-x-scroll snap-x snap-mandatory scroll-smooth hide-scrollbar rounded-3xl bg-white dark:bg-brand-card shadow-soft" data-purpose="hero-carousel">
-                                <!-- Hero slide(s) injected from js/matches-data.js?v=916010 -->
+                                <!-- Hero slide(s) injected from js/matches-data.js?v=916012 -->
                             </div>
                             <!-- Carousel Navigation -->
                             <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full dark:bg-black/50 light:bg-white/70 shadow-lg dark:text-white light:text-slate-800 hover:scale-110 transition-transform z-20">
@@ -445,7 +445,7 @@
                 class="flex space-x-4 overflow-x-auto pb-4 custom-scrollbar snap-x"
                 data-purpose="matches-upcoming"
               >
-                <!-- Real upcoming matches injected from js/matches-data.js?v=916010 -->
+                <!-- Real upcoming matches injected from js/matches-data.js?v=916012 -->
               </div>
             </section>
             <!-- BEGIN: Mid Section Grid -->
@@ -716,18 +716,18 @@
       </div>
     </main>
     <script src="js/level-system.js"></script>
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
     <script src="js/theme.js"></script>
 <script src="js/notif-ws.js"></script>
-<script src="js/matches-data.js?v=916010"></script>
-<script src="js/matches-render.js?v=916011"></script>
+<script src="js/matches-data.js?v=916012"></script>
+<script src="js/matches-render.js?v=916013"></script>
 <script>
   // Populate "Top Fans" with REAL registered Firestore users (no fake names).
   (async function () {
     var container = document.getElementById("top-fans-list");
     if (!container) return;
     try {
-      // Wait for Firebase handles exposed by js/script.js?v=916014 -> js/firebase-config.js
+      // Wait for Firebase handles exposed by js/script.js?v=916015 -> js/firebase-config.js
       var tries = 0;
       while (!(window.__FB__ && window.__FB__.db) && tries < 150) {
         await new Promise(function (r) { setTimeout(r, 100); });

@@ -37,22 +37,22 @@
       ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: #0a0e14; }
       ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-      ::-webkit-scrollbar-thumb:hover { background: #10b981; }
+      ::-webkit-scrollbar-thumb:hover { background: #3F69A8; }
       .text-fan { color: #ffffff !important; }
       :root:not(.dark) .text-connect { color: #d99a00 !important; }
       .dark .text-connect { color: #f5b301 !important; }
       :root:not(.dark) .text-fan { color: #374151 !important; }
       .calendar-day { transition: all 0.2s ease; font-weight: 500; }
-      .calendar-day:hover { background: rgba(16,185,129,0.15); }
-      .calendar-day.today { background: #10b981; color: #fff; font-weight: 700; box-shadow: 0 2px 8px rgba(16,185,129,0.4); }
+      .calendar-day:hover { background: rgba(63,105,168,0.15); }
+      .calendar-day.today { background: #3F69A8; color: #fff; font-weight: 700; box-shadow: 0 2px 8px rgba(63,105,168,0.4); }
       :root:not(.dark) .calendar-day.today { color: #000; }
-      .calendar-day.has-event { border: 2px solid #10b981; position: relative; }
-      .calendar-day.has-event::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #10b981; }
-      .calendar-day.selected { background: rgba(16,185,129,0.25); color: #059669; font-weight: 700; }
-      .dark .calendar-day.selected { color: #34d399; }
+      .calendar-day.has-event { border: 2px solid #3F69A8; position: relative; }
+      .calendar-day.has-event::after { content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; border-radius: 50%; background: #3F69A8; }
+      .calendar-day.selected { background: rgba(63,105,168,0.25); color: #2A547E; font-weight: 700; }
+      .dark .calendar-day.selected { color: #5A87C8; }
       .match-card { transition: all 0.2s ease; }
       .match-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-      .active-sport-tab { background: rgba(16,185,129,0.15) !important; border-color: #10b981 !important; color: #10b981 !important; font-weight: 600 !important; }
+      .active-sport-tab { background: rgba(63,105,168,0.15) !important; border-color: #3F69A8 !important; color: #3F69A8 !important; font-weight: 600 !important; }
       .text-muted { color: #6b7280; }
       .dark .text-muted { color: #9ca3af; }
       .match-card .team-name { color: #111827; }
@@ -190,7 +190,7 @@
       </main>
     </div>
 
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
     <script src="js/theme.js"></script>
 
     <script>
@@ -645,6 +645,6 @@
 
       document.addEventListener('DOMContentLoaded', init);
     </script>
-  <script src="js/matches-data.js?v=916010"></script>
+  <script src="js/matches-data.js?v=916012"></script>
   <script src="js/notif-ws.js"></script></body>
 </html>

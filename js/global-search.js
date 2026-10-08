@@ -67,10 +67,10 @@
         const label = SPORT_LABEL[p.sport] || p.sport;
         html +=
           '<a href="' + playerHref(p) + '" class="gs-item" style="display:flex;align-items:center;gap:10px;padding:8px;border-radius:8px;text-decoration:none;color:inherit;">' +
-            '<span style="width:24px;height:24px;border-radius:50%;background:rgba(16,185,129,0.15);color:#10b981;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">' + (p.rank || "–") + '</span>' +
+            '<span style="width:24px;height:24px;border-radius:50%;background:rgba(63,105,168,0.15);color:#3F69A8;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;">' + (p.rank || "–") + '</span>' +
             '<div style="flex:1;min-width:0;"><p style="font-size:13px;font-weight:600;color:var(--text-color,#0f172a);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + p.name + '</p>' +
             '<p style="font-size:11px;color:#94a3b8;margin:0;">' + label + (p.team ? " · " + p.team : "") + '</p></div>' +
-            '<span style="font-size:11px;color:#10b981;font-weight:700;">' + (p.stat != null && p.stat !== "" ? p.stat : "") + '</span>' +
+            '<span style="font-size:11px;color:#3F69A8;font-weight:700;">' + (p.stat != null && p.stat !== "" ? p.stat : "") + '</span>' +
           '</a>';
       });
     }
@@ -90,7 +90,7 @@
     }
     dd.innerHTML = html;
     dd.querySelectorAll(".gs-item").forEach(el => {
-      el.addEventListener("mouseenter", () => { el.style.background = "rgba(16,185,129,0.08)"; });
+      el.addEventListener("mouseenter", () => { el.style.background = "rgba(63,105,168,0.08)"; });
       el.addEventListener("mouseleave", () => { el.style.background = "transparent"; });
     });
   }

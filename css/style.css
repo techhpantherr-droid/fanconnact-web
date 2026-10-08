@@ -33,7 +33,7 @@ html.dark body {
   --border: #243347 !important;
   --text: #ffffff !important;
   --text-light: #94a3b8 !important;
-  --primary: #22c55e !important;
+  --primary: #153F69 !important;
   --hover: #162132 !important;
 }
 body.theme-light,
@@ -277,13 +277,13 @@ body.theme-custom .hover\:bg-white\/5:hover {
    `bg-transparent` class is used) the tick disappears. This rule forces
    a native coloured tick via accent-color so it always renders. ── */
 input[type="checkbox"]:not(.sr-only):not(.peer) {
-  accent-color: #10b981 !important;
+  accent-color: #3F69A8 !important;
 }
 body.theme-custom input[type="checkbox"]:not(.sr-only):not(.peer),
 body.theme-stadium input[type="checkbox"]:not(.sr-only):not(.peer),
 body.theme-esports input[type="checkbox"]:not(.sr-only):not(.peer),
 body.theme-royal input[type="checkbox"]:not(.sr-only):not(.peer) {
-  accent-color: var(--primary, #10b981) !important;
+  accent-color: var(--primary, #3F69A8) !important;
 }
 
 /* Match cards: guarantee a solid surface + border so cards never look
@@ -331,7 +331,7 @@ html:root:not(.dark) .text-fan { color: #0f172a !important; }
 html.dark .text-fan { color: #ffffff !important; }
 /* Default (non-royal): Connact = royal blue (light) / green (dark) — as before */
 html:root:not(.dark) .text-connect { color: #1565c0 !important; }
-html.dark .text-connect { color: #10b981 !important; }
+html.dark .text-connect { color: #3F69A8 !important; }
 /* Royal blue theme ONLY: Connact = golden */
 html.dark body.theme-royal .text-connect { color: #f5b301 !important; }
 html:root:not(.dark) body.theme-royal .text-connect { color: #f5b301 !important; }
@@ -433,7 +433,7 @@ body.theme-dark {
   --border: #243347;
   --text: #ffffff;
   --text-light: #94a3b8;
-  --primary: #22c55e;
+  --primary: #153F69;
   --hover: #162132;
   background-color: var(--page-bg);
 }
@@ -457,7 +457,7 @@ body.theme-stadium {
   --border: #1f7a4f;
   --text: #ffffff;
   --text-light: #b6eccf;
-  --primary: #22c55e;
+  --primary: #153F69;
   --hover: rgba(15, 44, 29, 0.7);
   --page-bg-image:
     linear-gradient(180deg, rgba(7, 20, 15, 0.55) 0%, rgba(6, 18, 13, 0.82) 100%),
@@ -505,7 +505,7 @@ body.theme-royal {
   --border: #2563eb;
   --text: #ffffff;
   --text-light: #bfd6ff;
-  --primary: #3b82f6;
+  --primary: #2A547E;
   --hover: rgba(16, 42, 94, 0.7);
   --page-bg-image:
     linear-gradient(180deg, rgba(6, 20, 47, 0.55) 0%, rgba(3, 10, 28, 0.82) 100%),
@@ -531,7 +531,7 @@ body.theme-custom {
   --border: #243347;
   --text: #ffffff;
   --text-light: #94a3b8;
-  --primary: #22c55e;
+  --primary: #153F69;
   --hover: rgba(22, 33, 50, 0.85);
   background-color: var(--page-bg);
   background-image: var(--page-bg-image, none);

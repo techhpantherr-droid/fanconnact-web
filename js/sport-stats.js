@@ -174,7 +174,7 @@
     var cfg = SPORT_CONFIG[sport];
     if (!cfg) return;
 
-    container.innerHTML = '<div style="display:flex;justify-content:center;padding:20px"><div style="width:24px;height:24px;border:3px solid #10b981;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite"></div></div>';
+    container.innerHTML = '<div style="display:flex;justify-content:center;padding:20px"><div style="width:24px;height:24px;border:3px solid #3F69A8;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite"></div></div>';
 
     const cacheKey = 'sport-stats:' + sport + ':v1';
     let players = [];
@@ -225,7 +225,7 @@
         var name = topPlayer ? topPlayer.name : '-';
         html += '<div style="background:var(--card-bg,#fff);border:1px solid var(--border-color,#e2e8f0);border-radius:12px;padding:14px;transition:all 0.2s">' +
           '<p style="font-size:10px;font-weight:700;text-transform:uppercase;color:#64748b;margin:0 0 6px;letter-spacing:0.5px">' + card.label + '</p>' +
-          '<p style="font-size:20px;font-weight:800;color:#10b981;margin:0 0 4px">' + val + '</p>' +
+          '<p style="font-size:20px;font-weight:800;color:#3F69A8;margin:0 0 4px">' + val + '</p>' +
           '<p style="font-size:11px;color:#94a3b8;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + name + '</p>' +
         '</div>';
       });
@@ -242,7 +242,7 @@
               '<span style="font-size:12px;font-weight:600;color:var(--text-color,#0f172a)">' + t.team + '</span>' +
             '</div>' +
             '<div style="display:flex;align-items:center;gap:6px">' +
-              '<span style="font-size:11px;font-weight:700;color:#10b981">' + t.rating + '</span>' +
+              '<span style="font-size:11px;font-weight:700;color:#3F69A8">' + t.rating + '</span>' +
               '<span style="font-size:10px">' + trend + '</span>' +
             '</div>' +
           '</div>';

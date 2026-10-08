@@ -4850,12 +4850,12 @@ if (Array.isArray(model.overs) && model.overs.length) {
           };
           const xTicks = [...new Set([0, Math.floor((pts.length - 1) / 2), pts.length - 1])].map(i =>
             '<text x="' + X(i).toFixed(1) + '" y="' + (H - mB + 18) + '" text-anchor="middle" font-size="10" fill="currentColor" opacity=".55">' + esc(tl[i] && tl[i].t !== '' ? tl[i].t : ('#' + (i + 1))) + '</text>').join('');
-          const legendHtml = '<span class="inline-flex items-center gap-1"><span class="inline-block w-3 h-0.5 rounded" style="background:#10b981"></span> ' + esc(HOME_T.name) + ' (' + esc(tl[tl.length - 1].h) + ')</span>' +
+          const legendHtml = '<span class="inline-flex items-center gap-1"><span class="inline-block w-3 h-0.5 rounded" style="background:#3F69A8"></span> ' + esc(HOME_T.name) + ' (' + esc(tl[tl.length - 1].h) + ')</span>' +
             '<span class="inline-flex items-center gap-1"><span class="inline-block w-3 h-0.5 rounded" style="background:#f7941d"></span> ' + esc(AWAY_T.name) + ' (' + esc(tl[tl.length - 1].a) + ')</span>';
           svg.style.display = '';
           svg.innerHTML = grid.join('') +
             '<line x1="' + mL + '" y1="0" x2="' + mL + '" y2="' + (H - mB) + '" stroke="currentColor" stroke-opacity=".15"/>' +
-            poly('h', '#10b981') + poly('a', '#f7941d') + xTicks +
+            poly('h', '#3F69A8') + poly('a', '#f7941d') + xTicks +
             '<text x="' + (W / 2) + '" y="' + (H - 6) + '" text-anchor="middle" font-size="10" fill="currentColor" opacity=".5">Score progression (' + esc(M.meta.title || 'match') + ')</text>';
           if (legend) legend.innerHTML = legendHtml;
           let tbl = $('graph-timeline');
@@ -5003,7 +5003,7 @@ if (Array.isArray(model.overs) && model.overs.length) {
           h += '<polyline points="'+pts.map(p=>x(p.x)+','+y(p[key])).join(' ')+'" fill="none" stroke="'+stroke+'" stroke-width="3" stroke-linejoin="round"/>';
           pts.forEach(p => h += '<circle cx="'+x(p.x)+'" cy="'+y(p[key])+'" r="3.5" fill="'+stroke+'"><title>'+esc(label+' · Over '+p.x+': '+p[key]+'%')+'</title></circle>');
         };
-        add('home', HOME_T.name, HOME_T.color || '#10b981');
+        add('home', HOME_T.name, HOME_T.color || '#3F69A8');
         add('away', AWAY_T.name, AWAY_T.color || '#f7941d');
         h += '<text x="'+(W/2)+'" y="'+(H-10)+'" fill="currentColor" font-size="10" text-anchor="middle" opacity=".6">Overs</text>' +
              '<text x="14" y="'+(H/2)+'" fill="currentColor" font-size="10" text-anchor="middle" opacity=".6" transform="rotate(-90 14 '+(H/2)+')">Win Probability</text>';

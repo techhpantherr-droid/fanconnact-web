@@ -33,7 +33,7 @@ body.theme-dark {
 
   --text-light: #94a3b8;
 
-  --primary: #22c55e;
+  --primary: #153F69;
 
   --hover: #162132;
 
@@ -71,7 +71,7 @@ body.theme-stadium {
 
   --text-light: #a9e3c4;
 
-  --primary: #22c55e;
+  --primary: #153F69;
 
   --hover: #0f2c1d;
 
@@ -121,7 +121,7 @@ body.theme-royal {
 
   --text-light: #bfd6ff;
 
-  --primary: #3b82f6;
+  --primary: #2A547E;
 
   --hover: #102a5e;
 
@@ -222,7 +222,7 @@ THEME CARDS
 }
 
 .active-theme {
-  border-color: #10b981;
+  border-color: #3F69A8;
 }
 
 .theme-preview {
@@ -331,7 +331,7 @@ THEME CARDS
 
   border-radius: 50%;
 
-  background: #10b981;
+  background: #3F69A8;
 
   display: flex;
 
@@ -385,7 +385,7 @@ Appearance Options
 .option-card:hover {
   border-color: var(--primary);
 
-  background: rgba(16, 185, 129, 0.05);
+  background: rgba(63, 105, 168, 0.05);
 }
 
 .option-left {
@@ -409,7 +409,7 @@ Appearance Options
 
   justify-content: center;
 
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(63, 105, 168, 0.12);
 
   font-size: 20px;
 
@@ -499,7 +499,7 @@ Switch
 }
 
 .switch input:checked + .slider {
-  background: #10b981;
+  background: #3F69A8;
 }
 
 .switch input:checked + .slider:before {
@@ -589,13 +589,13 @@ SPORTS
 }
 
 .sport-item:hover {
-  border-color: #3b82f6;
+  border-color: #2A547E;
 
   transform: translateY(-2px);
 }
 
 .sport-item.active {
-  border-color: #3b82f6;
+  border-color: #2A547E;
 
   background: rgba(59, 130, 246, 0.08);
 }
@@ -747,7 +747,7 @@ NOTIFICATIONS
 .notification-item:hover {
   border-color: var(--primary);
 
-  background: rgba(16, 185, 129, 0.05);
+  background: rgba(63, 105, 168, 0.05);
 }
 
 .notification-left {
@@ -917,7 +917,7 @@ BOTTOM 3 CARDS
 }
 
 .status.success {
-  color: #10b981;
+  color: #3F69A8;
 }
 
 .logout {
@@ -1021,9 +1021,9 @@ body {
 /* Active Theme */
 
 .active-theme {
-  border: 2px solid #10b981;
+  border: 2px solid #3F69A8;
 
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.18);
+  box-shadow: 0 0 0 4px rgba(63, 105, 168, 0.18);
 }
 
 /* Smooth transition */
@@ -1140,7 +1140,7 @@ section h2 {
 /* Account overview card polish */
 main section .from-primary\/10,
 main section[class*="from-primary"] {
-  background-image: linear-gradient(135deg, rgba(16, 185, 129, 0.12), transparent 70%);
+  background-image: linear-gradient(135deg, rgba(63, 105, 168, 0.12), transparent 70%);
 }
 
 /* Theme grid: keep cards equal and tidy */

@@ -69,9 +69,9 @@
           "tertiary": "#006947",
           "background": "#f7f9fb",
           "on-tertiary-container": "#f5fff6",
-          "emerald-accent": "#10b981",
-          "brand-green": "#10b981",
-          brand: { dark: "#0b1220", green: "#10b981", card: "#111827", border: "#243347" },
+          "emerald-accent": "#3F69A8",
+          "brand-green": "#3F69A8",
+          brand: { dark: "#0b1220", green: "#3F69A8", card: "#111827", border: "#243347" },
         },
         borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
         spacing: { xl: "32px", sm: "8px", lg: "24px", base: "4px", md: "16px", gutter: "16px", "container-margin": "24px", xs: "4px" },
@@ -270,7 +270,7 @@
         </div>
       </div>
       <!-- Custom Theme -->
-      <div id="customThemeCard" data-theme="custom" class="relative group cursor-pointer border border-outline-variant rounded-lg overflow-hidden h-36 theme-item flex flex-col items-center justify-center gap-1" style="background:conic-gradient(from 180deg at 50% 50%, #22c55e, #3b82f6, #a855f7, #f7941d, #22c55e);">
+      <div id="customThemeCard" data-theme="custom" class="relative group cursor-pointer border border-outline-variant rounded-lg overflow-hidden h-36 theme-item flex flex-col items-center justify-center gap-1" style="background:conic-gradient(from 180deg at 50% 50%, #22c55e, #2A547E, #a855f7, #f7941d, #22c55e);">
         <div class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
           <span class="material-symbols-outlined text-white text-3xl">tune</span>
           <span class="block font-bold text-body-sm text-white mt-1">Custom</span>
@@ -510,7 +510,7 @@
       <div>
         <label class="block text-xs font-semibold mb-2 text-on-surface-variant dark:text-slate-400">Live Preview</label>
         <div id="customThemePreview" class="h-28 rounded-xl border border-outline-variant dark:border-brand-border flex items-center justify-center gap-3 overflow-hidden" style="background:#0b1220;color:#ffffff;">
-          <span class="px-3 py-1.5 rounded-lg text-sm font-semibold" style="background:#22c55e;color:#fff;">Primary</span>
+          <span class="px-3 py-1.5 rounded-lg text-sm font-semibold" style="background:#153F69;color:#fff;">Primary</span>
           <span class="px-3 py-1.5 rounded-lg text-sm font-semibold border" style="border-color:#243347;color:#94a3b8;">Card</span>
           <span class="text-sm" style="color:#ffffff;">Text sample</span>
         </div>
@@ -540,7 +540,7 @@
         </div>
         <div>
           <label class="block text-xs font-semibold mb-1 text-on-surface-variant dark:text-slate-400">Accent (Primary)</label>
-          <input id="ctPrimary" type="color" value="#22c55e" class="w-full h-10 rounded-lg border border-outline-variant dark:border-brand-border cursor-pointer bg-transparent" />
+          <input id="ctPrimary" type="color" value="#153F69" class="w-full h-10 rounded-lg border border-outline-variant dark:border-brand-border cursor-pointer bg-transparent" />
         </div>
         <div>
           <label class="block text-xs font-semibold mb-1 text-on-surface-variant dark:text-slate-400">Hover</label>
@@ -576,12 +576,12 @@
 
     <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-outline-variant dark:border-brand-border sticky bottom-0 bg-surface-container-lowest dark:bg-brand-card">
       <button id="cancelCustomThemeBtn" class="px-4 py-2 rounded-lg text-sm font-semibold transition-colors hover:bg-black/10 dark:hover:bg-white/10 text-on-surface-variant dark:text-slate-400">Cancel</button>
-      <button id="applyCustomThemeBtn" class="px-5 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:brightness-110" style="background:#10b981">Apply Custom Theme</button>
+      <button id="applyCustomThemeBtn" class="px-5 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:brightness-110" style="background:#3F69A8">Apply Custom Theme</button>
     </div>
   </div>
 </div>
 
-<script type="module" src="js/script.js?v=916014"></script>
+<script type="module" src="js/script.js?v=916015"></script>
 <script src="js/theme.js"></script>
 <script src="js/settings.js"></script>
 <script>
@@ -684,7 +684,7 @@
       sunset: { pageBg:'#2b1055', cardBg:'#3a1c71', border:'#ff7e5f', text:'#ffffff', textLight:'#ffd6c4', primary:'#ff7e5f', hover:'#4a2575', isDark:true },
       ocean:  { pageBg:'#031b2e', cardBg:'#06304d', border:'#0ea5e9', text:'#ffffff', textLight:'#bae6fd', primary:'#0ea5e9', hover:'#0a3a5c', isDark:true },
       mono:   { pageBg:'#0a0a0a', cardBg:'#171717', border:'#404040', text:'#fafafa', textLight:'#a3a3a3', primary:'#fafafa', hover:'#262626', isDark:true },
-      mint:   { pageBg:'#ecfdf5', cardBg:'#ffffff', border:'#6ee7b7', text:'#064e3b', textLight:'#047857', primary:'#10b981', hover:'#d1fae5', isDark:false }
+      mint:   { pageBg:'#ecfdf5', cardBg:'#ffffff', border:'#6ee7b7', text:'#064e3b', textLight:'#047857', primary:'#3F69A8', hover:'#d1fae5', isDark:false }
     };
 
     function loadFromSettings() {
@@ -696,7 +696,7 @@
         fields.border.value = c.border || '#243347';
         fields.text.value = c.text || '#ffffff';
         fields.textLight.value = c.textLight || '#94a3b8';
-        fields.primary.value = c.primary || '#22c55e';
+        fields.primary.value = c.primary || '#153F69';
         fields.hover.value = c.hover || '#162132';
         fields.isDark.value = (c.isDark === false) ? 'false' : 'true';
         fields.bgImage.value = c.bgImage || '';

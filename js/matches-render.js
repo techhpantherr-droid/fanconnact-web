@@ -176,8 +176,8 @@
     const label = SPORT_LABEL[m.sport] || m.sport;
     const darkNow = isDarkSurface();
     const S = darkNow
-      ? { card: "#12172D", border: "#243347", on: "#ffffff", variant: "#aab6c4", accent: "#34d399" }
-      : { card: "#ffffff", border: "#e2e8f0", on: "#0f172a", variant: "#475569", accent: "#2196f3" };
+      ? { card: "#12172D", border: "#243347", on: "#ffffff", variant: "#aab6c4", accent: "#5A87C8" }
+      : { card: "#ffffff", border: "#e2e8f0", on: "#0f172a", variant: "#475569", accent: "#153F69" };
     // In a horizontal-scroll carousel, cards need a fixed width so they
     // don't stretch to full container width and break the scroll on mobile.
     // In a vertical list (game pages / live matches) cards must be full width.
@@ -558,11 +558,11 @@ as =
       notNamedDark + " .border-border-subtle { border-color: #e2e8f0 !important; }",
       notNamedDark + " .text-on-surface { color: #0f172a !important; }",
       notNamedDark + " .text-on-surface-variant { color: #475569 !important; }",
-      notNamedDark + " .text-emerald-accent { color: #2196f3 !important; }",
+      notNamedDark + " .text-emerald-accent { color: #153F69 !important; }",
       notNamedDark + " .score-home, " + notNamedDark + " .score-away { color: #0f172a !important; }",
       ".dark .text-on-surface { color: #ffffff !important; }",
       ".dark .text-on-surface-variant { color: #aab6c4 !important; }",
-      ".dark .text-emerald-accent { color: #34d399 !important; }",
+      ".dark .text-emerald-accent { color: #5A87C8 !important; }",
       ".dark .score-home, .dark .score-away { color: #ffffff !important; }",
       ".dark .bg-card-bg { background: #12172D !important; }"
     ].join("\n");

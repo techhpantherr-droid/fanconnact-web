@@ -56,7 +56,7 @@
               "secondary-container": "#6063ee",
               outline: "#6c7a71",
               "inverse-surface": "#213145",
-              "primary-container": "#10b981",
+              "primary-container": "#3F69A8",
               "on-primary-fixed-variant": "#005236",
               "on-tertiary-fixed-variant": "#3c475a",
               "on-tertiary": "#ffffff",
@@ -92,9 +92,9 @@
               "error-container": "#ffdad6",
               "tertiary-container": "#98a3ba",
               "on-secondary": "#ffffff",
-              "emerald-accent": "#10b981",
+              "emerald-accent": "#3F69A8",
               brand: {
-                green: "#10b981",
+                green: "#3F69A8",
                 dark: "#0B0E11",
                 card: "#16191E",
                 border: "#2A2E35",
@@ -195,8 +195,8 @@
         box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
       }
       .frame-emerald {
-        border: 4px solid #10b981 !important;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        border: 4px solid #3F69A8 !important;
+        box-shadow: 0 0 10px rgba(63, 105, 168, 0.5);
       }
       .frame-diamond {
         border: 4px solid #22d3ee !important;
@@ -244,8 +244,8 @@
 .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-none::-webkit-scrollbar { display: none; }
 .zoom-range { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; }
-.zoom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
-.zoom-range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
+.zoom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #3F69A8; cursor: pointer; border: 2px solid white; }
+.zoom-range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #3F69A8; cursor: pointer; border: 2px solid white; }
   /* Primary buttons must always show their labels on top of the accent colour. */
   .bg-primary,
   body.theme-light .bg-primary,
@@ -825,7 +825,7 @@
       </div>
     </div>
 
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
     <!-- Camera Modal -->
     <div
       id="camera-modal"
@@ -1876,17 +1876,17 @@
         };
 
         const presets = {
-          stadium:    G([[0,"#1d4ed8"],[0.32,"#60a5fa"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+          stadium:    G([[0,"#153F69"],[0.32,"#60a5fa"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
           cricket:    G([[0,"#bbf7d0"],[0.28,"#4ade80"],[0.45,"#16a34a"],[0.7,"#15803d"],[1,"#14532d"]]),
-          football:   G([[0,"#1e3a8a"],[0.3,"#3b82f6"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+          football:   G([[0,"#1e3a8a"],[0.3,"#2A547E"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
           basketball: G([[0,"#f59e0b"],[0.3,"#d97706"],[0.5,"#b45309"],[1,"#78350f"]]),
-          tennis:     G([[0,"#1e3a8a"],[0.3,"#3b82f6"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+          tennis:     G([[0,"#1e3a8a"],[0.3,"#2A547E"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
           hockey:     G([[0,"#e0f2fe"],[0.3,"#7dd3fc"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
           kabaddi:    G([[0,"#fcd34d"],[0.3,"#f59e0b"],[0.5,"#d97706"],[1,"#92400e"]]),
           volleyball: G([[0,"#fde68a"],[0.3,"#38bdf8"],[0.45,"#0ea5e9"],[0.7,"#0369a1"],[1,"#0c4a6e"]]),
           tabletennis:G([[0,"#1e293b"],[0.3,"#475569"],[0.45,"#dc2626"],[0.7,"#b91c1c"],[1,"#7f1d1d"]]),
           baseball:   G([[0,"#1e3a8a"],[0.3,"#2563eb"],[0.45,"#16a34a"],[0.7,"#15803d"],[1,"#052e16"]]),
-          esports:    G([[0,"#7c3aed"],[0.35,"#a855f7"],[0.6,"#3b82f6"],[1,"#1e1b4b"]]),
+          esports:    G([[0,"#7c3aed"],[0.35,"#a855f7"],[0.6,"#2A547E"],[1,"#1e1b4b"]]),
         };
         if (presets[type]) { fill(presets[type]); vignette(); }
       }

@@ -32,7 +32,7 @@ html:not(.dark) .transactions-panel { background: #ffffff !important; }
 html:not(.dark) .transactions-panel h3 { color: #111827 !important; }
 html:not(.dark) .transactions-panel > div > div { color: #374151 !important; border-color: #f3f4f6 !important; }
 html:not(.dark) .transactions-panel span { color: #9ca3af !important; }
-html:not(.dark) .view-btn { color: #059669 !important; border-color: #059669 !important; }
+html:not(.dark) .view-btn { color: #2A547E !important; border-color: #2A547E !important; }
 html:not(.dark) .view-btn:hover { background: #f0fdf4 !important; }
 html:not(.dark) .earn-grid h3 { color: #111827 !important; }
 html:not(.dark) .earn-heading { color: #111827 !important; }
@@ -40,15 +40,15 @@ html:not(.dark) #theme-toggle span.material-symbols-outlined { color: #6b7280 !i
 html:not(.dark) .notification-trigger span.material-symbols-outlined { color: #6b7280 !important; }
 html:not(.dark) #profile-trigger { border-color: #e5e7eb !important; }
 html:not(.dark) #profile-trigger p { color: #111827 !important; }
-html:not(.dark) #user-level-display { color: #059669 !important; }
+html:not(.dark) #user-level-display { color: #2A547E !important; }
 html:not(.dark) .wallet-image img { filter: brightness(0.95); }
 html:not(.dark) body { background-color: #f3f4f6 !important; color: #111827 !important; }
 html:not(.dark) header, html:not(.dark) nav[class*="xl:hidden"] { background-color: #ffffff !important; border-color: #e5e7eb !important; }
 html:not(.dark) header a { color: #6b7280 !important; }
-html:not(.dark) header a.text-brand-green { color: #059669 !important; }
+html:not(.dark) header a.text-brand-green { color: #2A547E !important; }
 html:not(.dark) .mobile-subnav { background-color: #ffffff !important; border-color: #e5e7eb !important; }
 html:not(.dark) .mobile-subnav a { color: #6b7280 !important; }
-html:not(.dark) .mobile-subnav a.text-brand-green { color: #059669 !important; }
+html:not(.dark) .mobile-subnav a.text-brand-green { color: #2A547E !important; }
 
 .dashboard {
     max-width: 1400px;

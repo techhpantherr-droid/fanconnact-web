@@ -22,7 +22,7 @@ import { calculateLevel } from "./services/userService.js";
         s.setProperty('--border', c.border || '#243347');
         s.setProperty('--text', c.text || '#ffffff');
         s.setProperty('--text-light', c.textLight || '#94a3b8');
-        s.setProperty('--primary', c.primary || '#22c55e');
+        s.setProperty('--primary', c.primary || '#153F69');
         s.setProperty('--hover', c.hover || '#162132');
         if (c.bgImage) {
           s.setProperty('--page-bg-image', 'linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url("' + c.bgImage + '")');

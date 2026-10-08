@@ -37,10 +37,10 @@
           extend: {
             fontFamily: { lexend: ["Lexend", "sans-serif"], sans: ["Inter", "sans-serif"] },
             colors: {
-              brand: { dark: "#0B0E1E", blue: "#4154F1", green: "#10b981", card: "#12172D", secondary: "#1A213E", border: "rgba(255,255,255,0.1)" },
-              "fan-dark": "#060b13", "fan-card-bg": "rgba(16,24,39,0.6)", "fan-emerald": "#10b981", "fan-emerald-dark": "#059669",
+              brand: { dark: "#0B0E1E", blue: "#4154F1", green: "#3F69A8", card: "#12172D", secondary: "#1A213E", border: "rgba(255,255,255,0.1)" },
+              "fan-dark": "#060b13", "fan-card-bg": "rgba(16,24,39,0.6)", "fan-emerald": "#3F69A8", "fan-emerald-dark": "#2A547E",
               "fan-border": "rgba(255,255,255,0.1)", "border-subtle": "rgba(255,255,255,0.08)",
-              "emerald-accent": "#10b981", "brand-green": "#10b981",
+              "emerald-accent": "#3F69A8", "brand-green": "#3F69A8",
             },
           },
         },
@@ -126,7 +126,7 @@
                 </div>
               </div>
               <div class="wallet-image">
-                <img src="assets/fancoin/Fanconnact_Stadium_Wallet.png">
+                <img src="assets/fancoin/fanconnactlogo.png">
               </div>
             </div>
 
@@ -366,7 +366,7 @@
               return { db: window.__FB__.db, auth: window.__FB__.auth };
             }
             // Self-sufficient fallback: import the Firebase handles directly
-            // (avoids the race with js/script.js?v=916014 setting window.__FB__).
+            // (avoids the race with js/script.js?v=916015 setting window.__FB__).
             try {
               const fb = await import("./js/firebase-config.js");
               if (fb.db && fb.auth) {
@@ -494,7 +494,7 @@
         </div>
       </div>
     </main>
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
     <script src="js/theme.js"></script>
   <script src="js/notif-ws.js"></script></body>
 </html>

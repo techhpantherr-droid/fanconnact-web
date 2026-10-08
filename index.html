@@ -44,18 +44,18 @@
               sans: ["Inter", "sans-serif"],
             },
             colors: {
-              "emerald-accent": "#10b981",
+              "emerald-accent": "#3F69A8",
               "card-bg": "#101a2e",
               "border-subtle": "#25324a",
               "on-surface": "#e8eef7",
               "on-surface-variant": "#94a3b8",
               "surface-container-low": "#162132",
               "surface-container-high": "#1e293b",
-              primary: "#10b981",
+              primary: "#3F69A8",
               brand: {
                 dark: "#0B0E1E",
                 blue: "#4154F1",
-                green: "#10b981",
+                green: "#3F69A8",
                 card: "#12172D",
                 secondary: "#1A213E",
               },
@@ -75,7 +75,7 @@
       .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 999px; background: #334155; }
       .text-fan { color: #ffffff !important; }
       :root:not(.dark) .text-connect { color: #1565c0 !important; }
-      .dark .text-connect { color: #10b981 !important; }
+      .dark .text-connect { color: #3F69A8 !important; }
       .dark body.theme-royal .text-connect { color: #f5b301 !important; }
       :root:not(.dark) body.theme-royal .text-connect { color: #f5b301 !important; }
       :root:not(.dark) .text-fan { color: #374151 !important; }
@@ -94,19 +94,19 @@
       :root:not(.dark) .text-yellow-500 { color: #b45309 !important; }
       :root:not(.dark) .text-yellow-600 { color: #b45309 !important; }
       :root:not(.dark) .text-brand-green { color: #047857 !important; }
-      :root:not(.dark) .text-blue-400 { color: #1d4ed8 !important; }
-      :root:not(.dark) .bg-brand-blue { background: #2196f3 !important; }
+      :root:not(.dark) .text-blue-400 { color: #153F69 !important; }
+      :root:not(.dark) .bg-brand-blue { background: #153F69 !important; }
       :root:not(.dark) #cta-footer { background: #f1f5f9 !important; border-color: #e2e8f0 !important; }
       :root:not(.dark) .hover\:bg-gray-800:hover { background: #f1f5f9 !important; }
-      :root:not(.dark) ::-webkit-scrollbar-thumb { background: #2196f3; }
-      .dark ::-webkit-scrollbar-thumb { background: #10b981; }
-      /* ---- match card theme (injected by js/matches-render.js?v=916011) ---- */
+      :root:not(.dark) ::-webkit-scrollbar-thumb { background: #153F69; }
+      .dark ::-webkit-scrollbar-thumb { background: #3F69A8; }
+      /* ---- match card theme (injected by js/matches-render.js?v=916013) ---- */
       :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
       :root:not(.dark) .border-border-subtle { border-color: #e2e8f0 !important; }
       :root:not(.dark) .text-on-surface { color: #0f172a !important; }
       :root:not(.dark) .text-on-surface-variant { color: #475569 !important; }
-      :root:not(.dark) .text-emerald-accent { color: #2196f3 !important; }
-      :root:not(.dark) .bg-emerald-accent\/15 { background: #dbeafe !important; }
+      :root:not(.dark) .text-emerald-accent { color: #153F69 !important; }
+      :root:not(.dark) .bg-emerald-accent\/15 { background: #E6EDF6 !important; }
       :root:not(.dark) .bg-emerald-accent\/5 { background: #eff6ff !important; }
       :root:not(.dark) .border-emerald-accent\/40 { border-color: #93c5fd !important; }
       :root:not(.dark) .bg-surface-container-low { background: #eff4ff !important; }
@@ -114,7 +114,7 @@
       :root:not(.dark) .hover\:bg-surface-container-high:hover { background: #d3e4fe !important; }
       .dark .text-on-surface { color: #ffffff !important; }
       .dark .text-on-surface-variant { color: #aab6c4 !important; }
-      .dark .text-emerald-accent { color: #34d399 !important; }
+      .dark .text-emerald-accent { color: #5A87C8 !important; }
       .dark .score-home, .dark .score-away { color: #ffffff !important; }
       .dark .bg-surface-container-low { background: #1a2a3e !important; }
       .dark .bg-surface-container-high { background: #243347 !important; }
@@ -282,7 +282,7 @@
             </svg>
           </button>
           <div class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2" data-purpose="match-card-grid">
-            <!-- Real match cards injected here from js/matches-data.js?v=916010 -->
+            <!-- Real match cards injected here from js/matches-data.js?v=916012 -->
           </div>
         </div>
       </section>
@@ -356,7 +356,7 @@
       <!-- END: CTAFooter -->
     </main>
     <script src="js/level-system.js"></script>
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
     <script type="module">
       import { loadNewStyleNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js?v=916011';
       import { renderHighlights } from './js/highlights.js?v=916011';
@@ -464,8 +464,8 @@
       [data-purpose="match-card-grid"] { scrollbar-width: none; }
     </style>
   <script src="js/notif-ws.js"></script>
-  <script src="js/matches-data.js?v=916010"></script>
-  <script src="js/matches-render.js?v=916011"></script>
+  <script src="js/matches-data.js?v=916012"></script>
+  <script src="js/matches-render.js?v=916013"></script>
   <script>
     (function () {
       const track = document.querySelector('[data-purpose="match-card-grid"]');

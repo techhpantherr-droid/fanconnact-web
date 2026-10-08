@@ -24,16 +24,16 @@
             --surface-container-low: #f8fafc; --surface-container-lowest: #ffffff; --surface-bright: #f8fafc;
             --surface-variant: #f1f5f9; --background: #ffffff; --on-background: #000000;
             --on-surface: #475569; --on-surface-variant: #334155; --outline: #94a3b8; --outline-variant: #cbd5e1;
-            --primary: #2196f3; --on-primary: #ffffff; --primary-container: #dbeafe; --on-primary-container: #1e3a5f;
-            --primary-fixed: #dbeafe; --on-primary-fixed: #1e3a5f; --primary-fixed-dim: #2196f3;
-            --on-primary-fixed-variant: #1e40af; --secondary: #2196f3; --on-secondary: #ffffff;
+            --primary: #153F69; --on-primary: #ffffff; --primary-container: #E6EDF6; --on-primary-container: #1e3a5f;
+            --primary-fixed: #E6EDF6; --on-primary-fixed: #1e3a5f; --primary-fixed-dim: #153F69;
+            --on-primary-fixed-variant: #1e40af; --secondary: #153F69; --on-secondary: #ffffff;
             --secondary-container: #bfdbfe; --on-secondary-container: #1e3a8a; --secondary-fixed: #e0e7ff;
             --secondary-fixed-dim: #a5b4fc; --on-secondary-fixed: #1e3a8a; --on-secondary-fixed-variant: #3730a3;
             --tertiary: #475569; --on-tertiary: #000000; --tertiary-container: #e2e8f0; --on-tertiary-container: #0f172a;
             --tertiary-fixed: #e2e8f0; --tertiary-fixed-dim: #cbd5e1; --on-tertiary-fixed: #0f172a;
             --on-tertiary-fixed-variant: #334155; --error: #dc2626; --on-error: #ffffff;
             --error-container: #fee2e2; --on-error-container: #991b1b;
-            --inverse-primary: #2196f3; --inverse-on-surface: #f8faff; --surface-tint: #2196f3;
+            --inverse-primary: #153F69; --inverse-on-surface: #f8faff; --surface-tint: #153F69;
         }
         .dark {
             --inverse-surface: #0a0a0a; --surface: #111111; --surface-dim: #9ca3af;
@@ -41,16 +41,16 @@
             --surface-container-low: #141414; --surface-container-lowest: #000000; --surface-bright: #2d2d2d;
             --surface-variant: #1a1a1a; --background: #000000; --on-background: #ffffff;
             --on-surface: #e2e8f0; --on-surface-variant: #9ca3af; --outline: #4b5563; --outline-variant: #374151;
-            --primary: #10b981; --on-primary: #ffffff; --primary-container: #064e3b; --on-primary-container: #a7f3d0;
-            --primary-fixed: #064e3b; --on-primary-fixed: #a7f3d0; --primary-fixed-dim: #10b981;
-            --on-primary-fixed-variant: #6ee7b7; --secondary: #34d399; --on-secondary: #000000;
-            --secondary-container: #10b981; --on-secondary-container: #a7f3d0; --secondary-fixed: #a7f3d0;
-            --secondary-fixed-dim: #10b981; --on-secondary-fixed: #000000; --on-secondary-fixed-variant: #6ee7b7;
+            --primary: #3F69A8; --on-primary: #ffffff; --primary-container: #064e3b; --on-primary-container: #a7f3d0;
+            --primary-fixed: #064e3b; --on-primary-fixed: #a7f3d0; --primary-fixed-dim: #3F69A8;
+            --on-primary-fixed-variant: #6ee7b7; --secondary: #5A87C8; --on-secondary: #000000;
+            --secondary-container: #3F69A8; --on-secondary-container: #a7f3d0; --secondary-fixed: #a7f3d0;
+            --secondary-fixed-dim: #3F69A8; --on-secondary-fixed: #000000; --on-secondary-fixed-variant: #6ee7b7;
             --tertiary: #9ca3af; --on-tertiary: #ffffff; --tertiary-container: #2d2d2d; --on-tertiary-container: #e2e8f0;
             --tertiary-fixed: #2d2d2d; --tertiary-fixed-dim: #3d3d3d; --on-tertiary-fixed: #e2e8f0;
             --on-tertiary-fixed-variant: #cbd5e1; --error: #ff6b6b; --on-error: #000000;
             --error-container: #7f1d1d; --on-error-container: #ffb4ab;
-            --inverse-primary: #10b981; --inverse-on-surface: #e2e8f0; --surface-tint: #10b981;
+            --inverse-primary: #3F69A8; --inverse-on-surface: #e2e8f0; --surface-tint: #3F69A8;
         }
     </style>
     <style>
@@ -67,12 +67,12 @@
         }
         /* H1 "FanConnact" must be readable on both the light gradient and the dark panel */
         .bg-on-surface .text-primary-fixed { color: #1565c0 !important; }
-        .dark .bg-on-surface .text-primary-fixed { color: #34d399 !important; }
+        .dark .bg-on-surface .text-primary-fixed { color: #5A87C8 !important; }
         .bg-on-surface [class*="text-surface-dim"] {
             color: #475569;
         }
         .bg-on-surface .text-primary-fixed-dim {
-            color: #2196f3;
+            color: #153F69;
         }
         .bg-on-surface .glow-emerald {
             box-shadow: 0 0 20px rgba(33,150,243,0.15);
@@ -81,10 +81,10 @@
             color: #b0c0d0;
         }
         .dark .bg-on-surface .text-primary-fixed-dim {
-            color: #34d399;
+            color: #5A87C8;
         }
         .dark .bg-on-surface .glow-emerald {
-            box-shadow: 0 0 20px rgba(16,185,129,0.15);
+            box-shadow: 0 0 20px rgba(63,105,168,0.15);
         }
 
         /* Right panel / modal text overrides */
@@ -118,7 +118,7 @@
         .dark .bg-inverse-surface .hover\:bg-white\/20:hover { background-color: rgba(255,255,255,0.2); }
         .dark .bg-inverse-surface .hover\:bg-white\/5:hover { background-color: rgba(255,255,255,0.05); }
         .dark .bg-inverse-surface .hover\:text-white:hover { color: #ffffff; }
-        .dark .bg-inverse-surface .text-primary-fixed-dim { color: #34d399; }
+        .dark .bg-inverse-surface .text-primary-fixed-dim { color: #5A87C8; }
 
         /* Dark mode: input fields get white bg with BLACK text for user entries */
         .dark .bg-inverse-surface input:not([type="checkbox"]):not([type="radio"]),
@@ -149,8 +149,8 @@
         }
         .dark .bg-on-surface .backdrop-blur-md:hover {
             background: rgba(255,255,255,0.08) !important;
-            border-color: rgba(16,185,129,0.15) !important;
-            box-shadow: 0 8px 32px rgba(16,185,129,0.06);
+            border-color: rgba(63,105,168,0.15) !important;
+            box-shadow: 0 8px 32px rgba(63,105,168,0.06);
         }
 
         /* Professional input focus state */
@@ -158,33 +158,33 @@
         .bg-inverse-surface select:focus,
         .bg-inverse-surface textarea:focus {
             box-shadow: 0 0 0 3px rgba(33,150,243,0.1), 0 1px 2px rgba(0,0,0,0.02);
-            border-color: #2196f3 !important;
+            border-color: #153F69 !important;
         }
         .dark .bg-inverse-surface input:not([type="checkbox"]):not([type="radio"]):focus,
         .dark .bg-inverse-surface select:focus,
         .dark .bg-inverse-surface textarea:focus {
-            box-shadow: 0 0 0 3px rgba(16,185,129,0.15), 0 1px 2px rgba(0,0,0,0.1);
-            border-color: #10b981 !important;
+            box-shadow: 0 0 0 3px rgba(63,105,168,0.15), 0 1px 2px rgba(0,0,0,0.1);
+            border-color: #3F69A8 !important;
         }
 
         /* Elevated primary CTA button */
         .bg-gradient-to-r.from-primary {
-            box-shadow: 0 4px 20px rgba(33,150,243,0.2);
+            box-shadow: 0 4px 20px rgba(21,63,105,0.18);
             transition: all 0.3s ease;
         }
 
         /* Fully green solid buttons (Verify Email / Camera / Send OTP) in both themes */
         .btn-green-solid {
-            background-color: #10b981 !important;
+            background-color: #3F69A8 !important;
             color: #ffffff !important;
-            border-color: #10b981 !important;
+            border-color: #3F69A8 !important;
             opacity: 1 !important;
         }
         .btn-green-solid:hover:not(:disabled) {
-            background-color: #059669 !important;
+            background-color: #2A547E !important;
         }
         .btn-green-solid:disabled {
-            background-color: #43c98b !important;
+            background-color: #5A87C8 !important;
             color: #ffffff !important;
             opacity: 1 !important;
             cursor: not-allowed;
@@ -194,10 +194,10 @@
             transform: translateY(-1px);
         }
         .dark .bg-gradient-to-r.from-primary {
-            box-shadow: 0 4px 20px rgba(16,185,129,0.15);
+            box-shadow: 0 4px 20px rgba(63,105,168,0.15);
         }
         .dark .bg-gradient-to-r.from-primary:hover {
-            box-shadow: 0 8px 28px rgba(16,185,129,0.25);
+            box-shadow: 0 8px 28px rgba(63,105,168,0.25);
         }
 
         /* Subtle right panel background color wash */
@@ -208,7 +208,7 @@
         }
         .dark .bg-inverse-surface {
             background:
-                radial-gradient(ellipse 40% 30% at 100% 0%, rgba(16,185,129,0.04) 0%, transparent 100%),
+                radial-gradient(ellipse 40% 30% at 100% 0%, rgba(63,105,168,0.04) 0%, transparent 100%),
                 #0a0a0a;
         }
 
@@ -403,7 +403,7 @@
         }
         
         .glow-emerald {
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 20px rgba(63, 105, 168, 0.2);
         }
         
         .bg-split-gradient {
@@ -435,8 +435,8 @@
         .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
         .scrollbar-none::-webkit-scrollbar { display: none; }
         .zoom-range { -webkit-appearance: none; appearance: none; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; }
-        .zoom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
-        .zoom-range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #10b981; cursor: pointer; border: 2px solid white; }
+        .zoom-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #3F69A8; cursor: pointer; border: 2px solid white; }
+        .zoom-range::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #3F69A8; cursor: pointer; border: 2px solid white; }
         /* Primary buttons must always show their labels on top of the accent colour. */
         .bg-primary,
         body.theme-light .bg-primary,
@@ -651,7 +651,7 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
               <button
                 type="button"
                 id="camera-capture-btn"
-                style="background-color: #10b981 !important; color: #ffffff !important; opacity: 1 !important;"
+                style="background-color: #3F69A8 !important; color: #ffffff !important; opacity: 1 !important;"
                 class="px-4 py-2 bg-primary text-on-primary rounded-xl text-label-md font-label-md hover:brightness-110 transition-colors flex items-center gap-2 btn-green-solid"
               >
                 <span class="material-symbols-outlined text-base">camera_alt</span>
@@ -719,7 +719,7 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
                 data-frame="gold"
               ></div>
               <div
-                class="frame-item w-12 h-12 rounded-full border-4 border-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] cursor-pointer"
+                class="frame-item w-12 h-12 rounded-full border-4 border-emerald-500 shadow-[0_0_8px_rgba(63,105,168,0.4)] cursor-pointer"
                 data-frame="emerald"
               ></div>
               <div
@@ -964,8 +964,8 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
             <div class="md:col-span-2">
               <div class="flex flex-wrap items-center gap-2">
                 <input id="email-otp-input" type="text" maxlength="6" placeholder="Enter 6-digit OTP" class="w-32 bg-surface-variant/5 border border-outline-variant/20 rounded-xl py-3 px-4 text-sm text-on-tertiary placeholder:text-surface-dim/30 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all" disabled />
-                <button type="button" id="send-email-otp-btn" style="background-color: #10b981 !important; color: #ffffff !important; opacity: 1 !important;" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid">Send Email OTP</button>
-                <button type="button" id="verify-email-otp-btn" style="background-color: #43c98b !important; color: #ffffff !important; opacity: 1 !important;" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid" disabled>Verify</button>
+                <button type="button" id="send-email-otp-btn" style="background-color: #3F69A8 !important; color: #ffffff !important; opacity: 1 !important;" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid">Send Email OTP</button>
+                <button type="button" id="verify-email-otp-btn" style="background-color: #5A87C8 !important; color: #ffffff !important; opacity: 1 !important;" class="px-4 py-3 text-sm bg-primary text-on-primary rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 whitespace-nowrap btn-green-solid" disabled>Verify</button>
                 <span id="email-otp-status" class="text-xs text-surface-dim/70"></span>
               </div>
             </div>
@@ -1392,17 +1392,17 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
                     };
 
                     const presets = {
-                        stadium:    G([[0,"#1d4ed8"],[0.32,"#60a5fa"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+                        stadium:    G([[0,"#153F69"],[0.32,"#60a5fa"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
                         cricket:    G([[0,"#bbf7d0"],[0.28,"#4ade80"],[0.45,"#16a34a"],[0.7,"#15803d"],[1,"#14532d"]]),
-                        football:   G([[0,"#1e3a8a"],[0.3,"#3b82f6"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+                        football:   G([[0,"#1e3a8a"],[0.3,"#2A547E"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
                         basketball: G([[0,"#f59e0b"],[0.3,"#d97706"],[0.5,"#b45309"],[1,"#78350f"]]),
-                        tennis:     G([[0,"#1e3a8a"],[0.3,"#3b82f6"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
+                        tennis:     G([[0,"#1e3a8a"],[0.3,"#2A547E"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
                         hockey:     G([[0,"#e0f2fe"],[0.3,"#7dd3fc"],[0.45,"#15803d"],[0.7,"#166534"],[1,"#052e16"]]),
                         kabaddi:    G([[0,"#fcd34d"],[0.3,"#f59e0b"],[0.5,"#d97706"],[1,"#92400e"]]),
                         volleyball: G([[0,"#fde68a"],[0.3,"#38bdf8"],[0.45,"#0ea5e9"],[0.7,"#0369a1"],[1,"#0c4a6e"]]),
                         tabletennis:G([[0,"#1e293b"],[0.3,"#475569"],[0.45,"#dc2626"],[0.7,"#b91c1c"],[1,"#7f1d1d"]]),
                         baseball:   G([[0,"#1e3a8a"],[0.3,"#2563eb"],[0.45,"#16a34a"],[0.7,"#15803d"],[1,"#052e16"]]),
-                        esports:    G([[0,"#7c3aed"],[0.35,"#a855f7"],[0.6,"#3b82f6"],[1,"#1e1b4b"]]),
+                        esports:    G([[0,"#7c3aed"],[0.35,"#a855f7"],[0.6,"#2A547E"],[1,"#1e1b4b"]]),
                     };
                     if (presets[type]) { fill(presets[type]); vignette(); }
                 }
@@ -2166,7 +2166,7 @@ class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container text-
     });
   </script>
 
-  <script type="module" src="js/script.js?v=916014"></script>
+  <script type="module" src="js/script.js?v=916015"></script>
 </body>
 
 </html>

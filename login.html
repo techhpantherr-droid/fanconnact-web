@@ -39,15 +39,15 @@
                     colors: {
                         "fan-dark": "#060b13",
                         "fan-card-bg": "rgba(16, 24, 39, 0.6)",
-                        "fan-emerald": "#10b981",
-                        "fan-emerald-dark": "#059669",
+                        "fan-emerald": "#3F69A8",
+                        "fan-emerald-dark": "#2A547E",
                         "fan-border": "rgba(255, 255, 255, 0.1)",
                     },
                     fontFamily: {
                         sans: ["Inter", "sans-serif"],
                     },
                     backgroundImage: {
-                        "emerald-gradient": "linear-gradient(90deg, #10b981 0%, #059669 100%)",
+                        "emerald-gradient": "linear-gradient(90deg, #3F69A8 0%, #2A547E 100%)",
                     },
                 },
             },
@@ -69,12 +69,12 @@
 
         html:not(.dark) .login-container-glow {
             background: #ffffff;
-            border-color: #2196f3;
+            border-color: #153F69;
             box-shadow: 0 10px 25px -5px rgba(33,150,243,0.08);
         }
         .dark .login-container-glow {
-            border-color: rgba(16,185,129,0.3);
-            box-shadow: 0 0 40px rgba(16,185,129,0.1);
+            border-color: rgba(63,105,168,0.3);
+            box-shadow: 0 0 40px rgba(63,105,168,0.1);
         }
 
         html:not(.dark) [data-purpose="login-form-container"] {
@@ -171,28 +171,28 @@
             border-color: #cbd5e1;
         }
         html:not(.dark) #theme-toggle svg {
-            color: #2196f3;
+            color: #153F69;
         }
         .dark #theme-toggle {
             background: rgba(255,255,255,0.05);
             border-color: rgba(255,255,255,0.1);
         }
         .dark #theme-toggle svg {
-            color: #10b981;
+            color: #3F69A8;
         }
 
         /* ── Forgot password link: blue in light, green in dark ── */
         html:not(.dark) a[href="forget-password.html"] {
-            color: #2196f3 !important;
+            color: #153F69 !important;
         }
         html:not(.dark) a[href="forget-password.html"]:hover {
-            color: #1d4ed8 !important;
+            color: #153F69 !important;
         }
         .dark a[href="forget-password.html"] {
-            color: #10b981 !important;
+            color: #3F69A8 !important;
         }
         .dark a[href="forget-password.html"]:hover {
-            color: #34d399 !important;
+            color: #5A87C8 !important;
         }
 
         /* ── Social login buttons light mode ── */
@@ -220,7 +220,7 @@
         #remember-me {
             appearance: auto !important;
             -webkit-appearance: auto !important;
-            accent-color: #10b981 !important;
+            accent-color: #3F69A8 !important;
         }
         html:not(.dark) #remember-me {
             background-color: #ffffff;
@@ -267,7 +267,7 @@
             border-color: #e2e8f0 !important;
         }
         html:not(.dark) .bg-hero-section .bg-fan-emerald {
-            background: #2196f3 !important;
+            background: #153F69 !important;
         }
         /* Glassmorphism for cards */
         
@@ -284,20 +284,20 @@
         /* Glow effect for login container border */
         
         .login-container-glow {
-            box-shadow: 0 0 40px rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 0 40px rgba(63, 105, 168, 0.1);
+            border: 1px solid rgba(63, 105, 168, 0.2);
         }
         /* Custom input focus states */
         html:not(.dark) input:focus,
         html:not(.dark) .fan-input:focus {
-            border-color: #2196f3 !important;
+            border-color: #153F69 !important;
             box-shadow: 0 0 0 3px rgba(33,150,243,0.1) !important;
             outline: none;
         }
         .dark input:focus,
         .dark .fan-input:focus {
-            border-color: #10b981 !important;
-            box-shadow: 0 0 0 3px rgba(16,185,129,0.15) !important;
+            border-color: #3F69A8 !important;
+            box-shadow: 0 0 0 3px rgba(63,105,168,0.15) !important;
             outline: none;
         }
         /* Custom scrollbar if needed */
@@ -314,11 +314,11 @@
         }
         
          ::-webkit-scrollbar-thumb {
-            background: #10b981;
+            background: #3F69A8;
             border-radius: 10px;
         }
         html:not(.dark) ::-webkit-scrollbar-thumb {
-            background: #2196f3;
+            background: #153F69;
         }
         
         .sidebar-collapsed #sidebar {
@@ -786,7 +786,7 @@
 
     <!-- Firebase SDK (Modular) -->
     <script type="module" src="js/firebase-config.js?v=916011"></script>
-    <script type="module" src="js/script.js?v=916014"></script>
+    <script type="module" src="js/script.js?v=916015"></script>
   <script src="js/theme.js"></script><script src="js/sidebar.js"></script>
 
   <!-- Login handler: real Firebase auth + Remember me persistence -->

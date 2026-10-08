@@ -634,10 +634,10 @@ LIGHT MODE
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 :root:not(.dark) .tab:hover {
-  color: #2196f3;
+  color: #153F69;
 }
 :root:not(.dark) .tab.active {
-  background: #2196f3;
+  background: #153F69;
   color: #ffffff;
   box-shadow: 0 4px 14px rgba(33, 150, 243, 0.35);
 }
@@ -655,13 +655,13 @@ LIGHT MODE
   transform: translateY(-2px);
 }
 :root:not(.dark) .notification-card.pinned {
-  border-color: #2196f3;
+  border-color: #153F69;
   box-shadow: 0 0 0 1px rgba(33, 150, 243, 0.15), 0 4px 12px rgba(33, 150, 243, 0.08);
 }
 
 :root:not(.dark) .icon {
   background: #eff6ff;
-  color: #2196f3;
+  color: #153F69;
 }
 
 :root:not(.dark) .card-content p {
@@ -674,7 +674,7 @@ LIGHT MODE
 
 :root:not(.dark) .reward {
   background: #eff6ff;
-  color: #2196f3;
+  color: #153F69;
 }
 
 :root:not(.dark) .pin-btn {
@@ -682,7 +682,7 @@ LIGHT MODE
   color: #64748b;
 }
 :root:not(.dark) .pin-btn:hover {
-  background: #2196f3;
+  background: #153F69;
   color: #fff;
 }
 
@@ -745,7 +745,7 @@ LIGHT MODE
   background: #e2e8f0;
 }
 :root:not(.dark) .interest-card.active {
-  background: #2196f3;
+  background: #153F69;
   color: #ffffff;
 }
 
@@ -813,12 +813,12 @@ DARK MODE
   border: 1px solid #1e1e1e;
 }
 .dark .tab:hover {
-  color: #10b981;
+  color: #3F69A8;
 }
 .dark .tab.active {
-  background: #10b981;
+  background: #3F69A8;
   color: #000000;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 14px rgba(63, 105, 168, 0.3);
 }
 
 .dark .section-title {
@@ -830,17 +830,17 @@ DARK MODE
   border: 1px solid #1e1e1e;
 }
 .dark .notification-card:hover {
-  border-color: #10b981;
+  border-color: #3F69A8;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 .dark .notification-card.pinned {
-  border-color: #10b981;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.1);
+  border-color: #3F69A8;
+  box-shadow: 0 0 0 1px rgba(63, 105, 168, 0.1);
 }
 
 .dark .icon {
   background: #1a1a1a;
-  color: #10b981;
+  color: #3F69A8;
 }
 
 .dark .card-content p {
@@ -852,8 +852,8 @@ DARK MODE
 }
 
 .dark .reward {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
+  background: rgba(63, 105, 168, 0.1);
+  color: #3F69A8;
 }
 
 .dark .pin-btn {
@@ -861,7 +861,7 @@ DARK MODE
   color: #64748b;
 }
 .dark .pin-btn:hover {
-  background: #10b981;
+  background: #3F69A8;
   color: #000;
 }
 
@@ -924,7 +924,7 @@ DARK MODE
   background: #1a1a1a;
 }
 .dark .interest-card.active {
-  background: #10b981;
+  background: #3F69A8;
   color: #000000;
 }
 
@@ -936,8 +936,8 @@ DARK MODE
   background: #1a1a1a;
 }
 .dark .team-card.active {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
+  background: rgba(63, 105, 168, 0.15);
+  color: #3F69A8;
 }
 
 .dark #filterDropdown {
@@ -987,7 +987,7 @@ ADVANCED MICRO-INTERACTIONS
   content: ''; position: absolute; inset: 0;
   border-radius: inherit; pointer-events: none;
   opacity: 0; transition: opacity 0.4s;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 30px rgba(16,185,129,0.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 30px rgba(63,105,168,0.06);
 }
 .dark .notification-card:hover::after {
   opacity: 1;

@@ -32,7 +32,7 @@ const defaultSettings = {
     border: "#243347",
     text: "#ffffff",
     textLight: "#94a3b8",
-    primary: "#22c55e",
+    primary: "#153F69",
     hover: "#162132",
     bgImage: "",
     bgSize: "cover",
@@ -111,7 +111,7 @@ function applyCustomTheme() {
   s.setProperty("--border", c.border || "#243347");
   s.setProperty("--text", c.text || "#ffffff");
   s.setProperty("--text-light", c.textLight || "#94a3b8");
-  s.setProperty("--primary", c.primary || "#22c55e");
+  s.setProperty("--primary", c.primary || "#153F69");
   s.setProperty("--hover", c.hover || "#162132");
   // Background image (optional). Empty = solid color only.
   if (c.bgImage) {
@@ -514,7 +514,7 @@ function openModal(type) {
     </div>
     <div class="flex items-center justify-end gap-3 px-6 py-4 border-t" style="border-color:${isDark ? "#243347" : "#e2e8f0"}">
       <button id="modalCancelBtn" class="px-4 py-2 rounded-lg text-sm font-semibold transition-colors hover:bg-black/10 dark:hover:bg-white/10" style="color:${isDark ? "#94a3b8" : "#64748b"}">Cancel</button>
-      <button id="modalSubmitBtn" class="px-5 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:brightness-110" style="background:#10b981">${isBug ? "Send Report" : "Submit Feedback"}</button>
+      <button id="modalSubmitBtn" class="px-5 py-2 rounded-lg text-sm font-semibold text-white transition-all hover:brightness-110" style="background:#3F69A8">${isBug ? "Send Report" : "Submit Feedback"}</button>
     </div>
   `;
 
@@ -678,7 +678,7 @@ function showToast(message, type) {
     toast.style.background = "#ef4444";
     toast.style.color = "#ffffff";
   } else {
-    toast.style.background = isDark ? "#059669" : "#10b981";
+    toast.style.background = isDark ? "#2A547E" : "#3F69A8";
     toast.style.color = "#ffffff";
   }
   toast.textContent = message;
@@ -817,7 +817,7 @@ style.textContent = `
 .settings-modal { animation: modal-in 0.25s ease-out; }
 .settings-modal-overlay { transition: opacity 0.2s ease; }
 
-.settings-modal input:focus, .settings-modal textarea:focus { border-color: #10b981 !important; box-shadow: 0 0 0 3px rgba(16,185,129,0.15); }
+.settings-modal input:focus, .settings-modal textarea:focus { border-color: #3F69A8 !important; box-shadow: 0 0 0 3px rgba(63,105,168,0.15); }
 .settings-modal input::placeholder, .settings-modal textarea::placeholder { color: #94a3b8; }
 `;
 document.head.appendChild(style);

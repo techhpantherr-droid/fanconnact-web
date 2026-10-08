@@ -73,7 +73,7 @@
     }
 
     .glow-green {
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 15px rgba(63, 105, 168, 0.3);
     }
 
     .hero-gradient {
@@ -84,7 +84,7 @@
     }
 
     /* The hero slide sits on a dark photo with a dark scrim (rendered by
-       js/matches-render.js?v=916011), so keep it dark in light mode too. */
+       js/matches-render.js?v=916013), so keep it dark in light mode too. */
     .hero-gradient {
       border-color: rgba(255, 255, 255, 0.18);
     }
@@ -112,23 +112,23 @@
     }
 
     .dark .nav-link-active {
-      background-color: rgba(16, 185, 129, 0.2) !important;
-      color: #10b981 !important;
-      border-right: 4px solid #10b981 !important;
+      background-color: rgba(63, 105, 168, 0.2) !important;
+      color: #3F69A8 !important;
+      border-right: 4px solid #3F69A8 !important;
     }
 
     .dark .nav-link-active span,
     .dark .nav-link-active .nav-text {
-      color: #10b981 !important;
+      color: #3F69A8 !important;
     }
 
     :root:not(.dark) .nav-link-active {
       background-color: #ecfdf5 !important;
       color: #047857 !important;
-      border-right: 4px solid #10b981 !important;
+      border-right: 4px solid #3F69A8 !important;
     }
 
-    /* Brand emerald (#10b981) on white cards is low-contrast in light mode.
+    /* Brand emerald (#3F69A8) on white cards is low-contrast in light mode.
        Darken the accent text so "Level 0", status lines and links stay
        readable. (Sport pages remap this to blue locally; this only affects
        pages like leaderboard that rely on the default emerald token.) */
@@ -141,8 +141,8 @@
     }
 
     .frame-emerald {
-      border: 3px solid #10b981 !important;
-      box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+      border: 3px solid #3F69A8 !important;
+      box-shadow: 0 0 10px rgba(63, 105, 168, 0.5);
     }
 
     .frame-diamond {
@@ -904,7 +904,7 @@ class="w-full flex items-center justify-center rounded-xl border border-purple-5
   </main>
   <script src="js/leaderboard.js"></script>
   <script src="js/team-rankings-data.js"></script>
-  <script type="module" src="js/script.js?v=916014"></script>
+  <script type="module" src="js/script.js?v=916015"></script>
   <script>
     const SPORT_ALIASES = { 'tabletennis':'tennis', 'table-tennis':'tennis', 'badminton':'tennis', 'rugby':'football' };
     const initGameFromUrl = new URLSearchParams(window.location.search).get('game');
