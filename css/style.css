@@ -888,3 +888,19 @@ header .flex-1 {
   html, body { overflow-x: hidden !important; }
   img, video, iframe, canvas, svg { max-width: 100% !important; height: auto; }
 }
+
+/* ==========================
+   BRAND LOGO (full wordmark)
+   The site logo image is a wide wordmark; display it by height so it
+   never distorts inside the square icon slots it used to occupy.
+   ========================== */
+.fc-brand-logo {
+  height: 30px !important;
+  width: auto !important;
+  max-width: 170px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+@media (min-width: 640px) { .fc-brand-logo { height: 34px !important; } }
+@media (min-width: 1024px) { .fc-brand-logo { height: 38px !important; } }
