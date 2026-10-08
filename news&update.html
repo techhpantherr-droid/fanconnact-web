@@ -1,8 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/fancoin/favicon-32x32.png?v=916100" />
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/fancoin/favicon-16x16.png?v=916100" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/fancoin/favicon-32x32.png?v=916101" />
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/fancoin/favicon-48x48.png?v=916101" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/fancoin/apple-touch-icon.png?v=916101" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/fancoin/favicon-16x16.png?v=916101" />
     <meta property="og:site_name" content="Fanconnact" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="assets/fancoin/fanconnactlogo.png" />
@@ -156,6 +158,11 @@
   :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
   :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
 </style>
+<style>
+.fc-brand-icon { height: 28px !important; width: auto !important; max-width: 40px !important; object-fit: contain; flex-shrink: 0; display: block; }
+@media (min-width: 640px) { .fc-brand-icon { height: 32px !important; } }
+@media (min-width: 1024px) { .fc-brand-icon { height: 36px !important; } }
+</style>
 </head>
   <body
     class="h-screen w-full flex flex-row overflow-hidden transition-colors duration-300 bg-white dark:bg-black"
@@ -172,10 +179,10 @@
         <span class="material-symbols-outlined">close</span>
       </button>
       <div class="p-6 flex items-center space-x-2 logo-container cursor-pointer" onclick="window.location.href='dashboard.html'">
-        <img src="assets/fancoin/fanconnactlogo.png" alt="FanConnact" class="fc-brand-logo" />
+        <img src="assets/fancoin/fanconnact-icon.png" alt="FanConnact" class="fc-brand-icon" />
         <span
           class="text-xl font-bold tracking-tight font-headline logo-text"
-          ></span
+          ><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span
         >
       </div>
       <nav class="flex-1 px-4 space-y-1 mt-2">
@@ -219,8 +226,8 @@
           </button>
 
           <div id="header-logo" class="lg:hidden flex items-center gap-2 ml-2">
-            <img src="assets/fancoin/fanconnactlogo.png" alt="FanConnact" class="fc-brand-logo" />
-            <span class="text-base font-bold whitespace-nowrap"></span>
+            <img src="assets/fancoin/fanconnact-icon.png" alt="FanConnact" class="fc-brand-icon" />
+            <span class="text-base font-bold whitespace-nowrap"><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span>
           </div>
 
           <nav class="hidden xl:flex items-center space-x-6 mx-6 shrink-0">

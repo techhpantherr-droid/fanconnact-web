@@ -904,3 +904,15 @@ header .flex-1 {
 }
 @media (min-width: 640px) { .fc-brand-logo { height: 34px !important; } }
 @media (min-width: 1024px) { .fc-brand-logo { height: 38px !important; } }
+
+/* Square transparent brand icon shown beside the "FanConnact" wordmark */
+.fc-brand-icon {
+  height: 28px !important;
+  width: auto !important;
+  max-width: 40px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+@media (min-width: 640px) { .fc-brand-icon { height: 32px !important; } }
+@media (min-width: 1024px) { .fc-brand-icon { height: 36px !important; } }
