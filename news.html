@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/fancoin/favicon-32x32.png?v=916102" />
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/fancoin/favicon-48x48.png?v=916102" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/fancoin/apple-touch-icon.png?v=916102" />
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/fancoin/favicon-16x16.png?v=916102" />
+    <meta property="og:site_name" content="Fanconnact" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/fancoin/fanconnactlogo.png" />
+    <meta property="og:title" content="Fanconnact | News & Updates" />
+    <meta property="og:description" content="Join Fanconnact for fantasy sports, predictions, and live matches." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fanconnact | News & Updates" />
+    <meta name="twitter:description" content="Join Fanconnact for fantasy sports, predictions, and live matches." />
+    <meta name="twitter:image" content="assets/fancoin/fanconnactlogo.png" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="js/api-config.js"></script>
+    <script>
+      if (localStorage.getItem("color-theme") === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <title>Fanconnact | News & Updates</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;family=Hanken+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+      body { transition: color 0.3s, background-color 0.3s, border-color 0.3s; font-family: 'Hanken Grotesk', sans-serif; margin: 0; padding: 0; }
+      .dark body { background-color: #0B0E11; color: white; }
+      .light body { background-color: #F8F9FF; color: #0f172a; }
+      .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+      .custom-scrollbar::-webkit-scrollbar-thumb { border-radius: 0.25rem; }
+      .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #2A2E35; }
+      .light .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #d1d5db; }
+      .nav-link-active { font-weight: 500 !important; }
+      .dark .nav-link-active { background-color: rgba(63, 105, 168, 0.2) !important; color: #3F69A8 !important; border-right: 4px solid #3F69A8 !important; }
+      .dark .nav-link-active span, .dark .nav-link-active .nav-text { color: #3F69A8 !important; }
+      :root:not(.dark) .nav-link-active { background-color: #eff6ff !important; color: #153F69 !important; border-right: 4px solid #2A547E !important; }
+      #sidebar.sidebar-collapsed { width: 0 !important; min-width: 0 !important; border: 0 !important; padding: 0 !important; overflow: hidden !important; }
+      .text-fan { color: #ffffff !important; }
+      :root:not(.dark) .text-connect { color: #1565c0 !important; }
+      .dark .text-connect { color: #3F69A8 !important; }
+      .dark body.theme-royal .text-connect { color: #f5b301 !important; }
+      :root:not(.dark) body.theme-royal .text-connect { color: #f5b301 !important; }
+      :root:not(.dark) .text-fan { color: #374151 !important; }
+      :root:not(.dark) .hover\:text-emerald-accent:hover,
+      :root:not(.dark) .hover\:text-brand-green:hover,
+      :root:not(.dark) .nav-link:hover,
+      :root:not(.dark) [class*="hover:text-emerald"],
+      :root:not(.dark) [class*="hover:text-brand-green"] {
+        color: #153F69 !important;
+      }
+      :root:not(.dark) ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      :root:not(.dark) ::-webkit-scrollbar-thumb {
+        background: #153F69;
+      }
+      :root:not(.dark) ::-webkit-scrollbar-thumb:hover {
+        background: #2A547E;
+      }
+      .dark ::-webkit-scrollbar-thumb {
+        background: #3F69A8;
+      }
+      .dark ::-webkit-scrollbar-thumb:hover {
+        background: #5A87C8;
+      }
+      :root:not(.dark) input:focus {
+        border-color: #153F69 !important;
+        box-shadow: 0 0 0 2px rgba(21,63,105,0.18) !important;
+      }
+      .dark .text-gray-400 { color: #94a3b8 !important; }
+      :root:not(.dark) .bg-card-bg { background: #ffffff !important; }
+      :root:not(.dark) .bg-dark-bg { background: #f1f5f9 !important; }
+      :root:not(.dark) .bg-brand-surface { background: #ffffff !important; }
+      :root:not(.dark) .bg-brand-dark { background: #f8fafc !important; }
+      :root:not(.dark) .bg-gray-800 { background: #ffffff !important; }
+      :root:not(.dark) .bg-gray-800\/40 { background: #f8fafc !important; }
+      :root:not(.dark) .bg-gray-800\/50 { background: #ffffff !important; }
+      :root:not(.dark) [class*="bg-gray-900"] { background: #f8fafc !important; }
+      :root:not(.dark) .from-gray-800 { --tw-gradient-from: #f1f5f9 !important; }
+      :root:not(.dark) .to-gray-900 { --tw-gradient-to: #e2e8f0 !important; }
+      :root:not(.dark) .from-gray-800.to-gray-900 { background: linear-gradient(135deg,#f1f5f9,#e2e8f0) !important; }
+      :root:not(.dark) .bg-gradient-to-br.from-gray-800.to-gray-900 { background: #f8fafc !important; border-color: #e2e8f0 !important; }
+      :root:not(.dark) .text-white { color: #0f172a !important; }
+      :root:not(.dark) .text-gray-400 { color: #64748b !important; }
+      :root:not(.dark) .text-gray-500 { color: #64748b !important; }
+      :root:not(.dark) .text-gray-300 { color: #334155 !important; }
+      :root:not(.dark) .bg-emerald-accent { background: #153F69 !important; }
+      :root:not(.dark) .bg-emerald-accent\/10 { background: #E6EDF6 !important; }
+      :root:not(.dark) .border-emerald-accent { border-color: #153F69 !important; }
+      :root:not(.dark) .text-emerald-accent { color: #153F69 !important; }
+      :root:not(.dark) .bg-accent-green { background: #E6EDF6 !important; }
+      :root:not(.dark) .text-accent-green { color: #153F69 !important; }
+      :root:not(.dark) .border-accent-green { border-color: #153F69 !important; }
+      :root:not(.dark) .bg-brand-green { background: #153F69 !important; }
+      :root:not(.dark) .border-gray-700 { border-color: #e2e8f0 !important; }
+      :root:not(.dark) .border-gray-800 { border-color: #e2e8f0 !important; }
+      :root:not(.dark) .border-gray-800\/50 { border-color: #e2e8f0 !important; }
+      :root:not(.dark) .hover\:bg-gray-800:hover { background: #f1f5f9 !important; }
+      :root:not(.dark) .hover\:text-white:hover { color: #0f172a !important; }
+      :root:not(.dark) .dark\:hover\:bg-white\/5:hover { background: #f1f5f9 !important; }
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                green: "#3F69A8",
+                dark: "#0B0E11",
+                card: "#1A1D23",
+                border: "#2A2D35",
+              },
+            },
+            fontFamily: {
+              headline: ["Lexend", "sans-serif"],
+              body: ["Hanken Grotesk", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+  <meta name="description" content="Fanconnact sports news, updates, video highlights">
+  <meta property="og:title" content="Fanconnact News">
+  <meta name="robots" content="index,follow">
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+<!-- fc-seo-meta-v1 -->
+<meta name="description" content="Fanconnact sports news and updates - latest headlines across cricket, football, basketball and more." />
+<meta name="keywords" content="fanconnact, fanconnect, fancoonnect, fanconect, fan connact, live sports scores, live cricket score, football live score, basketball live, esports live, kabaddi live, volleyball live, tennis scores, sports predictions, fan coins, sports communities" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://fanconnact.com/news.html" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Fanconnact | News & Updates" />
+<meta name="twitter:description" content="Fanconnact sports news and updates - latest headlines across cricket, football, basketball and more." />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Fanconnact" />
+<meta property="og:title" content="Fanconnact | News & Updates" />
+<meta property="og:description" content="Fanconnact sports news and updates - latest headlines across cricket, football, basketball and more." />
+<meta property="og:url" content="https://fanconnact.com/news.html" />
+<meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+<style>
+  /* fc-light-accent-contrast: keep white text on solid accent buttons in light theme */
+  :root:not(.dark) .bg-emerald-accent, :root:not(.dark) .bg-emerald-accent *,
+  :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
+  :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
+</style>
+<style>
+.fc-brand-icon { height: 28px !important; width: auto !important; max-width: 40px !important; object-fit: contain; flex-shrink: 0; display: block; }
+@media (min-width: 640px) { .fc-brand-icon { height: 32px !important; } }
+@media (min-width: 1024px) { .fc-brand-icon { height: 36px !important; } }
+body .text-fan, body .text-connect { font-family: 'Lexend', 'Hanken Grotesk', 'Poppins', system-ui, sans-serif !important; font-weight: 800 !important; letter-spacing: -0.02em !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: transparent !important; }
+body .text-fan { background-image: linear-gradient(90deg, #00d9e6 0%, #0a8fe0 100%) !important; }
+body .text-connect { background-image: linear-gradient(90deg, #0a8fe0 0%, #1e5bd6 100%) !important; }
+</style>
+
+  <!-- fc-seo-jsonld-v1 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fanconnact.com/#organization",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanconnact",
+        "Fanconect",
+        "Fanocnnact",
+        "Fan Connact",
+        "Fanconnet",
+        "Fanconnact live",
+        "Fanconnect live"
+      ],
+      "url": "https://fanconnact.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fanconnact.com/assets/fancoin/fanconnact-icon.png"
+      },
+      "description": "Fanconnact is a live sports platform for scores, fixtures, rankings, predictions, fan coins and communities across cricket, football, basketball, e-sports, volleyball, tennis, hockey and more."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fanconnact.com/#website",
+      "url": "https://fanconnact.com/",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanocnnact",
+        "Fanconect"
+      ],
+      "publisher": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://fanconnact.com/livematches.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fanconnact.com/news.html#webpage",
+      "url": "https://fanconnact.com/news.html",
+      "name": "Fanconnact | News & Updates",
+      "isPartOf": {
+        "@id": "https://fanconnact.com/#website"
+      },
+      "about": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "breadcrumb": {
+        "@id": "https://fanconnact.com/news.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fanconnact.com/news.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fanconnact.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Fanconnact",
+          "item": "https://fanconnact.com/news.html"
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+  <body
+    class="h-screen w-full flex flex-row overflow-hidden transition-colors duration-300 bg-white dark:bg-black"
+  >
+    <!-- BEGIN: Sidebar -->
+    <aside
+      id="sidebar"
+      class="fixed inset-y-0 left-0 z-[60] w-64 flex-shrink-0 flex flex-col h-screen transition-all duration-300 bg-white dark:bg-black border-r border-gray-200 dark:border-brand-border shadow-xl lg:shadow-none -translate-x-full lg:translate-x-0 lg:static overflow-y-auto custom-scrollbar"
+    >
+      <button
+        id="close-sidebar-btn"
+        class="lg:hidden p-2 absolute top-4 right-4 text-slate-500 dark:text-gray-400"
+      >
+        <span class="material-symbols-outlined">close</span>
+      </button>
+      <div class="p-6 flex items-center space-x-2 logo-container cursor-pointer" onclick="window.location.href='dashboard.html'">
+        <img src="assets/fancoin/fanconnact-icon.png?v=916102" alt="FanConnact" class="fc-brand-icon" />
+        <span
+          class="text-xl font-bold tracking-tight font-headline logo-text"
+          ><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span
+        >
+      </div>
+      <nav class="flex-1 px-4 space-y-1 mt-2">
+        <a
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-gray-100"
+          href="dashboard.html"
+          ><span class="material-symbols-outlined text-xl">home</span
+          ><span class="text-sm nav-text">Home</span></a
+        ><a
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-gray-100"
+          href="livematches.html"
+          ><span class="material-symbols-outlined text-xl">live_tv</span
+          ><span class="text-sm nav-text">Live Matches</span></a
+        ><a
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link nav-link-active"
+          href="news.html"
+          ><span class="material-symbols-outlined text-xl">newspaper</span
+          ><span class="text-sm nav-text">News & Updates</span></a
+        >
+        <div class="h-px bg-gray-200 dark:bg-brand-border my-4 mx-2"></div>
+        <a
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-gray-100"
+          href="top-players.html"
+          ><span class="material-symbols-outlined text-xl">person_pin</span
+          ><span class="text-sm nav-text">Player Zone</span></a
+        ><a
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:bg-gray-100"
+          href="leaderboard.html"
+          ><span class="material-symbols-outlined text-xl">leaderboard</span
+          ><span class="text-sm nav-text">Leaderboard</span></a
+        >
+      </nav>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+      <!-- BEGIN: Header -->
+      <header class="sticky top-0 z-50 transition-colors duration-300 bg-white dark:bg-black border-b border-gray-200 dark:border-brand-border px-4 md:px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4 md:space-x-12">
+          <button class="text-gray-400 hover:text-emerald-accent" id="mobile-menu-btn">
+            <span class="material-symbols-outlined">menu</span>
+          </button>
+
+          <div id="header-logo" class="lg:hidden flex items-center gap-2 ml-2">
+            <img src="assets/fancoin/fanconnact-icon.png?v=916102" alt="FanConnact" class="fc-brand-icon" />
+            <span class="text-base font-bold whitespace-nowrap"><span class="text-fan">Fan</span><span class="text-connect">Connact</span></span>
+          </div>
+
+          <nav class="hidden xl:flex items-center space-x-6 mx-6 shrink-0">
+            <a class="text-gray-400 hover:text-brand-green transition-colors font-medium text-sm nav-link" href="dashboard.html">Home</a>
+            <a class="text-gray-400 hover:text-brand-green transition-colors font-medium text-sm nav-link" href="livematches.html">Matches</a>            <a class="text-gray-400 hover:text-brand-green transition-colors font-medium text-sm nav-link" href="leaderboard.html">Leaderboard</a>
+            <a class="text-brand-green font-bold border-b-2 border-brand-green pb-0.5 text-sm" href="news.html">News</a>
+          </nav>
+
+          <div class="relative shrink-0" id="lang-selector-wrapper">
+            <button id="lang-selector-btn" class="flex items-center gap-1 px-1.5 sm:px-2.5 py-1.5 rounded-lg text-xs font-bold border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
+              <span class="material-symbols-outlined text-sm">translate</span>
+              <span id="current-lang-label" class="hidden sm:inline">EN</span>
+            </button>
+            <div id="lang-dropdown" class="absolute top-full right-0 mt-1 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-brand-border rounded-xl shadow-xl py-2 z-50 hidden max-h-60 overflow-y-auto custom-scrollbar min-w-[140px]">
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-5 md:gap-8">
+          <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95">
+            <span id="theme-toggle-light-icon" class="material-symbols-outlined hidden text-yellow-400">light_mode</span>
+            <span id="theme-toggle-dark-icon" class="material-symbols-outlined text-slate-500 dark:text-slate-400">dark_mode</span>
+          </button>
+
+
+
+          <div id="profile-trigger" class="flex items-center space-x-3 cursor-pointer border-l border-gray-200 dark:border-brand-border pl-4 md:pl-6">
+            <img id="user-profile-img" alt="User Profile" class="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-brand-green" src="https://ui-avatars.com/api/?name=Guest&background=10b981&color=fff" />
+            <div class="hidden sm:block">
+              <p id="user-name-display" class="text-sm font-bold text-slate-900 dark:text-white"></p>
+              <p id="user-level-display" class="text-[10px] text-brand-green font-bold uppercase tracking-wider"></p>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- END: Header -->
+
+      <!-- Mobile Sub-Nav -->
+      <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-brand-border scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
+        <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
+        <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>        <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
+        <a href="news.html" class="text-brand-green font-bold border-b-2 border-brand-green text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
+      </nav>
+
+      <div class="flex-1 overflow-y-auto custom-scrollbar">
+        <div class="max-w-7xl mx-auto px-3 md:px-6 py-4 md:py-8 space-y-6 md:space-y-10" id="news-app">
+          <!-- Page Header -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl md:text-3xl font-black font-headline dark:text-white text-gray-900">News & Updates</h1>
+              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Stay informed with the latest sports news</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-gray-500 dark:text-gray-400 font-medium shrink-0">Filter:</span>
+              <div class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1" id="filter-chips">
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero News -->
+          <div id="hero-news-container"></div>
+
+          <!-- News Grid -->
+          <section>
+            <div class="flex items-center justify-between mb-4 md:mb-6">
+              <h2 class="text-lg md:text-xl font-bold font-headline dark:text-white text-gray-900">Latest Headlines</h2>
+              <span class="text-xs text-gray-500 dark:text-gray-400" id="article-count"></span>
+            </div>
+            <div id="news-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4"></div>
+          </section>
+
+          <!-- Video Section -->
+          <div id="video-container"></div>
+
+          <!-- Match Highlights -->
+          <section id="highlights-section" class="space-y-6">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl md:text-2xl font-bold font-headline dark:text-white text-gray-900">Match Highlights</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Recent match results & video highlights</p>
+              </div>
+            </div>
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1" id="highlight-tabs"></div>
+            <div id="highlight-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script type="module">
+      import { loadNews, renderFilterChips, renderLanguageSelector, LANGUAGES } from './js/news.js?v=916012';
+      import { renderHighlights } from './js/highlights.js?v=916012';
+
+      let currentSport = 'all';
+      let currentLang = 'en';
+
+      const app = document.getElementById('news-app');
+      const filterChips = document.getElementById('filter-chips');
+      const langDropdown = document.getElementById('lang-dropdown');
+      const langBtn = document.getElementById('lang-selector-btn');
+      const langLabel = document.getElementById('current-lang-label');
+
+      function initLangSelector() {
+        const saved = localStorage.getItem('fanconnect-news-lang');
+        if (saved) currentLang = saved;
+        langDropdown.innerHTML = renderLanguageSelector(currentLang);
+        const lang = LANGUAGES.find(l => l.code === currentLang);
+        if (lang) langLabel.textContent = lang.code.toUpperCase();
+
+        langBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          langDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => langDropdown.classList.add('hidden'));
+
+        langDropdown.addEventListener('click', async (e) => {
+          const btn = e.target.closest('.lang-btn');
+          if (!btn) return;
+          const code = btn.dataset.lang;
+          if (code === currentLang) { langDropdown.classList.add('hidden'); return; }
+          currentLang = code;
+          localStorage.setItem('fanconnect-news-lang', code);
+          const lang = LANGUAGES.find(l => l.code === code);
+          if (lang) langLabel.textContent = lang.code.toUpperCase();
+          langDropdown.innerHTML = renderLanguageSelector(currentLang);
+          langDropdown.classList.add('hidden');
+          filterChips.innerHTML = renderFilterChips(currentSport, currentLang);
+          await loadNews(app, { sport: currentSport, language: currentLang });
+        });
+      }
+
+      async function initFilters() {
+        filterChips.innerHTML = renderFilterChips(currentSport, currentLang);
+        filterChips.addEventListener('click', async (e) => {
+          const chip = e.target.closest('.filter-chip');
+          if (!chip) return;
+          const sport = chip.dataset.sport;
+          if (sport === currentSport) return;
+          currentSport = sport;
+          filterChips.innerHTML = renderFilterChips(currentSport, currentLang);
+          await loadNews(app, { sport: currentSport, language: currentLang });
+        });
+      }
+
+      async function init() {
+        initLangSelector();
+        await initFilters();
+        await loadNews(app, { sport: currentSport, language: currentLang });
+        const highlightsSection = document.getElementById('highlights-section');
+        if (highlightsSection) await renderHighlights(highlightsSection, 'football');
+      }
+
+      init();
+    </script>
+    <script type="module" src="js/script.js?v=916015"></script>
+    <script src="js/theme.js"></script>
+  <script src="js/notif-ws.js"></script></body>
+</html>

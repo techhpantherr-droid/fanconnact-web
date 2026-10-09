@@ -170,6 +170,93 @@
   :root:not(.dark) .bg-brand-green, :root:not(.dark) .bg-brand-green *,
   :root:not(.dark) .bg-emerald-500, :root:not(.dark) .bg-emerald-500 * { color: #ffffff !important; }
 </style>
+
+  <!-- fc-seo-jsonld-v1 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fanconnact.com/#organization",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanconnact",
+        "Fanconect",
+        "Fanocnnact",
+        "Fan Connact",
+        "Fanconnet",
+        "Fanconnact live",
+        "Fanconnect live"
+      ],
+      "url": "https://fanconnact.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fanconnact.com/assets/fancoin/fanconnact-icon.png"
+      },
+      "description": "Fanconnact is a live sports platform for scores, fixtures, rankings, predictions, fan coins and communities across cricket, football, basketball, e-sports, volleyball, tennis, hockey and more."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fanconnact.com/#website",
+      "url": "https://fanconnact.com/",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanocnnact",
+        "Fanconect"
+      ],
+      "publisher": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://fanconnact.com/livematches.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fanconnact.com/cricket.html#webpage",
+      "url": "https://fanconnact.com/cricket.html",
+      "name": "Fanconnact - Live Cricket Scores, ICC Rankings, India vs Australia, T20 World Cup & IPL",
+      "isPartOf": {
+        "@id": "https://fanconnact.com/#website"
+      },
+      "about": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "breadcrumb": {
+        "@id": "https://fanconnact.com/cricket.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fanconnact.com/cricket.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fanconnact.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Fanconnact",
+          "item": "https://fanconnact.com/cricket.html"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
   <body
     class="h-screen w-full flex flex-col overflow-hidden transition-colors duration-300 bg-white dark:bg-black text-slate-900 dark:text-slate-100"
@@ -209,7 +296,7 @@
           >
           <a
             class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link"
-            href="news&update.html"
+            href="news.html"
             >News</a
           >
         </nav>
@@ -260,7 +347,7 @@
     <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
       <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
-      <a href="news&update.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
+      <a href="news.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
     </nav>
 
     <!-- END: MainHeader -->

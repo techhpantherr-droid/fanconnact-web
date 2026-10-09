@@ -104,6 +104,93 @@
 <meta property="og:description" content="Change your Fanconnact language, timezone, region and app preferences." />
 <meta property="og:url" content="https://fanconnact.com/setting.html" />
 <meta property="og:image" content="https://fanconnact.com/assets/fancoin/fanconnactlogo.png" />
+
+  <!-- fc-seo-jsonld-v1 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fanconnact.com/#organization",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanconnact",
+        "Fanconect",
+        "Fanocnnact",
+        "Fan Connact",
+        "Fanconnet",
+        "Fanconnact live",
+        "Fanconnect live"
+      ],
+      "url": "https://fanconnact.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fanconnact.com/assets/fancoin/fanconnact-icon.png"
+      },
+      "description": "Fanconnact is a live sports platform for scores, fixtures, rankings, predictions, fan coins and communities across cricket, football, basketball, e-sports, volleyball, tennis, hockey and more."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fanconnact.com/#website",
+      "url": "https://fanconnact.com/",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanocnnact",
+        "Fanconect"
+      ],
+      "publisher": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://fanconnact.com/livematches.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fanconnact.com/setting.html#webpage",
+      "url": "https://fanconnact.com/setting.html",
+      "name": "FanConnact - Settings",
+      "isPartOf": {
+        "@id": "https://fanconnact.com/#website"
+      },
+      "about": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "breadcrumb": {
+        "@id": "https://fanconnact.com/setting.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fanconnact.com/setting.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fanconnact.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "FanConnact",
+          "item": "https://fanconnact.com/setting.html"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
 <body id="appBody" class="bg-background text-on-surface">
 <script>
@@ -171,7 +258,7 @@
     </div>
     <nav class="hidden md:flex items-center gap-lg">
       <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="dashboard.html">Home</a>
-      <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="news&update.html">News</a>
+      <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="news.html">News</a>
       <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="livematches.html">Matches</a>
       <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="livematches.html">Matches</a>
       <a class="font-body-lg text-on-surface-variant dark:text-slate-400 hover:text-primary transition-colors" href="leaderboard.html">Leaderboard</a>

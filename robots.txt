@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://fanconnact.com/sitemap.xml
+Sitemap: https://fanconnact.com/sitemap-pages.xml
+Sitemap: https://fanconnact.com/sitemap-matches.xml

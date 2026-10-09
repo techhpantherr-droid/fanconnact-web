@@ -241,6 +241,84 @@
     }
   </style>
 
+
+  <!-- fc-seo-jsonld-v1 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fanconnact.com/#organization",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanconnact",
+        "Fanconect",
+        "Fanocnnact",
+        "Fan Connact",
+        "Fanconnet",
+        "Fanconnact live",
+        "Fanconnect live"
+      ],
+      "url": "https://fanconnact.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fanconnact.com/assets/fancoin/fanconnact-icon.png"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fanconnact.com/#website",
+      "url": "https://fanconnact.com/",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanocnnact",
+        "Fanconect"
+      ],
+      "publisher": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fanconnact.com/leaderboard.html#webpage",
+      "url": "https://fanconnact.com/leaderboard.html",
+      "name": "Fanconnact Leaderboard",
+      "isPartOf": {
+        "@id": "https://fanconnact.com/#website"
+      },
+      "about": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "breadcrumb": {
+        "@id": "https://fanconnact.com/leaderboard.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fanconnact.com/leaderboard.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fanconnact.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Fanconnact Leaderboard",
+          "item": "https://fanconnact.com/leaderboard.html"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 <body
   class="min-h-screen w-full flex flex-row overflow-x-hidden overflow-y-auto transition-colors duration-300 bg-[#F8F9FF] dark:bg-[#0B0E11]">
 <!-- fc-seo-meta-v1 -->
@@ -283,7 +361,7 @@
         <span class="text-sm nav-text">Live Matches</span>
       </a>
       <a class="flex items-center space-x-3 px-3 py-2 rounded-lg nav-link transition-colors text-slate-500 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-        href="news&update.html">
+        href="news.html">
         <span class="material-symbols-outlined text-xl">newspaper</span>
         <span class="text-sm nav-text">News & Updates</span>
       </a>
@@ -348,7 +426,7 @@
         <nav class="hidden xl:flex items-center space-x-6 mx-6 shrink-0">
           <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="dashboard.html">Home</a>
           <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="livematches.html">Matches</a>          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="leaderboard.html">Leaderboard</a>
-          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="news&update.html">News</a>
+          <a class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link" href="news.html">News</a>
         </nav>
       </div>
       <div class="flex items-center gap-5 md:gap-8">        <button id="theme-toggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-all active:scale-95">
@@ -370,7 +448,7 @@
     <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
       <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
-      <a href="news&update.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
+      <a href="news.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
     </nav>
 
     <!-- Filter Bar -->

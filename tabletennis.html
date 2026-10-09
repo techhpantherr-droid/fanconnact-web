@@ -357,6 +357,93 @@ body .text-fan, body .text-connect { font-family: 'Lexend', 'Hanken Grotesk', 'P
 body .text-fan { background-image: linear-gradient(90deg, #00d9e6 0%, #0a8fe0 100%) !important; }
 body .text-connect { background-image: linear-gradient(90deg, #0a8fe0 0%, #1e5bd6 100%) !important; }
 </style>
+
+  <!-- fc-seo-jsonld-v1 -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://fanconnact.com/#organization",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanconnact",
+        "Fanconect",
+        "Fanocnnact",
+        "Fan Connact",
+        "Fanconnet",
+        "Fanconnact live",
+        "Fanconnect live"
+      ],
+      "url": "https://fanconnact.com/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://fanconnact.com/assets/fancoin/fanconnact-icon.png"
+      },
+      "description": "Fanconnact is a live sports platform for scores, fixtures, rankings, predictions, fan coins and communities across cricket, football, basketball, e-sports, volleyball, tennis, hockey and more."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://fanconnact.com/#website",
+      "url": "https://fanconnact.com/",
+      "name": "Fanconnact",
+      "alternateName": [
+        "Fanconnect",
+        "Fanocnnact",
+        "Fanconect"
+      ],
+      "publisher": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://fanconnact.com/livematches.html?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://fanconnact.com/tabletennis.html#webpage",
+      "url": "https://fanconnact.com/tabletennis.html",
+      "name": "Fanconnact - Table Tennis Live Scores, ITTF & World Table Tennis Results",
+      "isPartOf": {
+        "@id": "https://fanconnact.com/#website"
+      },
+      "about": {
+        "@id": "https://fanconnact.com/#organization"
+      },
+      "inLanguage": "en",
+      "breadcrumb": {
+        "@id": "https://fanconnact.com/tabletennis.html#breadcrumb"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://fanconnact.com/tabletennis.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://fanconnact.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Fanconnact",
+          "item": "https://fanconnact.com/tabletennis.html"
+        }
+      ]
+    }
+  ]
+}
+  </script>
 </head>
   <body class="h-screen w-full flex flex-col overflow-hidden transition-colors duration-300 bg-white dark:bg-black text-slate-900 dark:text-slate-100">
     <!-- BEGIN: MainHeader -->
@@ -394,7 +481,7 @@ body .text-connect { background-image: linear-gradient(90deg, #0a8fe0 0%, #1e5bd
           >
           <a
             class="text-gray-400 hover:text-emerald-accent transition-colors font-medium text-sm nav-link"
-            href="news&update.html"
+            href="news.html"
             >News</a
           >
         </nav>
@@ -444,7 +531,7 @@ body .text-connect { background-image: linear-gradient(90deg, #0a8fe0 0%, #1e5bd
     <nav class="xl:hidden flex overflow-x-auto gap-1 sm:gap-2 px-2 py-1.5 sm:px-4 sm:py-2.5 bg-white dark:bg-black border-b border-gray-200 dark:border-border-subtle scrollbar-none whitespace-nowrap" style="-webkit-overflow-scrolling:touch;scrollbar-width:none;">
       <a href="dashboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Home</a>
       <a href="livematches.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Matches</a>      <a href="leaderboard.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">Leaderboard</a>
-      <a href="news&update.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
+      <a href="news.html" class="text-gray-400 hover:text-brand-green transition-colors font-medium text-[11px] sm:text-sm px-1.5 py-1 sm:px-3 sm:py-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/5 shrink-0">News</a>
     </nav>
     <!-- END: MainHeader -->
     <div class="flex flex-1 overflow-hidden page-flex">
