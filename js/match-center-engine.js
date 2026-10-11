@@ -3906,11 +3906,12 @@ if (Array.isArray(model.overs) && model.overs.length) {
       }
       return;
     }
-    const homeXI = M.squads.home.xi, awayXI = M.squads.away.xi;
-    homePlayer = homeXI.length ? homeXI[0].n : (M.players.home.length ? M.players.home[0] : '');
-    awayPlayer = awayXI.length ? awayXI[0].n : (M.players.away.length ? M.players.away[0] : '');
+    const homeXI = (M.squads && M.squads.home && M.squads.home.xi) || [];
+    const awayXI = (M.squads && M.squads.away && M.squads.away.xi) || [];
+    const homePlayer = homeXI.length ? homeXI[0].n : ((M.players && M.players.home && M.players.home.length) ? M.players.home[0] : '');
+    const awayPlayer = awayXI.length ? awayXI[0].n : ((M.players && M.players.away && M.players.away.length) ? M.players.away[0] : '');
     if (!homePlayer && !awayPlayer) { el.innerHTML = ''; return; }
-    roleHome = 'Striker'; roleAway = 'Bowler';
+    let roleHome = 'Striker', roleAway = 'Bowler';
     if (SPORT === 'football' || SPORT === 'hockey') { roleHome = 'On Ball'; roleAway = 'Defending'; }
     else if (SPORT === 'basketball') { roleHome = 'With Ball'; roleAway = 'Guarding'; }
     else if (SPORT === 'tennis' || SPORT === 'tabletennis' || SPORT === 'volleyball') { roleHome = 'Serving'; roleAway = 'Receiving'; }
