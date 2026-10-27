@@ -2,18 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://fanconnact.com/matches/</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-new-zealand-vs-india-161212.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-south-africa-vs-australia-147942.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-pakistan-vs-sri-lanka-170737.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-namibia-vs-ireland-174967.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-netherlands-vs-oman-176342.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-india-a-vs-new-zealand-a-171291.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-goa-vs-vidarbha-163781.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-bengal-vs-kerala-163861.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-tripura-vs-karnataka-163811.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-rajasthan-vs-uttarakhand-163891.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-baroda-vs-jammu-and-kashmir-163771.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-delhi-vs-jharkhand-163841.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-uttar-pradesh-vs-puducherry-163791.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-odisha-vs-services-163871.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-assam-vs-saurashtra-163821.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-railways-vs-tamil-nadu-163900.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-bihar-vs-madhya-pradesh-163773.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -22,22 +15,31 @@
   <url><loc>https://fanconnact.com/matches/cricket-mumbai-vs-haryana-163881.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-andhra-vs-chhattisgarh-163831.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-chandigarh-vs-himachal-pradesh-163910.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-arunachal-pradesh-vs-manipur-163131.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-goa-vs-vidarbha-163781.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-bengal-vs-kerala-163861.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-tripura-vs-karnataka-163811.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-rajasthan-vs-uttarakhand-163891.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-baroda-vs-jammu-and-kashmir-163771.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-delhi-vs-jharkhand-163841.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-uttar-pradesh-vs-puducherry-163791.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-odisha-vs-services-163871.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-meghalaya-vs-mizoram-163137.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-nagaland-vs-sikkim-163147.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-south-africa-vs-australia-147942.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-arunachal-pradesh-vs-manipur-163131.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-bangladesh-vs-west-indies-173050.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-afghanistan-vs-zimbabwe-172701.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-south-australia-vs-western-australia-166630.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-auckland-vs-canterbury-170437.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-central-stags-vs-northern-districts-170443.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-new-zealand-vs-india-161201.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-england-vs-pakistan-170733.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-namibia-vs-ireland-174957.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-vs-afghanistan-172691.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-nigeria-vs-uganda-174037.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-gambia-vs-lesotho-174027.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-zambia-vs-mozambique-174031.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-lesotho-vs-nigeria-174017.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-gambia-vs-lesotho-174027.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-gambia-vs-zambia-174010.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-lesotho-vs-nigeria-174017.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-mozambique-vs-uganda-174000.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-gambia-vs-uganda-173993.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-mozambique-vs-nigeria-173983.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -53,8 +55,8 @@
   <url><loc>https://fanconnact.com/matches/cricket-south-western-districts-vs-dolphins-173470.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-jersey-vs-kenya-175530.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-denmark-vs-papua-new-guinea-175540.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-denmark-vs-kuwait-175517.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-qatar-vs-kenya-175527.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-denmark-vs-kuwait-175517.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-new-south-wales-vs-western-australia-167123.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-victoria-vs-tasmania-167113.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-india-women-vs-zimbabwe-women-155562.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -87,34 +89,33 @@
   <url><loc>https://fanconnact.com/matches/hockey-calgary-flames-vs-toronto-maple-leafs-espn_401892583.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/hockey-edmonton-oilers-vs-detroit-red-wings-espn_401892584.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-santiago-gonzalez-bart-stevens-vs-maximo-gonzalez-andres-molteni-te_187264.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-tbd-vs-tbd-te_187265.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-sander-arends-luke-johnson-vs-skander-mansouri-maximilian-neuchrist-te_187263.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-tommy-paul-vs-andrey-rublev-te_185192.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-karen-khachanov-vs-carlos-alcaraz-te_185181.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-adrian-mannarino-vs-ignacio-buse-te_185184.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-karen-khachanov-vs-carlos-alcaraz-te_185181.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-cameron-norrie-vs-francisco-cerundolo-te_185186.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-alexander-zverev-vs-martin-landaluce-te_185188.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-flavio-cobolli-vs-grigor-dimitrov-te_185180.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-hubert-hurkacz-vs-zizou-bergs-te_185129.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-jerome-kym-vs-arthur-rinderknech-te_185140.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-alejandro-tabilo-vs-rafael-jodar-te_185132.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-alex-michelsen-vs-botic-van-de-zandschulp-te_185144.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-jerome-kym-vs-arthur-rinderknech-te_185140.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-giovanni-mpetshi-perricard-vs-arthur-fils-te_185134.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-alex-michelsen-vs-botic-van-de-zandschulp-te_185144.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-henry-bernet-dominic-stricker-vs-sadio-doumbia-david-pel-te_185167.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-ben-shelton-vs-aleksandar-kovacevic-te_185139.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-francisco-cabral-jj-tracy-vs-arthur-reymond-luca-sanchez-te_185162.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-stan-wawrinka-vs-jiri-lehecka-te_185143.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-anastasia-zakharova-vs-magda-linette-te_185726.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-simona-waltert-vs-jil-teichmann-te_185715.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-kaitlin-quevedo-vs-sofia-kenin-te_185711.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-anastasia-zakharova-vs-magda-linette-te_185726.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-lyudmyla-kichenok-makoto-ninomiya-vs-miriam-skoch-jesika-maleckova-te_185746.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-sara-sorribes-tormo-vs-zeynep-sonmez-te_185709.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-dayana-yastremska-vs-katie-volynets-te_185718.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-harriet-dart-naima-karamoko-vs-eri-hozumi-andreja-klepac-te_185740.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-antonia-ruzic-vs-claire-liu-te_185705.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-polina-kudermetova-vs-janice-tjen-te_185725.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-anna-bondar-zeynep-sonmez-vs-i-hsuan-cho-yi-tsen-cho-te_185738.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-lilli-tagger-vs-venus-williams-te_185724.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-anna-bondar-zeynep-sonmez-vs-i-hsuan-cho-yi-tsen-cho-te_185738.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-xinran-sun-vs-mananchaya-sawangkaew-te_185721.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-maya-joint-vs-sorana-cirstea-te_185679.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-ann-li-vs-ekaterina-alexandrova-te_185675.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -148,8 +149,8 @@
   <url><loc>https://fanconnact.com/matches/tennis-holger-rune-vs-quentin-halys-te_185130.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-kevin-krawietz-tim-puetz-vs-jakob-schnaitter-mark-wallner-te_185172.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-dominic-stricker-vs-casper-ruud-te_185137.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-maria-timofeeva-vs-teodora-kostovic-te_185712.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-panna-udvardy-vs-sinja-kraus-te_185716.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-maria-timofeeva-vs-teodora-kostovic-te_185712.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-mariia-kozyreva-maia-lumsden-vs-rutuja-bhosale-peangtarn-plipuech-te_185744.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-daria-snigur-vs-anna-bondar-te_185707.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-isabelle-haverlag-zhibek-kulambayeva-vs-qu-yihan-zhang-ruien-te_185736.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -171,15 +172,15 @@
   <url><loc>https://fanconnact.com/matches/tennis-nauhany-vitoria-leme-da-silva-vs-despina-papamichail-te_185761.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-lorenzo-sonego-vs-jacob-fearnley-te_187158.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-lukas-neumayer-vs-titouan-droguet-te_187157.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-adrian-mannarino-vs-alex-molcan-te_187156.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-fabian-marozsan-vs-tomas-machac-te_187155.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-adrian-mannarino-vs-alex-molcan-te_187156.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-rinky-hijikata-vs-yannick-hanfmann-te_187223.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-juan-manuel-cerundolo-vs-daniel-altmaier-te_187221.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-giovanni-mpetshi-perricard-vs-aleksandar-kovacevic-te_187222.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-romain-arneodo-hendrik-jebens-vs-arthur-reymond-luca-sanchez-te_187262.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-mika-brunold-vs-remy-bertola-te_187224.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-carol-young-suh-lee-vs-elena-pridankina-te_187144.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-alevtina-ibragimova-vs-polina-iatcenko-te_187141.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-carol-young-suh-lee-vs-elena-pridankina-te_187144.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-dayana-yastremska-vs-emerson-jones-te_187142.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-tatiana-prozorova-vs-joanna-garland-te_187146.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-harriet-dart-vs-mei-yamaguchi-te_187143.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -212,8 +213,8 @@
   <url><loc>https://fanconnact.com/matches/tennis-remy-bertola-vs-jakub-paul-te_187213.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-paolo-schiavone-augusto-virgili-vs-arthur-reymond-luca-sanchez-te_187261.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-sander-gille-sem-verbeek-vs-romain-arneodo-hendrik-jebens-te_187260.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-rina-saigo-vs-alevtina-ibragimova-te_187132.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-polina-iatcenko-vs-alexandra-shubladze-te_187136.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-rina-saigo-vs-alevtina-ibragimova-te_187132.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-elena-pridankina-vs-tyra-caterina-grant-te_187140.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-jeline-vandromme-vs-carol-young-suh-lee-te_187134.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-tatiana-prozorova-vs-ekaterine-gorgodze-te_187135.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -247,16 +248,17 @@
   <url><loc>https://fanconnact.com/matches/tennis-tbd-vs-tbd-10-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-tbd-vs-tbd-23-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/india-tour-of-new-zealand-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/australia-tour-of-south-africa-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/pakistan-odi-tri-series-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/ireland-tour-of-namibia-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/icc-cricket-world-cup-league-two-2023-27.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/india-a-tour-of-new-zealand-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/ranji-trophy-elite-2026-27.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/ranji-trophy-plate-2026-27.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/australia-tour-of-south-africa-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/west-indies-tour-of-bangladesh-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/afghanistan-vs-zimbabwe-in-uae-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/sheffield-shield-2026-27.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/the-ford-trophy-2026-27.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/odi-tri-nation-series-in-uae-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/icc-men-s-t20-world-cup-africa-sub-regional-qualifier-c-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/csa-t20-challenge-2026.html</loc><lastmod>2026-10-27</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
