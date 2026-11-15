@@ -1,43 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://fanconnact.com/matches/</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-india-vs-new-zealand-161282.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-england-vs-australia-151323.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-bangladesh-vs-south-africa-147953.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-vs-afghanistan-172731.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-karnali-yaks-vs-chitwan-rhinos-177800.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-england-lions-vs-west-indies-a-176529.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-ireland-a-vs-zimbabwe-a-175821.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-women-vs-thailand-women-177443.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-pakistan-women-vs-netherlands-women-177451.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-royal-desert-champions-vs-arabian-aces-176232.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-emirates-eagles-vs-uae-bulls-176235.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-united-tigers-vs-yas-lions-176243.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-arabian-aces-vs-royal-desert-champions-176232.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-pokhara-avengers-vs-kathmandu-gorkhas-177810.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-ireland-a-vs-zimbabwe-a-175821.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-united-arab-emirates-women-vs-scotland-women-177461.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-sri-lanka-women-vs-papua-new-guinea-women-177463.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-vidarbha-vs-odisha-164600.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-rajasthan-vs-jharkhand-164571.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-railways-vs-bihar-164581.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-himachal-pradesh-vs-andhra-164590.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-karnataka-vs-uttar-pradesh-164601.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-madhya-pradesh-vs-assam-164611.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-uttarakhand-vs-goa-164620.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-jammu-and-kashmir-vs-tamil-nadu-164621.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-gujarat-vs-mumbai-164661.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-mizoram-vs-baroda-164631.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-arabian-aces-vs-united-tigers-176250.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-sikkim-vs-arunachal-pradesh-163323.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-nagaland-vs-manipur-163327.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-services-vs-meghalaya-163331.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-kathmandu-gorkhas-vs-pokhara-avengers-177810.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-new-south-wales-vs-south-australia-167133.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-queensland-vs-tasmania-167143.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-victoria-vs-western-australia-167150.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-sydney-thunder-women-vs-melbourne-stars-women-162863.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-bangladesh-women-vs-netherlands-women-177473.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-women-vs-pakistan-women-177481.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-ireland-women-vs-papua-new-guinea-women-177490.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-united-arab-emirates-women-vs-sri-lanka-women-177500.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-india-vs-new-zealand-161282.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-new-zealand-vs-india-161271.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-england-vs-australia-151323.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-england-vs-australia-151312.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-kerala-vs-madhya-pradesh-164561.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-karnataka-vs-bengal-164541.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-uttarakhand-vs-chhattisgarh-164570.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-delhi-vs-jammu-and-kashmir-164551.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-kerala-vs-madhya-pradesh-164561.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-uttar-pradesh-vs-rajasthan-164513.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-tamil-nadu-vs-railways-164520.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-himachal-pradesh-vs-assam-164530.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-uttar-pradesh-vs-rajasthan-164513.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-goa-vs-vidarbha-164540.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-bihar-vs-saurashtra-164451.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-andhra-vs-tripura-164461.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-mizoram-vs-jharkhand-164431.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-gujarat-vs-odisha-164481.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-puducherry-vs-maharashtra-164391.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-bihar-vs-saurashtra-164451.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-baroda-vs-chandigarh-164343.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-haryana-vs-punjab-164361.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-puducherry-vs-maharashtra-164391.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-hyderabad-vs-mumbai-164401.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-uae-bulls-vs-yas-lions-176224.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-arabian-aces-vs-emirates-eagles-176221.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -48,8 +61,9 @@
   <url><loc>https://fanconnact.com/matches/cricket-yas-lions-vs-arabian-aces-176177.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-uae-bulls-vs-royal-desert-champions-176166.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-sikkim-vs-services-163317.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-manipur-vs-arunachal-pradesh-163313.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-meghalaya-vs-nagaland-163311.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-manipur-vs-arunachal-pradesh-163313.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-karnali-yaks-vs-chitwan-rhinos-177800.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-biratnagar-kings-vs-lumbini-lions-177791.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-janakpur-bolts-vs-chitwan-rhinos-177781.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-sudur-paschim-royals-vs-kathmandu-gorkhas-177771.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -60,14 +74,15 @@
   <url><loc>https://fanconnact.com/matches/cricket-boland-vs-warriors-173597.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-titans-vs-warriors-177255.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-boland-vs-lions-177244.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-england-lions-vs-west-indies-a-176529.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-west-indies-a-vs-england-lions-176521.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-queensland-vs-tasmania-166667.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-pakistan-u19-vs-india-u19-175720.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-afghanistan-u19-vs-india-u19-175710.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-bangladesh-u19-vs-pakistan-u19-175703.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-wellington-vs-central-stags-170511.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-northern-districts-vs-canterbury-170517.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-auckland-vs-otago-170503.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-wellington-vs-central-stags-170511.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-sydney-sixers-women-vs-melbourne-renegades-women-162861.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-adelaide-strikers-women-vs-perth-scorchers-women-162853.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-hobart-hurricanes-women-vs-brisbane-heat-women-162851.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -80,115 +95,61 @@
   <url><loc>https://fanconnact.com/matches/cricket-uganda-women-vs-united-states-of-america-women-177343.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-namibia-women-vs-united-states-of-america-women-177339.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-rwanda-women-vs-uganda-women-177335.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-pakistan-women-vs-thailand-women-177431.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-women-vs-thailand-women-177443.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-pakistan-women-vs-netherlands-women-177451.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-zimbabwe-women-vs-bangladesh-women-177441.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-scotland-women-vs-sri-lanka-women-177411.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-pakistan-women-vs-thailand-women-177431.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-ireland-women-vs-united-arab-emirates-women-177421.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-thailand-women-vs-netherlands-women-177401.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-scotland-women-vs-sri-lanka-women-177411.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-bangladesh-women-vs-pakistan-women-177400.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/cricket-papua-new-guinea-women-vs-scotland-women-177390.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-thailand-women-vs-netherlands-women-177401.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/cricket-ireland-women-vs-sri-lanka-women-177380.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/basketball-new-orleans-pelicans-vs-denver-nuggets-espn_401909980.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/basketball-cleveland-cavaliers-vs-dallas-mavericks-espn_401909981.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/basketball-miami-heat-vs-detroit-pistons-espn_401909982.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/basketball-memphis-grizzlies-vs-brooklyn-nets-espn_401909983.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/basketball-minnesota-timberwolves-vs-chicago-bulls-espn_401909984.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-nebraska-cornhuskers-vs-iowa-hawkeyes-espn_401884423.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-byu-cougars-vs-texas-tech-red-raiders-espn_401888816.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-illinois-fighting-illini-vs-penn-state-nittany-lions-espn_401884244.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-ucla-bruins-vs-oregon-ducks-espn_401885946.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-michigan-wolverines-vs-purdue-boilermakers-espn_401885216.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-usc-trojans-vs-washington-huskies-espn_401886068.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-minnesota-golden-gophers-vs-michigan-state-spartans-espn_401885616.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-stanford-cardinal-vs-georgia-tech-yellow-jackets-espn_401884444.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-incarnate-word-cardinals-vs-texas-a-and-m-corpus-christi-islanders-espn_401902526.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-ut-arlington-mavericks-vs-central-arkansas-bears-espn_401899891.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-davidson-wildcats-vs-fordham-rams-espn_401887457.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-vcu-rams-vs-dayton-flyers-espn_401887483.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-george-washington-revolutionaries-vs-loyola-chicago-ramblers-espn_401887913.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-st-thomas-tommies-vs-kansas-city-kangaroos-espn_401890605.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-northern-arizona-lumberjacks-vs-idaho-state-bengals-espn_401891205.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-stony-brook-seawolves-vs-towson-tigers-espn_401892408.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-florida-international-panthers-vs-new-mexico-state-aggies-espn_401897177.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-le-moyne-dolphins-vs-fairleigh-dickinson-knights-espn_401897974.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-fairfield-stags-vs-niagara-purple-eagles-espn_401898212.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-abilene-christian-wildcats-vs-eastern-kentucky-colonels-espn_401899855.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-tarleton-state-texans-vs-austin-peay-governors-espn_401899872.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-arkansas-state-red-wolves-vs-james-madison-dukes-espn_401900488.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-mercyhurst-lakers-vs-long-island-university-sharks-espn_401901376.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-new-haven-chargers-vs-chicago-state-cougars-espn_401901662.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-old-dominion-monarchs-vs-ul-monroe-warhawks-espn_401902204.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-se-louisiana-lions-vs-lamar-cardinals-espn_401902541.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-central-connecticut-blue-devils-vs-stonehill-skyhawks-espn_401903254.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-houston-cougars-vs-utah-utes-espn_401888867.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-south-dakota-state-jackrabbits-vs-north-dakota-state-bison-espn_401890627.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-omaha-mavericks-vs-oral-roberts-golden-eagles-espn_401890676.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-charleston-cougars-vs-campbell-fighting-camels-espn_401891583.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-northeastern-huskies-vs-william-and-mary-tribe-espn_401891683.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-hofstra-pride-vs-north-carolina-a-and-t-aggies-espn_401893744.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-kennesaw-state-owls-vs-middle-tennessee-blue-raiders-espn_401897412.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-iona-gaels-vs-rider-broncs-espn_401898301.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-manhattan-jaspers-vs-saint-peter-s-peacocks-espn_401898358.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-siena-saints-vs-quinnipiac-bobcats-espn_401898446.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-north-alabama-lions-vs-little-rock-trojans-espn_401899927.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-east-texas-a-and-m-lions-vs-northwestern-state-demons-espn_401902272.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-houston-christian-huskies-vs-ut-rio-grande-valley-vaqueros-espn_401902301.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-lsu-new-orleans-privateers-vs-stephen-f-austin-lumberjacks-espn_401902465.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-nicholls-colonels-vs-mcneese-cowboys-espn_401902558.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-the-citadel-bulldogs-vs-chattanooga-mocs-espn_401902597.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-western-carolina-catamounts-vs-east-tennessee-state-buccaneers-espn_401902618.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-mercer-bears-vs-unc-greensboro-spartans-espn_401902664.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-belmont-bruins-vs-illinois-state-redbirds-espn_401890446.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-george-mason-patriots-vs-duquesne-dukes-espn_401887506.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-pepperdine-waves-vs-denver-pioneers-espn_401888525.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-portland-pilots-vs-pacific-tigers-espn_401888526.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-uconn-huskies-vs-butler-bulldogs-espn_401888703.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-providence-friars-vs-xavier-musketeers-espn_401888746.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-washington-state-cougars-vs-oregon-state-beavers-espn_401891873.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-loyola-maryland-greyhounds-vs-holy-cross-crusaders-espn_401897289.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-robert-morris-colonials-vs-green-bay-phoenix-espn_401897813.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-lafayette-leopards-vs-colgate-raiders-espn_401897905.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-troy-trojans-vs-app-state-mountaineers-espn_401900471.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-louisiana-ragin-cajuns-vs-coastal-carolina-chanticleers-espn_401900505.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-grand-canyon-lopes-vs-utep-miners-espn_401901193.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-san-diego-state-aztecs-vs-colorado-state-rams-espn_401901455.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-seattle-u-redhawks-vs-saint-mary-s-gaels-espn_401888527.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-loyola-marymount-lions-vs-san-diego-toreros-espn_401888528.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-santa-clara-broncos-vs-san-francisco-dons-espn_401888529.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-lehigh-mountain-hawks-vs-navy-midshipmen-espn_401897888.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-wright-state-raiders-vs-purdue-fort-wayne-mastodons-espn_401897928.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-eastern-michigan-eagles-vs-ball-state-cardinals-espn_401898606.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-nevada-wolf-pack-vs-san-jose-state-spartans-espn_401901241.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-unlv-rebels-vs-new-mexico-lobos-espn_401901276.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-lipscomb-bisons-vs-bellarmine-knights-espn_401885970.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-eastern-washington-eagles-vs-montana-grizzlies-espn_401891112.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-brown-bears-vs-pennsylvania-quakers-espn_401896405.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-harvard-crimson-vs-columbia-lions-espn_401896423.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-dartmouth-big-green-vs-cornell-big-red-espn_401896440.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-yale-bulldogs-vs-princeton-tigers-espn_401896521.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-cal-state-fullerton-titans-vs-uc-riverside-highlanders-espn_401897008.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-iu-indianapolis-jaguars-vs-cleveland-state-vikings-espn_401897790.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-central-michigan-chippewas-vs-western-michigan-broncos-espn_401898650.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-stetson-hatters-vs-florida-gulf-coast-eagles-espn_401885917.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-marquette-golden-eagles-vs-st-john-s-red-storm-espn_401888766.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-depaul-blue-demons-vs-seton-hall-pirates-espn_401888790.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-murray-state-racers-vs-bradley-braves-espn_401890468.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-uic-flames-vs-drake-bulldogs-espn_401890499.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-south-dakota-coyotes-vs-north-dakota-fighting-hawks-espn_401890691.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-southern-illinois-salukis-vs-indiana-state-sycamores-espn_401890702.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-valparaiso-valparaiso-vs-northern-iowa-panthers-espn_401890764.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-sacred-heart-pioneers-vs-canisius-golden-griffins-espn_401898169.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-merrimack-warriors-vs-marist-red-foxes-espn_401898372.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-akron-zips-vs-kent-state-golden-flashes-espn_401898551.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-cal-poly-mustangs-vs-sacramento-state-hornets-espn_401896946.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-toledo-rockets-vs-bowling-green-falcons-espn_401899032.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-portland-state-vikings-vs-weber-state-wildcats-espn_401891282.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-uc-irvine-anteaters-vs-cal-state-bakersfield-roadrunners-espn_401896968.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-uc-san-diego-tritons-vs-cal-state-northridge-matadors-espn_401897044.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-idaho-vandals-vs-montana-state-bobcats-espn_401891166.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-long-beach-state-49ers-vs-california-baptist-lancers-espn_401897081.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-wyoming-cowboys-vs-uc-davis-aggies-espn_401901253.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/volleyball-uc-santa-barbara-gauchos-vs-utah-valley-wolverines-espn_401897135.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/cricket-papua-new-guinea-women-vs-scotland-women-177390.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-philadelphia-76ers-vs-indiana-pacers-espn_401909985.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-phoenix-suns-vs-los-angeles-lakers-espn_401909986.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-la-clippers-vs-charlotte-hornets-espn_401909987.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-utah-jazz-vs-san-antonio-spurs-espn_401909988.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-boston-celtics-vs-dallas-mavericks-espn_401909989.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-toronto-raptors-vs-new-york-knicks-espn_401909990.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-washington-wizards-vs-houston-rockets-espn_401909991.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-milwaukee-bucks-vs-atlanta-hawks-espn_401909992.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/basketball-sacramento-kings-vs-oklahoma-city-thunder-espn_401909993.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-indiana-hoosiers-vs-northwestern-wildcats-espn_401884394.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-bethune-cookman-wildcats-vs-mississippi-valley-state-delta-devils-espn_401903044.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-alabama-a-and-m-bulldogs-vs-alcorn-state-braves-espn_401903097.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-florida-a-and-m-rattlers-vs-jackson-state-tigers-espn_401903057.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-boston-college-eagles-vs-miami-hurricanes-espn_401883801.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-west-virginia-mountaineers-vs-ucf-knights-espn_401891522.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-smu-mustangs-vs-notre-dame-fighting-irish-espn_401884516.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-arizona-wildcats-vs-arizona-state-sun-devils-espn_401886936.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-south-carolina-gamecocks-vs-tennessee-volunteers-espn_401883491.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-north-carolina-tar-heels-vs-duke-blue-devils-espn_401883843.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-texas-a-and-m-aggies-vs-ole-miss-rebels-espn_401883473.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-umbc-retrievers-vs-binghamton-bearcats-espn_401884200.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-nc-state-wolfpack-vs-virginia-cavaliers-espn_401884272.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-new-hampshire-wildcats-vs-ualbany-great-danes-espn_401885760.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-tulsa-golden-hurricane-vs-temple-owls-espn_401887299.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-wake-forest-demon-deacons-vs-virginia-tech-hokies-espn_401888093.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-boise-state-broncos-vs-fresno-state-bulldogs-espn_401901422.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-texas-southern-tigers-vs-grambling-tigers-espn_401902978.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-alabama-state-hornets-vs-southern-jaguars-espn_401902995.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-prairie-view-a-and-m-panthers-vs-arkansas-pine-bluff-golden-lions-espn_401903007.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-syracuse-orange-vs-florida-state-seminoles-espn_401903401.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-georgia-bulldogs-vs-kentucky-wildcats-espn_401883392.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-kansas-jayhawks-vs-tcu-horned-frogs-espn_401887586.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-texas-longhorns-vs-lsu-tigers-espn_401883433.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-south-florida-bulls-vs-east-carolina-pirates-espn_401887172.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-tulane-green-wave-vs-rice-owls-espn_401887240.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-northeastern-huskies-vs-william-and-mary-tribe-espn_401891684.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-alabama-crimson-tide-vs-florida-gators-espn_401883567.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-colorado-buffaloes-vs-baylor-bears-espn_401887115.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-mississippi-state-bulldogs-vs-auburn-tigers-espn_401883346.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-arkansas-razorbacks-vs-missouri-tigers-espn_401883370.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-california-golden-bears-vs-clemson-tigers-espn_401884489.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-charlotte-49ers-vs-florida-atlantic-owls-espn_401903307.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-oklahoma-sooners-vs-vanderbilt-commodores-espn_401883550.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-creighton-bluejays-vs-villanova-wildcats-espn_401888728.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/volleyball-pittsburgh-panthers-vs-louisville-cardinals-espn_401883963.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-manchester-city-vs-fulham-espn_401879233.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-afc-bournemouth-vs-nottingham-forest-espn_401879238.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-aston-villa-vs-sunderland-espn_401878756.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -211,20 +172,11 @@
   <url><loc>https://fanconnact.com/matches/football-lazio-vs-lecce-espn_401874981.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-parma-vs-as-roma-espn_401874967.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-napoli-vs-torino-espn_401875067.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-carolina-hurricanes-vs-seattle-kraken-espn_401891809.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-chicago-blackhawks-vs-winnipeg-jets-espn_401892708.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-boston-bruins-vs-minnesota-wild-espn_401892709.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-toronto-maple-leafs-vs-edmonton-oilers-espn_401892710.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-montreal-canadiens-vs-colorado-avalanche-espn_401892711.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-tampa-bay-lightning-vs-detroit-red-wings-espn_401892712.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-pittsburgh-penguins-vs-ottawa-senators-espn_401892713.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-washington-capitals-vs-new-jersey-devils-espn_401892714.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-columbus-blue-jackets-vs-philadelphia-flyers-espn_401892715.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-st-louis-blues-vs-florida-panthers-espn_401892716.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-dallas-stars-vs-buffalo-sabres-espn_401892717.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-utah-mammoth-vs-san-jose-sharks-espn_401892718.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-anaheim-ducks-vs-new-york-islanders-espn_401892719.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-los-angeles-kings-vs-calgary-flames-espn_401892720.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-philadelphia-flyers-vs-edmonton-oilers-espn_401892721.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-dallas-stars-vs-florida-panthers-espn_401892722.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-anaheim-ducks-vs-calgary-flames-espn_401892723.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-vegas-golden-knights-vs-vancouver-canucks-espn_401892724.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-san-jose-sharks-vs-nashville-predators-espn_401892725.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-harri-heliovaara-henry-patten-vs-orlando-luz-rafael-matos-te_187517.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-alexander-zverev-vs-rafael-jodar-te_187505.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-marcelo-arevalo-mate-pavic-vs-theo-arribage-albano-olivetti-te_187518.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -234,8 +186,8 @@
   <url><loc>https://fanconnact.com/matches/tennis-katerina-siniakova-taylor-townsend-vs-sara-errani-jasmine-paolini-te_187445.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-diletta-cherubini-vs-alexandra-osborne-te_187535.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-martina-trevisan-vs-samantha-alvarez-te_187534.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/tennis-zhibek-kulambayeva-vs-valeriya-strakhova-te_187536.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-ariana-geerlings-vs-camila-rodero-contreras-te_187533.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/tennis-zhibek-kulambayeva-vs-valeriya-strakhova-te_187536.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-gabriela-dabrowski-luisa-stefani-vs-su-wei-hsieh-jelena-ostapenko-te_187380.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-guo-hanyu-kristina-mladenovic-vs-elise-mertens-zhang-shuai-te_187387.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-jessica-pegula-vs-mirra-andreeva-te_187441.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
@@ -259,35 +211,26 @@
   <url><loc>https://fanconnact.com/matches/football-coventry-city-vs-crystal-palace-401879235.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-tottenham-hotspur-vs-ipswich-town-401878754.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/football-newcastle-united-vs-arsenal-401879232.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-carolina-hurricanes-vs-seattle-kraken-401891809.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-chicago-blackhawks-vs-winnipeg-jets-401892708.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-boston-bruins-vs-minnesota-wild-401892709.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-toronto-maple-leafs-vs-edmonton-oilers-401892710.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-montreal-canadiens-vs-colorado-avalanche-401892711.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-tampa-bay-lightning-vs-detroit-red-wings-401892712.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-pittsburgh-penguins-vs-ottawa-senators-401892713.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-washington-capitals-vs-new-jersey-devils-401892714.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-columbus-blue-jackets-vs-philadelphia-flyers-401892715.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-st-louis-blues-vs-florida-panthers-401892716.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-dallas-stars-vs-buffalo-sabres-401892717.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-utah-mammoth-vs-san-jose-sharks-401892718.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-anaheim-ducks-vs-new-york-islanders-401892719.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/matches/hockey-los-angeles-kings-vs-calgary-flames-401892720.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-philadelphia-flyers-vs-edmonton-oilers-401892721.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-dallas-stars-vs-florida-panthers-401892722.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-anaheim-ducks-vs-calgary-flames-401892723.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-vegas-golden-knights-vs-vancouver-canucks-401892724.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/matches/hockey-san-jose-sharks-vs-nashville-predators-401892725.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/matches/tennis-tbd-vs-tbd-339-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/india-tour-of-new-zealand-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/england-tour-of-australia-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/bangladesh-tour-of-south-africa-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/afghanistan-vs-zimbabwe-in-uae-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/abu-dhabi-t10-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/nepal-premier-league-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/england-lions-tour-of-west-indies-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/ireland-a-tour-of-zimbabwe-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/icc-women-s-emerging-nations-trophy-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/abu-dhabi-t10-league-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/syed-mushtaq-ali-trophy-elite-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/syed-mushtaq-ali-trophy-plate-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/australia-domestic-one-day-cup-2026-27.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/womens-big-bash-league-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://fanconnact.com/tournament/syed-mushtaq-ali-trophy-elite-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/india-tour-of-new-zealand-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/england-tour-of-australia-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/csa-t20-challenge-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://fanconnact.com/tournament/england-lions-tour-of-west-indies-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/sheffield-shield-2026-27.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/acc-men-s-u19-asia-cup-2026.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
   <url><loc>https://fanconnact.com/tournament/the-ford-trophy-2026-27.html</loc><lastmod>2026-11-15</lastmod><changefreq>hourly</changefreq><priority>0.7</priority></url>
